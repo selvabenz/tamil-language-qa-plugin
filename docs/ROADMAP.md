@@ -1,5 +1,7 @@
 # Implementation roadmap
 
+The detailed [product plan](PRODUCT_PLAN.md) records the verse-by-verse workflow, native-style interface, review actions, safe writes, and version requirements. Its phased delivery plan supersedes the earlier diagnostic-only final release goal.
+
 ## 1. Establish the baseline
 
 - Preserve the supplied package and validate its 183 records and 99 fixtures.
@@ -19,7 +21,7 @@
 - Confirm the SDK, framework, architecture, and deployment requirements against the installed 9.5.110.1 host.
 - Build a minimal plugin that opens a review window before connecting the checker.
 - Read only authorized text through supported host interfaces, scan locally, and display verse-linked findings.
-- Keep the first version diagnostic-only, with no automatic Scripture changes.
+- Deliver a read-only preview first, then add explicit per-occurrence Apply and Modify & Apply through a validated, locked host transaction. Reject and Ignore never change Scripture.
 
 ## 4. Validate a release
 
@@ -29,4 +31,4 @@
 - Test loading, scanning, cancellation, review navigation, and error recovery on Paratext 9.5.110.1 with networking disabled.
 - Document the exact host build, SDK version, installation process, supported scope, and remaining gaps.
 
-Any future edit-application feature needs a separate design with explicit human approval, stale-source detection, an audit trail, and reversibility.
+The safe-application design is now specified in the product plan: human-triggered writes, stale-source detection under the host write lock, an audit journal, and guarded reversion. Implementation and host verification remain pending.

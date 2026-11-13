@@ -10,6 +10,7 @@ An offline Tamil புணர்ச்சி / sandhi checker planned for **Para
 - Explain findings in Tamil using rule IDs and grammatical evidence.
 - Preserve USFM, Unicode, verse references, whitespace, and original text during scans.
 - Present suggestions for human review; keep uncertain analyses open.
+- Scan a selected Scripture scope verse by verse, with Apply, Reject, Ignore, and Modify & Apply actions in a Paratext-style window and, where supported, inline context menus.
 - Keep project house style separate from general Tamil grammar.
 
 ## Accuracy
@@ -43,7 +44,9 @@ The validator checks catalog and fixture structure, including JSON Schema when `
 
 ## Next steps
 
-See the [implementation roadmap](docs/ROADMAP.md) and [Paratext compatibility plan](docs/PARATEXT_COMPATIBILITY.md).
+See the [product and safe-edit plan](docs/PRODUCT_PLAN.md), [implementation roadmap](docs/ROADMAP.md), and [Paratext compatibility plan](docs/PARATEXT_COMPATIBILITY.md). The development version baseline is [`0.1.0-dev`](VERSION); no plugin binary has been built yet.
+
+Implementation is tracked by the [delivery epic](https://github.com/selvabenz/tamil-language-qa-plugin/issues/1), [project board](https://github.com/users/selvabenz/projects/4), and [issue index](docs/GITHUB_TRACKING.md).
 
 ## Attribution and licensing
 

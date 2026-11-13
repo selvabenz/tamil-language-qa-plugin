@@ -1,0 +1,24 @@
+# GitHub delivery tracking
+
+[Delivery epic](https://github.com/selvabenz/tamil-language-qa-plugin/issues/1) | [Project board](https://github.com/users/selvabenz/projects/4)
+
+The board is linked to this repository. All 14 implementation tasks start in Todo. The epic remains open until their acceptance gates pass. Priority, phase and planned release fields organize delivery; area/type/priority/phase labels provide repository filtering. Dependencies are recorded as issue relationships and in each task body.
+
+| Phase | Task | Issue |
+| --- | --- | --- |
+| P0 | SDK and native integration | [#2](https://github.com/selvabenz/tamil-language-qa-plugin/issues/2) |
+| P0 | Shared contracts | [#7](https://github.com/selvabenz/tamil-language-qa-plugin/issues/7) |
+| P0 | Build identity and packaging | [#14](https://github.com/selvabenz/tamil-language-qa-plugin/issues/14) |
+| P1 | USFM and Tamil source spans | [#4](https://github.com/selvabenz/tamil-language-qa-plugin/issues/4) |
+| P1 | Scope and verse scanning | [#3](https://github.com/selvabenz/tamil-language-qa-plugin/issues/3) |
+| P1 | Offline linguistic analysis | [#5](https://github.com/selvabenz/tamil-language-qa-plugin/issues/5) |
+| P1 | Project house style | [#6](https://github.com/selvabenz/tamil-language-qa-plugin/issues/6) |
+| P1 | Native-style review window | [#8](https://github.com/selvabenz/tamil-language-qa-plugin/issues/8) |
+| P2 | Review decisions | [#10](https://github.com/selvabenz/tamil-language-qa-plugin/issues/10) |
+| P2 | Safe locked application | [#11](https://github.com/selvabenz/tamil-language-qa-plugin/issues/11) |
+| P2 | Audit, revert and recovery | [#12](https://github.com/selvabenz/tamil-language-qa-plugin/issues/12) |
+| P2 | Inline annotations and menus | [#9](https://github.com/selvabenz/tamil-language-qa-plugin/issues/9) |
+| P3 | Offline resources and responsiveness | [#13](https://github.com/selvabenz/tamil-language-qa-plugin/issues/13) |
+| P3 | Release validation | [#15](https://github.com/selvabenz/tamil-language-qa-plugin/issues/15) |
+
+The product plan and VERSION file document requirements and the development baseline. They do not imply implementation, a released binary, verified Paratext compatibility, or measured linguistic accuracy.

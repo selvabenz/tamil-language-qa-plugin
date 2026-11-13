@@ -6,7 +6,7 @@
 | --- | --- |
 | Host | Paratext 9.5.110.1 |
 | Platform | Windows |
-| Operation | Offline scanning and human review |
+| Operation | Offline scope scanning, verse-by-verse review, and explicit safe application |
 | Current compatibility status | Not built or tested |
 
 Paratext's official download page lists the requested version. Its plugin documentation describes Plugin API 2.0 introduced with Paratext 9.2, and the linked demo repository provides integration examples. These establish research starting points; they do not prove this project's compatibility with the target build.
@@ -28,4 +28,4 @@ Keep the checking core independent of host APIs. Use a thin Paratext adapter for
 
 ## Compatibility evidence required
 
-A release must record a successful build and a manual run on the exact target host. Exercise plugin discovery, project selection, read-only scanning, Tamil display, verse navigation, cancellation, exception handling, and offline operation. Confirm source text is unchanged after scanning. Until this evidence exists, describe Paratext 9.5.110.1 as a target rather than supported compatibility.
+A release must record a successful build and a manual run on the exact target host. Exercise plugin discovery, scope selection, read-only scanning, Tamil display, verse navigation, cancellation, exception handling, and offline operation. Confirm source text is unchanged after scanning. Verify native-style window behavior and inline annotation/context-menu capabilities, chapter-level writes under host locks, permissions, stale edits, and guarded recovery on copied projects. Confirm build identity appears in the UI. Until this evidence exists, describe Paratext 9.5.110.1 as a target rather than supported compatibility.
