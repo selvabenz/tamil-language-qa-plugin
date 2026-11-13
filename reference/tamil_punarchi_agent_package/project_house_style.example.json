@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "IRV_TAMIL_EXAMPLE",
+  "language": "ta",
+  "enable_project_overrides": false,
+  "scripture_edit_policy": "human_approval_required",
+  "preferred_divine_name": "யெகோவா",
+  "no_insert_before_lexemes": [
+    {
+      "lexeme_family": "தேவன்",
+      "surface_forms_examples": ["தேவன்", "தேவனுடைய", "தேவசாயலாக"],
+      "prohibited_inserted_consonants": ["த்"],
+      "reason": "Tamil IRV editorial exception: do not introduce extra த் before approved தேவன்-family expressions; preserve the word boundary.",
+      "scope": "approved_lexicon_only",
+      "examples_to_preserve": ["அவனை தேவசாயலாக"]
+    }
+  ],
+  "review_policy": {
+    "mode": "flag_only",
+    "approval_required": true,
+    "auto_apply": false,
+    "reason_prefix_ta": "காரணம்:",
+    "make_inference_without_morphology": false,
+    "show_both_lexical_and_case_analysis": true
+  },
+  "notes": "An example only. Enable explicitly per project; do not apply to generic Tamil prose."
+}

@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.vs/
+.idea/
+bin/
+obj/
+TestResults/
+*.user
+*.suo
+.env
+.env.*
+!.env.example
+artifacts/
+local-projects/

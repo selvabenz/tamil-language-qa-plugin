@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tamil-punarchi:finding:1.0",
+  "title": "Tamil Punarchi QA Finding",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["finding_id", "document_hash", "rule_ids", "layer", "status", "confidence", "context", "source_span", "original_text", "suggested_text", "reason_ta", "evidence", "protected", "source_urls", "review"],
+  "properties": {
+    "finding_id": {"type": "string", "minLength": 1},
+    "document_hash": {"type": "string", "minLength": 1},
+    "rule_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+    "layer": {"enum": ["classical", "modern", "house", "classical_and_modern", "engineering"]},
+    "status": {"enum": ["protected", "verified_suggestion", "needs_review", "accepted", "rejected", "open"]},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "context": {"type": "string"},
+    "reference": {"type": ["string", "null"], "description": "Optional book/chapter/verse or document section reference"},
+    "source_span": {
+      "type": "object", "additionalProperties": false,
+      "required": ["start_utf8_byte", "end_utf8_byte"],
+      "properties": {
+        "start_utf8_byte": {"type": "integer", "minimum": 0},
+        "end_utf8_byte": {"type": "integer", "minimum": 0},
+        "start_grapheme_index": {"type": ["integer", "null"], "minimum": 0},
+        "end_grapheme_index": {"type": ["integer", "null"], "minimum": 0}
+      }
+    },
+    "original_text": {"type": "string"},
+    "suggested_text": {"type": ["string", "null"], "description": "Null for protect/no-change or inconclusive findings"},
+    "reason_ta": {"type": "string", "pattern": "^காரணம்:"},
+    "evidence": {
+      "type": "object", "required": ["morphology", "syntax", "lexicon", "house_style", "blockers"],
+      "properties": {
+        "morphology": {"type": ["object", "null"]},
+        "syntax": {"type": ["object", "null"]},
+        "lexicon": {"type": ["object", "null"]},
+        "house_style": {"type": ["object", "null"]},
+        "blockers": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    },
+    "protected": {"type": "boolean"},
+    "source_urls": {"type": "array", "items": {"type": "string", "format": "uri"}},
+    "suggested_patch": {
+      "type": ["object", "null"],
+      "description": "Do not apply without human approval",
+      "properties": {
+        "from_utf8_byte": {"type": "integer", "minimum": 0},
+        "to_utf8_byte": {"type": "integer", "minimum": 0},
+        "replacement": {"type": "string"},
+        "expected_original_bytes_sha256": {"type": "string"}
+      },
+      "required": ["from_utf8_byte", "to_utf8_byte", "replacement", "expected_original_bytes_sha256"],
+      "additionalProperties": false
+    },
+    "review": {
+      "type": "object", "required": ["decision", "reviewer_id", "reason"],
+      "properties": {
+        "decision": {"enum": ["pending", "approved", "rejected", "open"]},
+        "reviewer_id": {"type": ["string", "null"]},
+        "reason": {"type": ["string", "null"]},
+        "reviewed_at": {"type": ["string", "null"], "format": "date-time"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

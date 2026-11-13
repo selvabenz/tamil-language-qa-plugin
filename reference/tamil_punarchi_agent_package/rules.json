@@ -1,0 +1,4162 @@
+{
+  "schema_version": "1.0.0",
+  "catalog_version": "2026-11-13",
+  "language": "ta",
+  "description": "Conservative, context-aware Tamil punarchi QA rule inventory, not a standalone regex correction engine",
+  "sources": {
+    "TVA_CLASS": "https://www.tamilvu.org/courses/degree/c021/c0213/html/c0213112.htm",
+    "TVA_GLIDE": "https://www.tamilvu.org/courses/hg200/hg215/html/hg215ple.htm",
+    "TVA_U": "https://www.tamilvu.org/ta/courses-degree-c021-c0211-html-c0211405-15613",
+    "TVA_M": "https://www.tamilvu.org/ta/courses-degree-c021-c0214-html-c0214221-16222",
+    "TVA_L": "https://www.tamilvu.org/ta/courses-degree-c021-c0214-html-c0214331-16247",
+    "TVA_ADD": "https://www.tamilvu.org/ta/courses-degree-c021-c0214-html-c0214661-16317",
+    "TVA_NO": "https://www.tamilvu.org/ta/courses-degree-c021-c0214-html-c0214662-16318",
+    "TVA_CASE": "https://www.tamilvu.org/ta/courses-degree-c021-c0214-html-c0214441-16269",
+    "TVA_SARI": "https://www.tamilvu.org/ta/courses-degree-c021-c0214-html-c0214442-16270",
+    "TVA_NUM1": "https://www.tamilvu.org/ta/courses-degree-c021-c0213-html-c0213661-16132",
+    "TVA_NUM2": "https://www.tamilvu.org/ta/courses-degree-c021-c0213-html-c0213662-16133",
+    "TVA_NUM3": "https://www.tamilvu.org/ta/courses-degree-c021-c0213-html-c0213663-16134",
+    "TVA_DIR": "https://www.tamilvu.org/ta/courses-degree-c021-c0213-html-c0213557-16105",
+    "TVA_YEAR": "https://www.tamilvu.org/en/node/8057",
+    "TVA_HOUSE": "https://www.tamilvu.org/ta/courses-degree-c021-c0214-html-c02142nd-16245",
+    "TVA_BOOK": "https://www.tamilvu.org/courses/hg300/hg314/html/hg314ple.htm",
+    "TVA_PURAN": "https://www.tamilvu.org/ta/courses-degree-c021-c0214-html-c0214333-16249",
+    "TVA_AKAR": "https://www.tamilvu.org/ta/courses-degree-c021-c0213-html-c0213441-16065",
+    "TVA_UKAR": "https://www.tamilvu.org/ta/courses-degree-c021-c0213-html-c0213444-16068",
+    "TVA_URUPU2": "https://www.tamilvu.org/ta/courses-degree-c021-c0214-html-c02145nd-16315"
+  },
+  "rule_count": 183,
+  "rules": [
+    {
+      "id": "BASE-001",
+      "category": "classification",
+      "name_ta": "இயல்புப் புணர்ச்சி",
+      "name_en": "No sound change",
+      "decision": "CLASSIFY",
+      "preconditions": "Both words form a genuine grammatical sandhi construction and no sound change is licensed",
+      "requires_annotations": [],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "BASE-002",
+      "category": "classification",
+      "name_ta": "விகாரப் புணர்ச்சி",
+      "name_en": "Sound changes",
+      "decision": "CLASSIFY",
+      "preconditions": "Actual combination undergoes addition / transformation / deletion",
+      "requires_annotations": [],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "BASE-003",
+      "category": "classification",
+      "name_ta": "வேற்றுமைப் புணர்ச்சி",
+      "name_en": "Case relation sandhi",
+      "decision": "CLASSIFY",
+      "preconditions": "Constituents are connected by a case relation",
+      "requires_annotations": [
+        "case_relation"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "BASE-004",
+      "category": "classification",
+      "name_ta": "அல்வழிப் புணர்ச்சி",
+      "name_en": "Non-case sandhi",
+      "decision": "CLASSIFY",
+      "preconditions": "No case relation; identify compound or phrase category",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "BASE-005",
+      "category": "classification",
+      "name_ta": "அகச்சந்தி",
+      "name_en": "Within-word sandhi",
+      "decision": "CLASSIFY",
+      "preconditions": "Stem plus inflection/derivational suffix",
+      "requires_annotations": [],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_CASE"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "BASE-006",
+      "category": "classification",
+      "name_ta": "புறச்சந்தி",
+      "name_en": "Across-word sandhi",
+      "decision": "CLASSIFY",
+      "preconditions": "Between words in syntactic/compound context",
+      "requires_annotations": [],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_BOOK"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "BASE-007",
+      "category": "classification",
+      "name_ta": "தோன்றல்",
+      "name_en": "Insertion",
+      "decision": "CLASSIFY",
+      "preconditions": "New phoneme/letter appears",
+      "requires_annotations": [],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "BASE-008",
+      "category": "classification",
+      "name_ta": "திரிதல்",
+      "name_en": "Substitution",
+      "decision": "CLASSIFY",
+      "preconditions": "Boundary letter transforms",
+      "requires_annotations": [],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "BASE-009",
+      "category": "classification",
+      "name_ta": "கெடுதல்",
+      "name_en": "Elision",
+      "decision": "CLASSIFY",
+      "preconditions": "Boundary letter drops",
+      "requires_annotations": [],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "BASE-010",
+      "category": "classification",
+      "name_ta": "வேற்றுமை விரி",
+      "name_en": "Overt case marker",
+      "decision": "CLASSIFY",
+      "preconditions": "Case suffix explicitly present",
+      "requires_annotations": [
+        "case_marker"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "BASE-011",
+      "category": "classification",
+      "name_ta": "வேற்றுமைத்தொகை",
+      "name_en": "Elliptical case marker",
+      "decision": "CLASSIFY",
+      "preconditions": "Case relation present, marker omitted",
+      "requires_annotations": [
+        "case_relation"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "BASE-012",
+      "category": "classification",
+      "name_ta": "உருபும் பயனும் உடன்தொக்க தொகை",
+      "name_en": "Marker and associated element omitted",
+      "decision": "CLASSIFY",
+      "preconditions": "Case marker and semantic intervening element implicit",
+      "requires_annotations": [
+        "compound_semantics"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "BASE-013",
+      "category": "classification",
+      "name_ta": "தொகைநிலைத் தொடர்",
+      "name_en": "Compound",
+      "decision": "CLASSIFY",
+      "preconditions": "Nominal/other compound with grammatical contraction",
+      "requires_annotations": [
+        "compound_type"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "BASE-014",
+      "category": "classification",
+      "name_ta": "தொகாநிலைத் தொடர்",
+      "name_en": "Free phrase",
+      "decision": "CLASSIFY",
+      "preconditions": "Independent syntactic phrase",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "GLIDE-001",
+      "category": "vowel",
+      "name_ta": "உடம்படுமெய்",
+      "name_en": "Vowel-to-vowel glide",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Actual compound/suffix boundary; stem ends with vowel இ; next element begins with vowel; insert ய்",
+      "requires_annotations": [
+        "boundary_is_compound_or_suffix",
+        "terminal_vowel",
+        "following_vowel"
+      ],
+      "examples_correct": [
+        "மணி + ஓசை → மணியோசை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_GLIDE"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "GLIDE-002",
+      "category": "vowel",
+      "name_ta": "உடம்படுமெய்",
+      "name_en": "Vowel-to-vowel glide",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Actual compound/suffix boundary; stem ends with vowel ஈ; next element begins with vowel; insert ய்",
+      "requires_annotations": [
+        "boundary_is_compound_or_suffix",
+        "terminal_vowel",
+        "following_vowel"
+      ],
+      "examples_correct": [
+        "தீ + எரி → தீயெரி"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_GLIDE"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "GLIDE-003",
+      "category": "vowel",
+      "name_ta": "உடம்படுமெய்",
+      "name_en": "Vowel-to-vowel glide",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Actual compound/suffix boundary; stem ends with vowel ஐ; next element begins with vowel; insert ய்",
+      "requires_annotations": [
+        "boundary_is_compound_or_suffix",
+        "terminal_vowel",
+        "following_vowel"
+      ],
+      "examples_correct": [
+        "வாழை + இலை → வாழையிலை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_GLIDE"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "GLIDE-004",
+      "category": "vowel",
+      "name_ta": "உடம்படுமெய்",
+      "name_en": "Vowel-to-vowel glide",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Actual compound/suffix boundary; stem ends with vowel ஆ; next element begins with vowel; insert வ்",
+      "requires_annotations": [
+        "boundary_is_compound_or_suffix",
+        "terminal_vowel",
+        "following_vowel"
+      ],
+      "examples_correct": [
+        "நிலா + அழகு → நிலாவழகு"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_GLIDE"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "GLIDE-005",
+      "category": "vowel",
+      "name_ta": "உடம்படுமெய்",
+      "name_en": "Vowel-to-vowel glide",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Actual compound/suffix boundary; stem ends with vowel ஊ; next element begins with vowel; insert வ்",
+      "requires_annotations": [
+        "boundary_is_compound_or_suffix",
+        "terminal_vowel",
+        "following_vowel"
+      ],
+      "examples_correct": [
+        "பூ + இதழ் → பூவிதழ்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_GLIDE"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "GLIDE-006",
+      "category": "vowel",
+      "name_ta": "உடம்படுமெய்",
+      "name_en": "Vowel-to-vowel glide",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Actual compound/suffix boundary; stem ends with vowel உ; next element begins with vowel; insert வ்",
+      "requires_annotations": [
+        "boundary_is_compound_or_suffix",
+        "terminal_vowel",
+        "following_vowel"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_GLIDE"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "GLIDE-007",
+      "category": "vowel",
+      "name_ta": "உடம்படுமெய்",
+      "name_en": "Vowel-to-vowel glide",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Actual compound/suffix boundary; stem ends with vowel எ; next element begins with vowel; insert வ்",
+      "requires_annotations": [
+        "boundary_is_compound_or_suffix",
+        "terminal_vowel",
+        "following_vowel"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_GLIDE"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "GLIDE-008",
+      "category": "vowel",
+      "name_ta": "உடம்படுமெய்",
+      "name_en": "Vowel-to-vowel glide",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Actual compound/suffix boundary; stem ends with vowel ஒ; next element begins with vowel; insert வ்",
+      "requires_annotations": [
+        "boundary_is_compound_or_suffix",
+        "terminal_vowel",
+        "following_vowel"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_GLIDE"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "GLIDE-009",
+      "category": "vowel",
+      "name_ta": "உடம்படுமெய்",
+      "name_en": "Vowel-to-vowel glide",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Actual compound/suffix boundary; stem ends with vowel ஓ; next element begins with vowel; insert வ்",
+      "requires_annotations": [
+        "boundary_is_compound_or_suffix",
+        "terminal_vowel",
+        "following_vowel"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_GLIDE"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "GLIDE-010",
+      "category": "vowel",
+      "name_ta": "உடம்படுமெய்",
+      "name_en": "Vowel-to-vowel glide",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Actual compound/suffix boundary; stem ends with vowel ஔ; next element begins with vowel; insert வ்",
+      "requires_annotations": [
+        "boundary_is_compound_or_suffix",
+        "terminal_vowel",
+        "following_vowel"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_GLIDE"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "GLIDE-011",
+      "category": "vowel",
+      "name_ta": "ஏகார உடம்படுமெய்",
+      "name_en": "E-ending glide alternation",
+      "decision": "ALLOW_VARIANTS",
+      "preconditions": "Final ஏ can admit ய் and வ் depending on lexical usage",
+      "requires_annotations": [],
+      "examples_correct": [
+        "சே + அழகு → சேயழகு",
+        "சே + அழகு → சேவழகு"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_GLIDE"
+      ],
+      "notes": "Never choose a glide by simple suffix-only regex."
+    },
+    {
+      "id": "GLIDE-012",
+      "category": "vowel",
+      "name_ta": "சொல் எல்லை",
+      "name_en": "Do not join independent words",
+      "decision": "PROTECT",
+      "preconditions": "Adjacent independent words are not morphological compound/suffix; vowel adjacency not enough to insert a glide",
+      "requires_annotations": [
+        "token_boundary_kind"
+      ],
+      "examples_correct": [
+        "அவன் அங்கே சென்றான்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "UCLASS-001",
+      "category": "short_u",
+      "name_ta": "குற்றியலுகரம் — நெடில்தொடர்",
+      "name_en": "நெடில்தொடர் shortened-U classification",
+      "decision": "CLASSIFY",
+      "preconditions": "Identify word final shortened உ with preceding sound in நெடில்தொடர்",
+      "requires_annotations": [
+        "stem_morphology",
+        "phonology"
+      ],
+      "examples_correct": [
+        "பாகு",
+        "காது",
+        "ஆறு"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_U"
+      ],
+      "notes": "Examples are words illustrating class; not isolated correction triggers."
+    },
+    {
+      "id": "UCLASS-002",
+      "category": "short_u",
+      "name_ta": "குற்றியலுகரம் — ஆய்தத்தொடர்",
+      "name_en": "ஆய்தத்தொடர் shortened-U classification",
+      "decision": "CLASSIFY",
+      "preconditions": "Identify word final shortened உ with preceding sound in ஆய்தத்தொடர்",
+      "requires_annotations": [
+        "stem_morphology",
+        "phonology"
+      ],
+      "examples_correct": [
+        "அஃது",
+        "எஃகு"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_U"
+      ],
+      "notes": "Examples are words illustrating class; not isolated correction triggers."
+    },
+    {
+      "id": "UCLASS-003",
+      "category": "short_u",
+      "name_ta": "குற்றியலுகரம் — உயிர்த்தொடர்",
+      "name_en": "உயிர்த்தொடர் shortened-U classification",
+      "decision": "CLASSIFY",
+      "preconditions": "Identify word final shortened உ with preceding sound in உயிர்த்தொடர்",
+      "requires_annotations": [
+        "stem_morphology",
+        "phonology"
+      ],
+      "examples_correct": [
+        "வரகு",
+        "முரடு",
+        "கிணறு"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_U"
+      ],
+      "notes": "Examples are words illustrating class; not isolated correction triggers."
+    },
+    {
+      "id": "UCLASS-004",
+      "category": "short_u",
+      "name_ta": "குற்றியலுகரம் — வன்தொடர்",
+      "name_en": "வன்தொடர் shortened-U classification",
+      "decision": "CLASSIFY",
+      "preconditions": "Identify word final shortened உ with preceding sound in வன்தொடர்",
+      "requires_annotations": [
+        "stem_morphology",
+        "phonology"
+      ],
+      "examples_correct": [
+        "பாக்கு",
+        "பட்டு",
+        "பத்து"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_U"
+      ],
+      "notes": "Examples are words illustrating class; not isolated correction triggers."
+    },
+    {
+      "id": "UCLASS-005",
+      "category": "short_u",
+      "name_ta": "குற்றியலுகரம் — மென்தொடர்",
+      "name_en": "மென்தொடர் shortened-U classification",
+      "decision": "CLASSIFY",
+      "preconditions": "Identify word final shortened உ with preceding sound in மென்தொடர்",
+      "requires_annotations": [
+        "stem_morphology",
+        "phonology"
+      ],
+      "examples_correct": [
+        "குரங்கு",
+        "பஞ்சு",
+        "வண்டு"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_U"
+      ],
+      "notes": "Examples are words illustrating class; not isolated correction triggers."
+    },
+    {
+      "id": "UCLASS-006",
+      "category": "short_u",
+      "name_ta": "குற்றியலுகரம் — இடைத்தொடர்",
+      "name_en": "இடைத்தொடர் shortened-U classification",
+      "decision": "CLASSIFY",
+      "preconditions": "Identify word final shortened உ with preceding sound in இடைத்தொடர்",
+      "requires_annotations": [
+        "stem_morphology",
+        "phonology"
+      ],
+      "examples_correct": [
+        "மார்பு",
+        "சார்பு"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_U"
+      ],
+      "notes": "Examples are words illustrating class; not isolated correction triggers."
+    },
+    {
+      "id": "U-007",
+      "category": "short_u",
+      "name_ta": "குற்றியலுகரம் உயிர்முன் கெடுதல்",
+      "name_en": "Short-u elision before vowels",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Verified final குற்றியலுகரம் followed by vowel-initial suffix or joined constituent",
+      "requires_annotations": [
+        "short_u_class",
+        "boundary_is_compound_or_suffix"
+      ],
+      "examples_correct": [
+        "வண்டு + இனம் → வண்டினம்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_U"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "U-008",
+      "category": "short_u",
+      "name_ta": "இறுதி எழுத்து மாற்றங்கள்",
+      "name_en": "Some suffixes cause additional alternation",
+      "decision": "REVIEW",
+      "preconditions": "Suffix-specific stem alternation requires lexicon and morphological analysis",
+      "requires_annotations": [
+        "lexical_paradigm"
+      ],
+      "examples_correct": [
+        "ஆடு + இன் → ஆட்டின்",
+        "வயிறு + ஐ → வயிற்றை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_U"
+      ],
+      "notes": "Do not generalize consonant doubling to every short-u stem."
+    },
+    {
+      "id": "U-009",
+      "category": "short_u",
+      "name_ta": "முற்றியலுகரம்",
+      "name_en": "Full-u stems",
+      "decision": "REVIEW",
+      "preconditions": "Full உ does not behave identically to shortened உ; phonological and lexical class must be known",
+      "requires_annotations": [
+        "stem_morphology"
+      ],
+      "examples_correct": [
+        "பசு",
+        "மது",
+        "கதவு",
+        "நிலவு"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_U"
+      ],
+      "notes": "Do not automatically elide all full உ endings."
+    },
+    {
+      "id": "U-010",
+      "category": "short_u",
+      "name_ta": "குற்றியலிகரம்",
+      "name_en": "Shortened-i",
+      "decision": "REVIEW",
+      "preconditions": "Classical shortening of இ in applicable environments, including certain combinations before ய்",
+      "requires_annotations": [
+        "morphological_environment"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical",
+      "tier": "review",
+      "source_ids": [
+        "TVA_U"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "C-001",
+      "category": "consonant",
+      "name_ta": "மெய்யுடன் உயிர் சேர்தல்",
+      "name_en": "Consonant-vowel attachment",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Final pure consonant + vowel initial next element, actual compound/suffix",
+      "requires_annotations": [
+        "boundary_is_compound_or_suffix"
+      ],
+      "examples_correct": [
+        "வேல் + எறிந்தான் → வேலெறிந்தான்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_BOOK"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "C-002",
+      "category": "consonant",
+      "name_ta": "தனிக்குறில் முன் ஒற்று இரட்டல்",
+      "name_en": "Short monosyllable coda gemination",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Single short vowel before final consonant + attached vowel",
+      "requires_annotations": [
+        "short_monovocalic_stem",
+        "boundary_is_compound_or_suffix"
+      ],
+      "examples_correct": [
+        "கல் + அழகு → கல்லழகு",
+        "பொன் + ஆடை → பொன்னாடை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_BOOK"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "M-001",
+      "category": "consonant_m",
+      "name_ta": "மகர ஈறு கெட்டு வல்லினம் மிகுதல்",
+      "name_en": "M-loss + hard consonant increase",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Specific case or adjective/simile compound; ம் final and hard initial",
+      "requires_annotations": [
+        "compound_type"
+      ],
+      "examples_correct": [
+        "மரம் + கிளை → மரக்கிளை",
+        "மரம் + கலம் → மரக்கலம்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_M"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "M-002",
+      "category": "consonant_m",
+      "name_ta": "மகர ஈறு இனமெல்லெழுத்தாதல்",
+      "name_en": "M assimilates to matching nasal",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Applicable case or classical compound before a hard consonant",
+      "requires_annotations": [
+        "compound_type"
+      ],
+      "examples_correct": [
+        "காலம் + கடந்து → காலங்கடந்து",
+        "மரம் + கண்டார் → மரங்கண்டார்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_M"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "M-003",
+      "category": "consonant_m",
+      "name_ta": "மகர ஈறு கெட்டு இடையினம் வருதல்",
+      "name_en": "M-loss with medial onset",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Licensed compound whose ம் drops before medial initial",
+      "requires_annotations": [
+        "compound_type"
+      ],
+      "examples_correct": [
+        "மரம் + வேர் → மரவேர்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_M"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "M-004",
+      "category": "consonant_m",
+      "name_ta": "மகர ஈறு மாறாமல் நிற்றல்",
+      "name_en": "M-retention",
+      "decision": "PROTECT",
+      "preconditions": "Independent subject phrase / relative participle; ம் remains",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "மரம் வளர்ந்தது",
+        "கொல்லும் யானை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_M"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "M-005",
+      "category": "consonant_m",
+      "name_ta": "மகர ஈற்று விகற்பம்",
+      "name_en": "M-final accepted alternatives",
+      "decision": "ALLOW_VARIANTS",
+      "preconditions": "Classical variant formation of compounds with ம்",
+      "requires_annotations": [],
+      "examples_correct": [
+        "குளம் + கரை → குளக்கரை",
+        "குளம் + கரை → குளங்கரை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_M"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "M-006",
+      "category": "consonant_m",
+      "name_ta": "அகம் சிறப்புப் புணர்ச்சி",
+      "name_en": "Akam special compounds",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Stem அகம் with கை or செவி",
+      "requires_annotations": [],
+      "examples_correct": [
+        "அகம் + கை → அங்கை",
+        "அகம் + செவி → அஞ்செவி"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_M"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "M-007",
+      "category": "consonant_m",
+      "name_ta": "நும் தம் எம் நம்",
+      "name_en": "Pronoun stem alternations",
+      "decision": "REVIEW",
+      "preconditions": "Special declensional stems and nasals",
+      "requires_annotations": [
+        "pronoun_paradigm"
+      ],
+      "examples_correct": [
+        "நாம் + ஐ → நம்மை",
+        "தாம் + ஐ → தம்மை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_M"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "LR-001",
+      "category": "consonant_l",
+      "name_ta": "லகரம் றகரமாகத் திரிதல்",
+      "name_en": "L → R-retroflex class",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Specific case/special-name compounds, final ல் before hard initial",
+      "requires_annotations": [
+        "compound_type"
+      ],
+      "examples_correct": [
+        "பால் + குடம் → பாற்குடம்",
+        "வேல் + படை → வேற்படை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_L"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "LR-002",
+      "category": "consonant_l",
+      "name_ta": "ளகரம் டகரமாகத் திரிதல்",
+      "name_en": "LL → retroflex T",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Specific compounds final ள் before hard initial",
+      "requires_annotations": [
+        "compound_type"
+      ],
+      "examples_correct": [
+        "வாள் + படை → வாட்படை",
+        "முள் + செடி → முட்செடி"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_L"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "LR-003",
+      "category": "consonant_l",
+      "name_ta": "லகர + நகர மாற்றம்",
+      "name_en": "L+N assimilation",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Genuine compound with final ல் plus ந initial",
+      "requires_annotations": [
+        "compound_type"
+      ],
+      "examples_correct": [
+        "நல் + நூல் → நன்னூல்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_L"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "LR-004",
+      "category": "consonant_l",
+      "name_ta": "லகர ளகர இயல்பு",
+      "name_en": "No universal L/LL conversion",
+      "decision": "PROTECT",
+      "preconditions": "Ordinary free phrase or coordinative compound may preserve ல்/ள்",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "கால் கை",
+        "தோள் வலிமை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_L"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NN-001",
+      "category": "consonant_n",
+      "name_ta": "னகர மாற்றம்",
+      "name_en": "N → R in established compounds",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Specific compounds final ன் followed by க initial",
+      "requires_annotations": [
+        "lexical_paradigm"
+      ],
+      "examples_correct": [
+        "பொன் + கலம் → பொற்கலம்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_BOOK"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NN-002",
+      "category": "consonant_n",
+      "name_ta": "ணகர மாற்றம்",
+      "name_en": "Retroflex N → retroflex T",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Specific compounds final ண் followed by க initial",
+      "requires_annotations": [
+        "lexical_paradigm"
+      ],
+      "examples_correct": [
+        "மண் + குடம் → மட்குடம்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_BOOK"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NN-003",
+      "category": "consonant_n",
+      "name_ta": "மெய் இரட்டல்",
+      "name_en": "Nasals double in licensed vowel boundary",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Short stem final ன்/ண் before vowel attached",
+      "requires_annotations": [
+        "boundary_is_compound_or_suffix"
+      ],
+      "examples_correct": [
+        "பொன் + ஆடை → பொன்னாடை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_BOOK"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "YRZ-001",
+      "category": "consonant_yrz",
+      "name_ta": "யகர ரகர ழகர ஈறு",
+      "name_en": "Y/R/Z + vallinam",
+      "decision": "REVIEW",
+      "preconditions": "Hard consonant joining compounds with final ய்/ர்/ழ்",
+      "requires_annotations": [
+        "compound_type"
+      ],
+      "examples_correct": [
+        "மெய் + கீர்த்தி → மெய்க்கீர்த்தி",
+        "கார் + பருவம் → கார்ப்பருவம்",
+        "யாழ் + கருவி → யாழ்க்கருவி"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_HOUSE"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "YRZ-002",
+      "category": "consonant_yrz",
+      "name_ta": "யகர ரகர ழகர இயல்பு",
+      "name_en": "Y/R/Z may remain before hard consonants",
+      "decision": "PROTECT",
+      "preconditions": "Free phrases/other constructions do not universally gain hard consonants",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "வேர் சிறிது",
+        "யாழ் பெரிது"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_HOUSE"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "V-001",
+      "category": "consonant_v",
+      "name_ta": "அவ்/இவ் சொற்களின் புணர்ச்சி",
+      "name_en": "V-final demonstrative alternations",
+      "decision": "REVIEW",
+      "preconditions": "Lexically specified demonstrative prefix compounds",
+      "requires_annotations": [
+        "lexical_paradigm"
+      ],
+      "examples_correct": [
+        "அவ் + யானை → அவ்வியானை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_BOOK"
+      ],
+      "notes": "Do not infer a blanket வ்→ற் rule from this example; verify individual lexical derivatives."
+    },
+    {
+      "id": "CASE-002-OVERT",
+      "category": "case",
+      "name_ta": "இரண்டாம் வேற்றுமை விரி",
+      "name_en": "Explicit accusative ஐ",
+      "decision": "INSERT_HARD",
+      "preconditions": "Following word begins க/ச/த/ப and previous noun is explicitly accusative (not lexical ஐ)",
+      "requires_annotations": [
+        "case_marker",
+        "lexical_ai_flag"
+      ],
+      "examples_correct": [
+        "கதையைப் படித்தான்",
+        "மலரைப் பறித்தான்",
+        "கதவைத் தட்டு",
+        "ஒலியைக் குறை"
+      ],
+      "examples_incorrect": [
+        "கதையை படித்தான்",
+        "மலரை பறித்தான்"
+      ],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "candidate",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "CASE-002-ELLIP",
+      "category": "case",
+      "name_ta": "இரண்டாம் வேற்றுமைத்தொகை",
+      "name_en": "Implied accusative",
+      "decision": "NO_INSERT",
+      "preconditions": "Accusative meaning but ஐ unexpressed",
+      "requires_annotations": [
+        "case_relation",
+        "case_marker"
+      ],
+      "examples_correct": [
+        "நகை செய்தான்",
+        "கனி தின்றான்",
+        "தமிழ் படித்தான்"
+      ],
+      "examples_incorrect": [
+        "நகைச் செய்தான்"
+      ],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "CASE-002-COMPOUND",
+      "category": "case",
+      "name_ta": "இரண்டாம் உருபும் பயனும் உடன்தொக்க தொகை",
+      "name_en": "Accusative compound",
+      "decision": "INSERT_HARD",
+      "preconditions": "Noun compound with implicit object relation and implicit predicate",
+      "requires_annotations": [
+        "compound_semantics"
+      ],
+      "examples_correct": [
+        "நகைக்கடை",
+        "எலிப்பொறி",
+        "தயிர்க்குடம்",
+        "நெய்க்குடம்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "CASE-003-COMPOUND",
+      "category": "case",
+      "name_ta": "மூன்றாம் உருபும் பயனும் உடன்தொக்க தொகை",
+      "name_en": "Instrumental/material compound",
+      "decision": "INSERT_HARD",
+      "preconditions": "Compound specifying material/instrument",
+      "requires_annotations": [
+        "compound_semantics"
+      ],
+      "examples_correct": [
+        "வெள்ளிக் கிண்ணம்",
+        "இரும்புப் பெட்டி",
+        "தேங்காய்ச் சட்னி"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "CASE-004-OVERT",
+      "category": "case",
+      "name_ta": "நான்காம் வேற்றுமை விரி",
+      "name_en": "Explicit dative கு",
+      "decision": "INSERT_HARD",
+      "preconditions": "Dative suffix கு/க்கு explicit and following க/ச/த/ப",
+      "requires_annotations": [
+        "case_marker"
+      ],
+      "examples_correct": [
+        "எனக்குக் கொடு",
+        "ஊருக்குப் போனான்",
+        "வீட்டுக்குத் தலைவி"
+      ],
+      "examples_incorrect": [
+        "எனக்கு கொடு"
+      ],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "candidate",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "CASE-004-ELLIP-HUMAN",
+      "category": "case",
+      "name_ta": "நான்காம் வேற்றுமைத்தொகை உயர்திணை",
+      "name_en": "Implied dative human",
+      "decision": "NO_INSERT",
+      "preconditions": "Human-animate noun in omitted dative relation",
+      "requires_annotations": [
+        "noun_animacy",
+        "case_relation"
+      ],
+      "examples_correct": [
+        "பொன்னி கணவன்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "CASE-004-ELLIP-NONHUMAN",
+      "category": "case",
+      "name_ta": "நான்காம் வேற்றுமைத்தொகை அஃறிணை",
+      "name_en": "Implied dative nonhuman",
+      "decision": "INSERT_HARD",
+      "preconditions": "Nonhuman noun in omitted dative compound",
+      "requires_annotations": [
+        "noun_animacy",
+        "compound_semantics"
+      ],
+      "examples_correct": [
+        "குறிஞ்சித் தலைவன்",
+        "படைத்தளபதி",
+        "கூலிப்படை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "CASE-004-COMPOUND",
+      "category": "case",
+      "name_ta": "நான்காம் உருபும் பயனும் உடன்தொக்க தொகை",
+      "name_en": "Dative compound",
+      "decision": "INSERT_HARD",
+      "preconditions": "Dative semantic compound with elided material (most, not all)",
+      "requires_annotations": [
+        "compound_semantics"
+      ],
+      "examples_correct": [
+        "தண்ணீர்க்குடம்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": "Most (பெரும்பாலும்), not unconditional."
+    },
+    {
+      "id": "CASE-005-OVERT",
+      "category": "case",
+      "name_ta": "ஐந்தாம் வேற்றுமை விரி",
+      "name_en": "Ablative expression",
+      "decision": "NO_INSERT",
+      "preconditions": "Explicit இருந்து/நின்று removal expression",
+      "requires_annotations": [],
+      "examples_correct": [
+        "வீட்டிலிருந்து சென்றான்",
+        "கூட்டினின்று பறந்தது"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "CASE-006-ELLIP-HUMAN",
+      "category": "case",
+      "name_ta": "ஆறாம் வேற்றுமைத்தொகை உயர்திணை",
+      "name_en": "Human genitive compound",
+      "decision": "NO_INSERT",
+      "preconditions": "Human noun possessive relation",
+      "requires_annotations": [
+        "noun_animacy",
+        "compound_semantics"
+      ],
+      "examples_correct": [
+        "ஆசிரியர் கழகம்",
+        "தம்பி துணி",
+        "மகளிர் கல்லூரி"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "CASE-006-ELLIP-NONHUMAN",
+      "category": "case",
+      "name_ta": "ஆறாம் வேற்றுமைத்தொகை அஃறிணை",
+      "name_en": "Nonhuman possessive compound",
+      "decision": "INSERT_HARD",
+      "preconditions": "Nonhuman noun possessive compound",
+      "requires_annotations": [
+        "noun_animacy",
+        "compound_semantics"
+      ],
+      "examples_correct": [
+        "கிளிக்கூண்டு",
+        "புலிக்குட்டி"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "CASE-006-OVERT",
+      "category": "case",
+      "name_ta": "உடைமைக் குறி",
+      "name_en": "Explicit possessive",
+      "decision": "NO_INSERT",
+      "preconditions": "Possessive -அது/உடைய in grammatical phrase",
+      "requires_annotations": [],
+      "examples_correct": [
+        "எனது புத்தகம்",
+        "என்னுடைய புத்தகம்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "CASE-007-COMPOUND",
+      "category": "case",
+      "name_ta": "ஏழாம் உருபும் பயனும் உடன்தொக்க தொகை",
+      "name_en": "Locative compound",
+      "decision": "INSERT_HARD",
+      "preconditions": "Locative compound with implicit location word",
+      "requires_annotations": [
+        "compound_semantics"
+      ],
+      "examples_correct": [
+        "மலைப்பாம்பு",
+        "சென்னைக் கல்லூரி",
+        "மதுரைக்கோயில்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "CASE-ALL-SCOPE",
+      "category": "case",
+      "name_ta": "வேற்றுமை விதிகள் விதிவிலக்கு",
+      "name_en": "Case scope",
+      "decision": "REVIEW",
+      "preconditions": "Six non-nominative/non-vocative cases have different overt, elliptical, and compound forms",
+      "requires_annotations": [
+        "case_relation"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_CASE",
+        "TVA_ADD",
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "HARD-DEM",
+      "category": "vallinam_add",
+      "name_ta": "Demonstrative adjective",
+      "name_en": "Demonstrative adjective",
+      "decision": "INSERT_HARD",
+      "preconditions": "Confirmed Demonstrative adjective grammatical category; second constituent begins with க/ச/த/ப",
+      "requires_annotations": [
+        "syntactic_relation",
+        "compound_type"
+      ],
+      "examples_correct": [
+        "அந்தப் பையன்",
+        "இந்தக் குழந்தை",
+        "எந்தப் பொருள்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "candidate",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "HARD-LOCADV",
+      "category": "vallinam_add",
+      "name_ta": "Locative/interrogative adverb",
+      "name_en": "Locative/interrogative adverb",
+      "decision": "INSERT_HARD",
+      "preconditions": "Confirmed Locative/interrogative adverb grammatical category; second constituent begins with க/ச/த/ப",
+      "requires_annotations": [
+        "syntactic_relation",
+        "compound_type"
+      ],
+      "examples_correct": [
+        "அங்குக் கண்டான்",
+        "எங்குப் போனான்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "HARD-MANNER",
+      "category": "vallinam_add",
+      "name_ta": "Manner adverb",
+      "name_en": "Manner adverb",
+      "decision": "INSERT_HARD",
+      "preconditions": "Confirmed Manner adverb grammatical category; second constituent begins with க/ச/த/ப",
+      "requires_annotations": [
+        "syntactic_relation",
+        "compound_type"
+      ],
+      "examples_correct": [
+        "அப்படிச் சொல்",
+        "இப்படிப் பேசு",
+        "எப்படிச் சொல்வான்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "candidate",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "HARD-PREFIX",
+      "category": "vallinam_add",
+      "name_ta": "Single-letter demonstrative prefix",
+      "name_en": "Single-letter demonstrative prefix",
+      "decision": "INSERT_HARD",
+      "preconditions": "Confirmed Single-letter demonstrative prefix grammatical category; second constituent begins with க/ச/த/ப",
+      "requires_annotations": [
+        "syntactic_relation",
+        "compound_type"
+      ],
+      "examples_correct": [
+        "அக்காலம்",
+        "எத்திசை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "HARD-ONELETTER",
+      "category": "vallinam_add",
+      "name_ta": "One-letter lexical stems",
+      "name_en": "One-letter lexical stems",
+      "decision": "INSERT_HARD",
+      "preconditions": "Confirmed One-letter lexical stems grammatical category; second constituent begins with க/ச/த/ப",
+      "requires_annotations": [
+        "syntactic_relation",
+        "compound_type"
+      ],
+      "examples_correct": [
+        "கைக்குழந்தை",
+        "தீப்பெட்டி",
+        "பூப்பல்லக்கு",
+        "மைப்பேனா"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "HARD-INFINITIVE",
+      "category": "vallinam_add",
+      "name_ta": "A-final infinitive",
+      "name_en": "A-final infinitive",
+      "decision": "INSERT_HARD",
+      "preconditions": "Confirmed A-final infinitive grammatical category; second constituent begins with க/ச/த/ப",
+      "requires_annotations": [
+        "syntactic_relation",
+        "compound_type"
+      ],
+      "examples_correct": [
+        "வரச் சொன்னான்",
+        "உண்ணப் போனான்",
+        "உட்காரப் பார்த்தான்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "candidate",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "HARD-PART-I",
+      "category": "vallinam_add",
+      "name_ta": "I-final verbal participle",
+      "name_en": "I-final verbal participle",
+      "decision": "INSERT_HARD",
+      "preconditions": "Confirmed I-final verbal participle grammatical category; second constituent begins with க/ச/த/ப",
+      "requires_annotations": [
+        "syntactic_relation",
+        "compound_type"
+      ],
+      "examples_correct": [
+        "ஓடிப் போனான்",
+        "தேடிப் பார்த்தான்",
+        "கூறிச் சென்றான்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "HARD-PART-Y",
+      "category": "vallinam_add",
+      "name_ta": "Y-final verbal participle",
+      "name_en": "Y-final verbal participle",
+      "decision": "INSERT_HARD",
+      "preconditions": "Confirmed Y-final verbal participle grammatical category; second constituent begins with க/ச/த/ப",
+      "requires_annotations": [
+        "syntactic_relation",
+        "compound_type"
+      ],
+      "examples_correct": [
+        "போய்ப் பார்த்தான்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "HARD-PART-HARDU",
+      "category": "vallinam_add",
+      "name_ta": "Vanthodar short-u participle",
+      "name_en": "Vanthodar short-u participle",
+      "decision": "INSERT_HARD",
+      "preconditions": "Confirmed Vanthodar short-u participle grammatical category; second constituent begins with க/ச/த/ப",
+      "requires_annotations": [
+        "syntactic_relation",
+        "compound_type"
+      ],
+      "examples_correct": [
+        "கற்றுக் கொடுத்தான்",
+        "படித்துக் கொடுத்தான்",
+        "வைத்துப் போனான்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "HARD-PART-AG",
+      "category": "vallinam_add",
+      "name_ta": "ஆக/ஆய்/என adverbial participles",
+      "name_en": "ஆக/ஆய்/என adverbial participles",
+      "decision": "INSERT_HARD",
+      "preconditions": "Confirmed ஆக/ஆய்/என adverbial participles grammatical category; second constituent begins with க/ச/த/ப",
+      "requires_annotations": [
+        "syntactic_relation",
+        "compound_type"
+      ],
+      "examples_correct": [
+        "நன்றாகச் சொன்னான்",
+        "வருவதாய்க் கூறினார்",
+        "வா எனக் கூறினார்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "HARD-PART-QUALITY",
+      "category": "vallinam_add",
+      "name_ta": "Qualitative adverbs",
+      "name_en": "Qualitative adverbs",
+      "decision": "INSERT_HARD",
+      "preconditions": "Confirmed Qualitative adverbs grammatical category; second constituent begins with க/ச/த/ப",
+      "requires_annotations": [
+        "syntactic_relation",
+        "compound_type"
+      ],
+      "examples_correct": [
+        "மெல்லப் பேசினார்",
+        "வேகமாகக் கூறினார்",
+        "நிறையப் பேசுவான்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "HARD-NEG-ELLIP",
+      "category": "vallinam_add",
+      "name_ta": "Clipped negative relative participles",
+      "name_en": "Clipped negative relative participles",
+      "decision": "INSERT_HARD",
+      "preconditions": "Confirmed Clipped negative relative participles grammatical category; second constituent begins with க/ச/த/ப",
+      "requires_annotations": [
+        "syntactic_relation",
+        "compound_type"
+      ],
+      "examples_correct": [
+        "செல்லாக் காசு",
+        "ஓடாக் குதிரை",
+        "தீராச் சிக்கல்",
+        "காணாப் பொருள்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "HARD-QUALITY",
+      "category": "vallinam_add",
+      "name_ta": "Quality compounds",
+      "name_en": "Quality compounds",
+      "decision": "INSERT_HARD",
+      "preconditions": "Confirmed Quality compounds grammatical category; second constituent begins with க/ச/த/ப",
+      "requires_annotations": [
+        "syntactic_relation",
+        "compound_type"
+      ],
+      "examples_correct": [
+        "சிவப்புத்துணி",
+        "புதுமைப்பெண்",
+        "வெள்ளைத்தாள்",
+        "மெய்ப்பொருள்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "HARD-SPEC-GEN",
+      "category": "vallinam_add",
+      "name_ta": "Specific+generic noun compound",
+      "name_en": "Specific+generic noun compound",
+      "decision": "INSERT_HARD",
+      "preconditions": "Confirmed Specific+generic noun compound grammatical category; second constituent begins with க/ச/த/ப",
+      "requires_annotations": [
+        "syntactic_relation",
+        "compound_type"
+      ],
+      "examples_correct": [
+        "மல்லிகைப்பூ"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "HARD-SIMILE",
+      "category": "vallinam_add",
+      "name_ta": "Simile/metaphor compounds",
+      "name_en": "Simile/metaphor compounds",
+      "decision": "INSERT_HARD",
+      "preconditions": "Confirmed Simile/metaphor compounds grammatical category; second constituent begins with க/ச/த/ப",
+      "requires_annotations": [
+        "syntactic_relation",
+        "compound_type"
+      ],
+      "examples_correct": [
+        "தாமரைப்பாதம்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "HARD-HARDU-NOUN",
+      "category": "vallinam_add",
+      "name_ta": "Vanthodar short-u noun compounds",
+      "name_en": "Vanthodar short-u noun compounds",
+      "decision": "INSERT_HARD",
+      "preconditions": "Confirmed Vanthodar short-u noun compounds grammatical category; second constituent begins with க/ச/த/ப",
+      "requires_annotations": [
+        "syntactic_relation",
+        "compound_type"
+      ],
+      "examples_correct": [
+        "பாக்குத்தோப்பு",
+        "எட்டுத்தொகை",
+        "பத்துப்பாட்டு"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "HARD-SOFTU-NOUN",
+      "category": "vallinam_add",
+      "name_ta": "Selected menthodar short-u noun compounds",
+      "name_en": "Selected menthodar short-u noun compounds",
+      "decision": "INSERT_HARD",
+      "preconditions": "Confirmed Selected menthodar short-u noun compounds grammatical category; second constituent begins with க/ச/த/ப",
+      "requires_annotations": [
+        "syntactic_relation",
+        "compound_type"
+      ],
+      "examples_correct": [
+        "குரங்குக் குட்டி",
+        "மருந்துச் சீட்டு",
+        "பாம்புத்தோல்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_ADD"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-PRON",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "Pronouns",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: Pronouns; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "அது சிறிது",
+        "இது பெரியது",
+        "எது பெரியது",
+        "அவை போயின",
+        "இவை சிறந்தவை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-DEMONSTRATIVE-QUANT",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "Quantifiers",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: Quantifiers; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "அத்தனை செடிகள்",
+        "இத்தனை பொருட்கள்",
+        "எத்தனை பழங்கள்",
+        "அவ்வளவு பேர்",
+        "எவ்வாறு பேசினான்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-TIME-ADV",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "Time and reporting adverbs",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: Time and reporting adverbs; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "அன்று பார்த்தான்",
+        "இன்று சென்றான்",
+        "என்று சொன்னான்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-NUM",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "Ordinary cardinal numeral",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: Ordinary cardinal numeral; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "ஒன்று போதும்",
+        "இரண்டு தடவை",
+        "மூன்று குழந்தைகள்",
+        "நான்கு கால்கள்",
+        "ஐந்து சிறுவர்கள்",
+        "நூறு பழங்கள்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-NUM-ADJ",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "ஒரு/இரு/அறு/எழு adjectival numbers",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: ஒரு/இரு/அறு/எழு adjectival numbers; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "ஒரு புத்தகம்",
+        "இரு தடவை",
+        "அறுபடைவீடு",
+        "எழுகடல்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-SUBJECT",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "Subject-predicate",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: Subject-predicate; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "கண்ணகி பேசினாள்",
+        "கோழி கூவியது",
+        "யெகோவா காப்பார்",
+        "கர்த்தர் சொன்னார்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-VOCATIVE",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "Vocative",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: Vocative; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "மகனே கேள்",
+        "அண்ணா பாருங்கள்",
+        "அரசே பார்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-IMPERATIVE",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "Imperative/optative boundary",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: Imperative/optative boundary; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "வா கண்ணா",
+        "படி பாடத்தை",
+        "வாழ்க தலைவா"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-REL-POS",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "Positive relative participle",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: Positive relative participle; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "வந்த பையன்",
+        "கேட்ட கேள்வி",
+        "ஓடிய குதிரை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-ADJECTIVE",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "Qualifying adjective",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: Qualifying adjective; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "நல்ல பையன்",
+        "பெரிய தெரு",
+        "புதிய சிந்தனை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-REL-NEG",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "Unclipped negative relative participle",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: Unclipped negative relative participle; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "செல்லாத காசு",
+        "காணாத கண்கள்",
+        "ஓடாத குதிரை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-PART-SOFTU",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "Menthodar verbal participle",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: Menthodar verbal participle; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "கண்டு பேசினார்",
+        "கொண்டு போனான்",
+        "வந்து சென்றான்",
+        "தின்று பார்த்தான்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-PART-MIDU",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "Idaithodar verbal participle",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: Idaithodar verbal participle; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "செய்து தந்தான்",
+        "கொய்து கொடுத்தாள்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-PART-QUALU",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "U-final qualitative adverb",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: U-final qualitative adverb; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "நன்கு பேசினான்",
+        "நன்று பேசினாய்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-PART-PADI",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "படி/ஆறு adverbs",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: படி/ஆறு adverbs; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "சொன்னபடி செய்தான்",
+        "கண்டவாறு சொன்னான்",
+        "வருமாறு கூறினான்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-VERBCOMP",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "வினைத்தொகை",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: வினைத்தொகை; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "சுடுகாடு",
+        "நடுகல்",
+        "சுடுசோறு",
+        "விடுகதை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-UMMAI",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "உம்மைத்தொகை",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: உம்மைத்தொகை; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "இரவு பகல்",
+        "யானை குதிரை",
+        "நன்மை தீமை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-QUESTION",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "Interrogative ஆ/ஓ",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: Interrogative ஆ/ஓ; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "அவனா தந்தான்",
+        "அவளோ கொடுத்தாள்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-PALA-SILA",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "பல/சில",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: பல/சில; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "பல பொருள்",
+        "சில பூக்கள்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-GEN",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "Possessive explicit",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: Possessive explicit; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "எனது புத்தகம்",
+        "என்னுடைய புத்தகம்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-SANSKRIT",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "Selected learned loan compounds",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: Selected learned loan compounds; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "ஆதிபகவன்",
+        "தேச பக்தி"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-SUFFIX-PL",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "Plural கள் suffix to certain short-u stems",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: Plural கள் suffix to certain short-u stems; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "எழுத்துகள்",
+        "வாக்குகள்",
+        "வழக்குகள்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-SUFFIX-NOM",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "Nominalizing தல் suffix",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: Nominalizing தல் suffix; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "ஆக்குதல்",
+        "வாழ்த்துதல்",
+        "கூப்புதல்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_NO"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-LEXICAL-AI",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "Lexical ஐ is not accusative",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: Lexical ஐ is not accusative; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "அறிக்கை செய்தான்",
+        "கொலை செய்தான்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-PUNCT",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "Punctuation/quote boundaries",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: Punctuation/quote boundaries; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "அவன் சொன்னான்: “பார்.”"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "NO-NAMES",
+      "category": "vallinam_no",
+      "name_ta": "வல்லினம் மிகா இடம்",
+      "name_en": "Proper names and names of deity",
+      "decision": "NO_INSERT",
+      "preconditions": "Protected context: Proper names and names of deity; must classify grammatical relation, not suffix alone",
+      "requires_annotations": [
+        "syntactic_relation"
+      ],
+      "examples_correct": [
+        "யெகோவா காப்பார்",
+        "கர்த்தர் சொன்னார்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": "Bible examples reflect configured house-style testing, not quotations of source text."
+    },
+    {
+      "id": "LEX-QUAL-LOSS",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — ஈறுபோதல்",
+      "name_en": "மை drop",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for ஈறுபோதல்; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "நன்மை + நூல் → நன்னூல்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_BOOK"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-QUAL-LENGTH",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — ஆதிநீடல்",
+      "name_en": "Initial vowel lengthening",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for ஆதிநீடல்; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "பசுமை + இலை → பாசிலை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_BOOK"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-QUAL-VOW",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — அடியகரம் ஐயாதல்",
+      "name_en": "Initial a to ai",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for அடியகரம் ஐயாதல்; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "பசுமை + தமிழ் → பைந்தமிழ்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_BOOK"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-QUAL-DOUBLE",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — தன்னொற்று இரட்டல்",
+      "name_en": "Consonant doubling in quality compound",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for தன்னொற்று இரட்டல்; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "வெறுமை + இலை → வெற்றிலை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_BOOK"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-QUAL-UY",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — இடைஉகரம் இய்யாதல்",
+      "name_en": "Medial உ to இ",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for இடைஉகரம் இய்யாதல்; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_BOOK"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-QUAL-MEI",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — முன்னின்ற மெய் திரிதல்",
+      "name_en": "Previous consonant transformation",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for முன்னின்ற மெய் திரிதல்; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_BOOK"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-QUAL-NASAL",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — இனமிகல்",
+      "name_en": "Nasal increment",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for இனமிகல்; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_BOOK"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-QUAL-FLEX",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — இணையவும்பெறும்",
+      "name_en": "Alternative derivations",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for இணையவும்பெறும்; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_BOOK"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-DIR-NORTH",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — வடக்கு",
+      "name_en": "North direction compounds",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for வடக்கு; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "வடக்கு + கிழக்கு → வடகிழக்கு",
+        "வடக்கு + நாடு → வடநாடு"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_DIR"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-DIR-SOUTH",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — தெற்கு",
+      "name_en": "South direction compounds",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for தெற்கு; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "தெற்கு + மேற்கு → தென்மேற்கு",
+        "தெற்கு + நாடு → தென்னாடு"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_DIR"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-DIR-WEST",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — மேற்கு",
+      "name_en": "West direction compounds",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for மேற்கு; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "மேற்கு + நாடு → மேல்நாடு"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_DIR"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-DIR-EAST",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — கிழக்கு",
+      "name_en": "East direction compounds",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for கிழக்கு; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "கிழக்கு + நாடு → கீழ்நாடு"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_DIR"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-DIR-ALT",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — திசைப்பெயர் விகற்பம்",
+      "name_en": "Untransformed directional alternatives",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for திசைப்பெயர் விகற்பம்; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "வடக்கு + திசை → வடக்குத் திசை",
+        "மேற்கு + திசை → மேற்குத் திசை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_DIR"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-NUM-1",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — ஒன்று",
+      "name_en": "One compounds",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for ஒன்று; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "ஒன்று + மாடு → ஒரு மாடு",
+        "ஒன்று + ஆடு → ஓராடு"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_NUM1"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-NUM-2",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — இரண்டு",
+      "name_en": "Two compounds",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for இரண்டு; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "இரண்டு + கால் → இருகால்",
+        "இரண்டு + ஆயிரம் → ஈராயிரம்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_NUM2"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-NUM-3",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — மூன்று",
+      "name_en": "Three compounds",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for மூன்று; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "மூன்று + தமிழ் → முத்தமிழ்",
+        "மூன்று + உலகு → மூவுலகு"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_NUM2"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-NUM-4",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — நான்கு",
+      "name_en": "Four compounds",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for நான்கு; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "நான்கு + வகை → நால்வகை",
+        "நான்கு + படை → நாற்படை",
+        "நான்கு + மணி → நான்மணி"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_NUM2"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-NUM-5",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — ஐந்து",
+      "name_en": "Five compounds",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for ஐந்து; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "ஐந்து + பொறி → ஐம்பொறி"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_NUM1"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-NUM-6",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — ஆறு",
+      "name_en": "Six compounds",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for ஆறு; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "ஆறு + படைவீடு → அறுபடைவீடு"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_NUM1"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-NUM-7",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — ஏழு",
+      "name_en": "Seven compounds",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for ஏழு; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "ஏழு + பிறப்பு → எழுபிறப்பு"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_NUM1"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-NUM-8",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — எட்டு",
+      "name_en": "Eight compounds",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for எட்டு; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "எட்டு + குணம் → எண்குணம்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_NUM1"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-NUM-9",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — ஒன்பது",
+      "name_en": "Nine compounds",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for ஒன்பது; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "ஒன்பது + ஆயிரம் → ஒன்பதினாயிரம்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_NUM3"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-NUM-10",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — பத்து",
+      "name_en": "Ten compounds",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for பத்து; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "பத்து + ஒன்று → பதினொன்று",
+        "பத்து + இரண்டு → பன்னிரண்டு",
+        "பத்து + பத்து → பதிற்றுப்பத்து"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_NUM3"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-NUM-TENS",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — பத்துகளின் புணர்ச்சி",
+      "name_en": "Tens",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for பத்துகளின் புணர்ச்சி; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "இரண்டு + பத்து → இருபது",
+        "மூன்று + பத்து → முப்பது",
+        "ஐந்து + பத்து → ஐம்பது"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_NUM3"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-NUM-REDUP",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — எண்ணுப்பெயர் இரட்டிப்பு",
+      "name_en": "Numeric reduplication",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for எண்ணுப்பெயர் இரட்டிப்பு; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "ஒன்று + ஒன்று → ஒவ்வொன்று"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_NUM3"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-TREE-MA",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — மரப்பெயர் மா",
+      "name_en": "Mango compounds",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for மரப்பெயர் மா; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "மா + காய் → மாங்காய்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_BOOK"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-TREE-PALAA",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — மரப்பெயர் பலா",
+      "name_en": "Jackfruit compounds",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for மரப்பெயர் பலா; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "பலா + காய் → பலாக்காய்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_BOOK"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "LEX-TREE-THENGU",
+      "category": "lexical",
+      "name_ta": "சிறப்புப் புணர்ச்சி — தெங்கு + காய்",
+      "name_en": "Coconut compound",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "Established lexical derivation for தெங்கு + காய்; never generate unknown forms",
+      "requires_annotations": [
+        "lemma_id",
+        "approved_dictionary"
+      ],
+      "examples_correct": [
+        "தெங்கு + காய் → தேங்காய்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_DIR"
+      ],
+      "notes": "Listed as an inventory item, not an open-ended suffix replacement."
+    },
+    {
+      "id": "SARI-AN",
+      "category": "sariyai",
+      "name_ta": "சாரியை — அன்",
+      "name_en": "Connecting morph அன்",
+      "decision": "REVIEW",
+      "preconditions": "Classify linking element அன்; recognize only when morphology supports",
+      "requires_annotations": [
+        "stem_morphology",
+        "suffix",
+        "grammar_model"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_SARI"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SARI-AAN",
+      "category": "sariyai",
+      "name_ta": "சாரியை — ஆன்",
+      "name_en": "Connecting morph ஆன்",
+      "decision": "REVIEW",
+      "preconditions": "Classify linking element ஆன்; recognize only when morphology supports",
+      "requires_annotations": [
+        "stem_morphology",
+        "suffix",
+        "grammar_model"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_SARI"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SARI-IN",
+      "category": "sariyai",
+      "name_ta": "சாரியை — இன்",
+      "name_en": "Connecting morph இன்",
+      "decision": "REVIEW",
+      "preconditions": "Classify linking element இன்; recognize only when morphology supports",
+      "requires_annotations": [
+        "stem_morphology",
+        "suffix",
+        "grammar_model"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_SARI"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SARI-AL",
+      "category": "sariyai",
+      "name_ta": "சாரியை — அல்",
+      "name_en": "Connecting morph அல்",
+      "decision": "REVIEW",
+      "preconditions": "Classify linking element அல்; recognize only when morphology supports",
+      "requires_annotations": [
+        "stem_morphology",
+        "suffix",
+        "grammar_model"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_SARI"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SARI-ATTRU",
+      "category": "sariyai",
+      "name_ta": "சாரியை — அற்று",
+      "name_en": "Connecting morph அற்று",
+      "decision": "REVIEW",
+      "preconditions": "Classify linking element அற்று; recognize only when morphology supports",
+      "requires_annotations": [
+        "stem_morphology",
+        "suffix",
+        "grammar_model"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_SARI"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SARI-ITTRU",
+      "category": "sariyai",
+      "name_ta": "சாரியை — இற்று",
+      "name_en": "Connecting morph இற்று",
+      "decision": "REVIEW",
+      "preconditions": "Classify linking element இற்று; recognize only when morphology supports",
+      "requires_annotations": [
+        "stem_morphology",
+        "suffix",
+        "grammar_model"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_SARI"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SARI-ATTHU",
+      "category": "sariyai",
+      "name_ta": "சாரியை — அத்து",
+      "name_en": "Connecting morph அத்து",
+      "decision": "REVIEW",
+      "preconditions": "Classify linking element அத்து; recognize only when morphology supports",
+      "requires_annotations": [
+        "stem_morphology",
+        "suffix",
+        "grammar_model"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_SARI"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SARI-AM",
+      "category": "sariyai",
+      "name_ta": "சாரியை — அம்",
+      "name_en": "Connecting morph அம்",
+      "decision": "REVIEW",
+      "preconditions": "Classify linking element அம்; recognize only when morphology supports",
+      "requires_annotations": [
+        "stem_morphology",
+        "suffix",
+        "grammar_model"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_SARI"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SARI-THAM",
+      "category": "sariyai",
+      "name_ta": "சாரியை — தம்",
+      "name_en": "Connecting morph தம்",
+      "decision": "REVIEW",
+      "preconditions": "Classify linking element தம்; recognize only when morphology supports",
+      "requires_annotations": [
+        "stem_morphology",
+        "suffix",
+        "grammar_model"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_SARI"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SARI-NAM",
+      "category": "sariyai",
+      "name_ta": "சாரியை — நம்",
+      "name_en": "Connecting morph நம்",
+      "decision": "REVIEW",
+      "preconditions": "Classify linking element நம்; recognize only when morphology supports",
+      "requires_annotations": [
+        "stem_morphology",
+        "suffix",
+        "grammar_model"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_SARI"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SARI-NUM",
+      "category": "sariyai",
+      "name_ta": "சாரியை — நும்",
+      "name_en": "Connecting morph நும்",
+      "decision": "REVIEW",
+      "preconditions": "Classify linking element நும்; recognize only when morphology supports",
+      "requires_annotations": [
+        "stem_morphology",
+        "suffix",
+        "grammar_model"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_SARI"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SARI-E",
+      "category": "sariyai",
+      "name_ta": "சாரியை — ஏ",
+      "name_en": "Connecting morph ஏ",
+      "decision": "REVIEW",
+      "preconditions": "Classify linking element ஏ; recognize only when morphology supports",
+      "requires_annotations": [
+        "stem_morphology",
+        "suffix",
+        "grammar_model"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_SARI"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SARI-A",
+      "category": "sariyai",
+      "name_ta": "சாரியை — அ",
+      "name_en": "Connecting morph அ",
+      "decision": "REVIEW",
+      "preconditions": "Classify linking element அ; recognize only when morphology supports",
+      "requires_annotations": [
+        "stem_morphology",
+        "suffix",
+        "grammar_model"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_SARI"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SARI-U",
+      "category": "sariyai",
+      "name_ta": "சாரியை — உ",
+      "name_en": "Connecting morph உ",
+      "decision": "REVIEW",
+      "preconditions": "Classify linking element உ; recognize only when morphology supports",
+      "requires_annotations": [
+        "stem_morphology",
+        "suffix",
+        "grammar_model"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_SARI"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SARI-AI",
+      "category": "sariyai",
+      "name_ta": "சாரியை — ஐ",
+      "name_en": "Connecting morph ஐ",
+      "decision": "REVIEW",
+      "preconditions": "Classify linking element ஐ; recognize only when morphology supports",
+      "requires_annotations": [
+        "stem_morphology",
+        "suffix",
+        "grammar_model"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_SARI"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SARI-KU",
+      "category": "sariyai",
+      "name_ta": "சாரியை — கு",
+      "name_en": "Connecting morph கு",
+      "decision": "REVIEW",
+      "preconditions": "Classify linking element கு; recognize only when morphology supports",
+      "requires_annotations": [
+        "stem_morphology",
+        "suffix",
+        "grammar_model"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_SARI"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SARI-N",
+      "category": "sariyai",
+      "name_ta": "சாரியை — ன்",
+      "name_en": "Connecting morph ன்",
+      "decision": "REVIEW",
+      "preconditions": "Classify linking element ன்; recognize only when morphology supports",
+      "requires_annotations": [
+        "stem_morphology",
+        "suffix",
+        "grammar_model"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_SARI"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SARI-ATTHU-EX",
+      "category": "sariyai",
+      "name_ta": "அத்துச் சாரியை",
+      "name_en": "Aththu in case inflection",
+      "decision": "TRANSFORM_COMPOUND",
+      "preconditions": "Lexeme மரம் with accusative marker ஐ",
+      "requires_annotations": [
+        "stem_morphology",
+        "case_marker"
+      ],
+      "examples_correct": [
+        "மரம் + ஐ → மரத்தை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_SARI"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SARI-IN-EX",
+      "category": "sariyai",
+      "name_ta": "இன் சாரியை",
+      "name_en": "In increment",
+      "decision": "REVIEW",
+      "preconditions": "Recognized paradigm insertion before case suffixes",
+      "requires_annotations": [
+        "stem_morphology"
+      ],
+      "examples_correct": [
+        "பூவிற்கு",
+        "பூவுக்கு"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_SARI"
+      ],
+      "notes": "Do not force one of optional accepted forms."
+    },
+    {
+      "id": "SAFE-001",
+      "category": "safety",
+      "name_ta": "பாதுகாப்பு விதி",
+      "name_en": "Unicode NFC",
+      "decision": "PROTECT",
+      "preconditions": "Normalize input for analysis; preserve original bytes for output",
+      "requires_annotations": [],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "engineering",
+      "tier": "block",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SAFE-002",
+      "category": "safety",
+      "name_ta": "பாதுகாப்பு விதி",
+      "name_en": "Not a whitespace-only task",
+      "decision": "PROTECT",
+      "preconditions": "Never infer grammar from last/first letters alone",
+      "requires_annotations": [],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "engineering",
+      "tier": "block",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SAFE-003",
+      "category": "safety",
+      "name_ta": "பாதுகாப்பு விதி",
+      "name_en": "Preserve Scripture",
+      "decision": "PROTECT",
+      "preconditions": "No silent changes to USFM Bible text",
+      "requires_annotations": [],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "house",
+      "tier": "block",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SAFE-004",
+      "category": "safety",
+      "name_ta": "பாதுகாப்பு விதி",
+      "name_en": "Protect USFM markers",
+      "decision": "PROTECT",
+      "preconditions": "Treat USFM verse/book/chapter markers, footnotes, xrefs, quotes and punctuation as protected boundaries",
+      "requires_annotations": [],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "engineering",
+      "tier": "block",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SAFE-005",
+      "category": "safety",
+      "name_ta": "பாதுகாப்பு விதி",
+      "name_en": "Lexical ஐ",
+      "decision": "PROTECT",
+      "preconditions": "Distinguish root-final ஐ from case marker ஐ",
+      "requires_annotations": [],
+      "examples_correct": [
+        "அறிக்கை செய்தான்",
+        "கொலை செய்தான்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "engineering",
+      "tier": "block",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SAFE-006",
+      "category": "safety",
+      "name_ta": "பாதுகாப்பு விதி",
+      "name_en": "Project exception",
+      "decision": "PROTECT",
+      "preconditions": "No added த் before தேவன்-family terms in Bible IRV house style",
+      "requires_annotations": [],
+      "examples_correct": [
+        "அவனை தேவசாயலாக"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "house",
+      "tier": "block",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SAFE-007",
+      "category": "safety",
+      "name_ta": "பாதுகாப்பு விதி",
+      "name_en": "Proper divine name spelling",
+      "decision": "PROTECT",
+      "preconditions": "Canonical configured name spelling யெகோவா; not யெஹோவா",
+      "requires_annotations": [],
+      "examples_correct": [
+        "யெகோவா"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "house",
+      "tier": "block",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SAFE-008",
+      "category": "safety",
+      "name_ta": "பாதுகாப்பு விதி",
+      "name_en": "No forced emendation",
+      "decision": "PROTECT",
+      "preconditions": "Human must approve edits to authoritative target",
+      "requires_annotations": [],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "house",
+      "tier": "block",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SAFE-009",
+      "category": "safety",
+      "name_ta": "பாதுகாப்பு விதி",
+      "name_en": "Rule conflict",
+      "decision": "PROTECT",
+      "preconditions": "Specific protection > explicit house override > verified grammatical rule > optional lexical rule",
+      "requires_annotations": [],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "engineering",
+      "tier": "block",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SAFE-010",
+      "category": "safety",
+      "name_ta": "பாதுகாப்பு விதி",
+      "name_en": "Open findings",
+      "decision": "PROTECT",
+      "preconditions": "Unknown syntax or low confidence creates review-only finding",
+      "requires_annotations": [],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "engineering",
+      "tier": "block",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SAFE-011",
+      "category": "safety",
+      "name_ta": "பாதுகாப்பு விதி",
+      "name_en": "No forced word join",
+      "decision": "PROTECT",
+      "preconditions": "Do not rewrite independent word spacing from classical compounds",
+      "requires_annotations": [],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "engineering",
+      "tier": "block",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SAFE-012",
+      "category": "safety",
+      "name_ta": "பாதுகாப்பு விதி",
+      "name_en": "Morphology tokens",
+      "decision": "PROTECT",
+      "preconditions": "Do not treat postpositions/suffixes as lexical independent words without analysis",
+      "requires_annotations": [],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "engineering",
+      "tier": "block",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SAFE-013",
+      "category": "safety",
+      "name_ta": "பாதுகாப்பு விதி",
+      "name_en": "Source separation",
+      "decision": "PROTECT",
+      "preconditions": "House rules are separate from grammatical facts",
+      "requires_annotations": [],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "engineering",
+      "tier": "block",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SAFE-014",
+      "category": "safety",
+      "name_ta": "பாதுகாப்பு விதி",
+      "name_en": "Idempotence",
+      "decision": "PROTECT",
+      "preconditions": "Repeated check on unchanged text emits same findings; applying approved fix is idempotent",
+      "requires_annotations": [],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "engineering",
+      "tier": "block",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SAFE-015",
+      "category": "safety",
+      "name_ta": "பாதுகாப்பு விதி",
+      "name_en": "Audit trail",
+      "decision": "PROTECT",
+      "preconditions": "Log context, exact text spans, rule id, evidence, reviewer and reason, not just corrected form",
+      "requires_annotations": [],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "engineering",
+      "tier": "block",
+      "source_ids": [
+        "TVA_CLASS"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SPECIAL-MA-QUALITY",
+      "category": "lexical",
+      "name_ta": "மா உரிச்சொல்",
+      "name_en": "Maa as intensifier differs from tree noun",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "மா is an uriccol (intensifier), not tree noun; takes distinctive ய் derivation",
+      "requires_annotations": [
+        "lexical_sense"
+      ],
+      "examples_correct": [
+        "மா + இரு → மாயிரு"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical",
+      "tier": "review",
+      "source_ids": [
+        "TVA_PURAN"
+      ],
+      "notes": "Contrast noun மா + இலை → மாவிலை."
+    },
+    {
+      "id": "SPECIAL-MA-NOUN",
+      "category": "lexical",
+      "name_ta": "மா பெயர்ச்சொல்",
+      "name_en": "Maa noun takes ordinary வ் glide",
+      "decision": "LEXICON_REVIEW",
+      "preconditions": "மா means mango tree or animal; vowel onset",
+      "requires_annotations": [
+        "lexical_sense"
+      ],
+      "examples_correct": [
+        "மா + இலை → மாவிலை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_PURAN"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SPECIAL-PALA-SILA",
+      "category": "lexical",
+      "name_ta": "பல/சில இரட்டிப்பு",
+      "name_en": "Several accepted reduplication forms",
+      "decision": "ALLOW_VARIANTS",
+      "preconditions": "Reduplicated பல+பல or சில+சில",
+      "requires_annotations": [
+        "lexical_paradigm"
+      ],
+      "examples_correct": [
+        "பலபல",
+        "பலப்பல",
+        "சிலசில",
+        "சிலச்சில"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_AKAR"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SPECIAL-MUTTRU-ODU",
+      "category": "short_u",
+      "name_ta": "ஒடு உருபு",
+      "name_en": "Instrumental/comitative ஒடு suffix",
+      "decision": "NO_INSERT",
+      "preconditions": "Comitative suffix ஒடு followed by predicate",
+      "requires_annotations": [
+        "case_marker"
+      ],
+      "examples_correct": [
+        "இராமனொடு சென்றான்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_UKAR"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SPECIAL-SARI-PROTECT",
+      "category": "sariyai",
+      "name_ta": "சாரியைகள் இடைச்சொற்கள்",
+      "name_en": "Sariyai is not the same as a lexical final ன்",
+      "decision": "PROTECT",
+      "preconditions": "Do not apply lexical final ன் → ற் change to a grammatical சாரியை",
+      "requires_annotations": [
+        "morphological_segmentation"
+      ],
+      "examples_correct": [
+        "ஒன்றன் கூட்டம்",
+        "வண்டின்கால்"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "block",
+      "source_ids": [
+        "TVA_PURAN"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SPECIAL-ALLAM",
+      "category": "sariyai",
+      "name_ta": "எல்லாம் எல்லாரும் எல்லீரும்",
+      "name_en": "Special quantifier case forms",
+      "decision": "REVIEW",
+      "preconditions": "Quantifier/pronominal paradigms use special சாரியை placement",
+      "requires_annotations": [
+        "pronoun_paradigm"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical_and_modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_URUPU2"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SPECIAL-PRON-CASE",
+      "category": "sariyai",
+      "name_ta": "தான் தாம் நாம்",
+      "name_en": "Pronoun case inflection",
+      "decision": "REVIEW",
+      "preconditions": "Pronouns change stems and linkers before case suffixes",
+      "requires_annotations": [
+        "pronoun_paradigm"
+      ],
+      "examples_correct": [
+        "தாம் + ஐ → தம்மை",
+        "நாம் + ஐ → நம்மை"
+      ],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_URUPU2"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SPECIAL-AH",
+      "category": "sariyai",
+      "name_ta": "அஃது சுட்டுப்பெயர்",
+      "name_en": "Aytham-containing pronoun case forms",
+      "decision": "REVIEW",
+      "preconditions": "Special case inflection of அஃது and related demonstratives",
+      "requires_annotations": [
+        "pronoun_paradigm"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "classical",
+      "tier": "review",
+      "source_ids": [
+        "TVA_URUPU2"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "SPECIAL-IRU",
+      "category": "sariyai",
+      "name_ta": "ஆ மா கோ ஒரெழுத்துப் பெயர்கள்",
+      "name_en": "One-letter stems in case inflection",
+      "decision": "REVIEW",
+      "preconditions": "Case endings of special single-letter nouns",
+      "requires_annotations": [
+        "stem_morphology"
+      ],
+      "examples_correct": [],
+      "examples_incorrect": [],
+      "acceptable_alternatives": [],
+      "layer": "modern",
+      "tier": "review",
+      "source_ids": [
+        "TVA_URUPU2"
+      ],
+      "notes": ""
+    }
+  ]
+}
