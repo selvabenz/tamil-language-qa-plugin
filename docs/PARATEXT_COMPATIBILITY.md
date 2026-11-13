@@ -7,7 +7,7 @@
 | Host | Paratext 9.5.110.1 |
 | Platform | Windows |
 | Operation | Offline scope scanning, verse-by-verse review, and explicit safe application |
-| Current compatibility status | Not built or tested |
+| Current compatibility status | Compiles against installed SDK 2.0.100; installed and host context menu discovered; full host acceptance pending |
 
 Paratext's official download page lists the requested version. Its plugin documentation describes Plugin API 2.0 introduced with Paratext 9.2, and the linked demo repository provides integration examples. These establish research starting points; they do not prove this project's compatibility with the target build.
 

@@ -6,11 +6,12 @@ using Paratext.PluginInterfaces;
 
 namespace TamilSandhi.Plugin
 {
-    internal sealed class SandhiAnnotations : IPluginAnnotationSource
+    internal sealed class SandhiAnnotations : IPluginAnnotationSource, IDisposable
     {
         private readonly IProject project;
         public SandhiAnnotations(IProject selected){project=selected;ReviewControl.ResultsChanged+=OnChanged;project.ProjectDeleted+=Unsubscribe;}
         private void Unsubscribe(){ReviewControl.ResultsChanged-=OnChanged;project.ProjectDeleted-=Unsubscribe;}
+        public void Dispose(){Unsubscribe();}
         public event EventHandler AnnotationsChanged;
         private void OnChanged(object sender,EventArgs args){var handler=AnnotationsChanged;if(handler!=null)handler(this,EventArgs.Empty);}
         public bool MaintainSelectionsOnWordBoundaries {get{return false;}}

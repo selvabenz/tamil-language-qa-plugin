@@ -23,6 +23,7 @@ namespace TamilSandhi
             var output = new List<Finding>();
             foreach (var segment in Usfm.Segments(snapshot.Text))
             {
+                if(scope!=null&&!scope.Any(s=>segment.Start<s.End&&segment.End>s.Start))continue;
                 var words = Words.Matches(snapshot.Text.Substring(segment.Start, segment.Length)).Cast<Match>().ToArray();
                 for (int i=0; i+1 < words.Length; i++)
                 {
@@ -37,9 +38,10 @@ namespace TamilSandhi
                     string hard=b.Substring(0,1)+"்";
                     if (a.EndsWith(hard, StringComparison.Ordinal)) continue;
                     string rule=null; var tags=new Dictionary<string,string>();
-                    BoundaryEvidence supplied=annotations == null ? null : annotations.FirstOrDefault(e => e.LeftStart==start);
-                    bool ambiguous=supplied != null && supplied.Ambiguous;
-                    if (supplied != null && supplied.Protected) continue;
+                    var matching=annotations==null?new BoundaryEvidence[0]:annotations.Where(e=>e.LeftStart==start).ToArray();
+                    BoundaryEvidence supplied=matching.FirstOrDefault();
+                    bool ambiguous=matching.Length>1 || (supplied != null && supplied.Ambiguous);
+                    if (matching.Any(e=>e.Protected)) continue;
                     if (supplied != null) { rule=supplied.Rule; tags=supplied.Tags ?? tags; }
                     else if ((a=="இந்த" || a=="அந்த" || a=="எந்த") && Nouns.Contains(b))
                     { rule="HARD-DEM"; tags["syntactic_relation"]="demonstrative_adjective+noun"; tags["compound_type"]="free_noun_phrase"; }

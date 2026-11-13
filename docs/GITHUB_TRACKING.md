@@ -2,7 +2,7 @@
 
 [Delivery epic](https://github.com/selvabenz/tamil-language-qa-plugin/issues/1) | [Project board](https://github.com/users/selvabenz/projects/4)
 
-The board is linked to this repository. All 14 implementation tasks start in Todo. The epic remains open until their acceptance gates pass. Priority, phase and planned release fields organize delivery; area/type/priority/phase labels provide repository filtering. Dependencies are recorded as issue relationships and in each task body.
+The board is linked to this repository. All 14 implementation tasks are In Progress, with source, test evidence and remaining gates recorded in issue comments. The epic remains open until their acceptance gates pass. Priority, phase and planned release fields organize delivery; area/type/priority/phase labels provide repository filtering. Dependencies are recorded as issue relationships and in each task body.
 
 | Phase | Task | Issue |
 | --- | --- | --- |
@@ -21,4 +21,4 @@ The board is linked to this repository. All 14 implementation tasks start in Tod
 | P3 | Offline resources and responsiveness | [#13](https://github.com/selvabenz/tamil-language-qa-plugin/issues/13) |
 | P3 | Release validation | [#15](https://github.com/selvabenz/tamil-language-qa-plugin/issues/15) |
 
-The product plan and VERSION file document requirements and the development baseline. They do not imply implementation, a released binary, verified Paratext compatibility, or measured linguistic accuracy.
+The [development prerelease](https://github.com/selvabenz/tamil-language-qa-plugin/releases/tag/v0.1.0-dev.1) provides an initial installed build. See [implementation status](IMPLEMENTATION_STATUS.md) for its 322 passing assertions, partial linguistic coverage and pending exact-host acceptance. A prerelease is not production completion.

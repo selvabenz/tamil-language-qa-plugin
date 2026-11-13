@@ -1,8 +1,8 @@
-param([string]$ParatextDir='C:\Program Files\Paratext 9')
+param([string]$ParatextDir='C:\Program Files\Paratext 9',[string]$PackageDir)
 $ErrorActionPreference='Stop'
 if(Get-Process -Name Paratext -ErrorAction SilentlyContinue){throw 'Close Paratext normally before installing.'}
 $repoRoot=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
-$build=Join-Path $repoRoot 'artifacts\build'
+$build=if($PackageDir){[IO.Path]::GetFullPath($PackageDir)}else{Join-Path $repoRoot 'artifacts\build'}
 $hostExe=Join-Path $ParatextDir 'Paratext.exe'
 if (!(Test-Path -LiteralPath $hostExe)) {throw 'Paratext installation not found.'}
 $hostVersion=(Get-Item -LiteralPath $hostExe).VersionInfo.FileVersion
@@ -13,6 +13,8 @@ if ([IO.Path]::GetDirectoryName($target) -ne $plugins) {throw 'Invalid installat
 foreach($name in @('TamilSandhi.ptxplg','TamilSandhi.Core.dll','rules.json','build.json')) {
     if (!(Test-Path -LiteralPath (Join-Path $build $name))) {throw "Build first: missing $name"}
 }
+$identity=Get-Content -LiteralPath (Join-Path $build 'build.json') -Raw | ConvertFrom-Json
+if($identity.dirty){throw 'Install a committed release build, not a dirty working-tree build.'}
 New-Item -ItemType Directory -Path $target -Force | Out-Null
 foreach($name in @('TamilSandhi.ptxplg','TamilSandhi.Core.dll','rules.json','build.json')) {
     $destination=Join-Path $target $name
@@ -20,4 +22,4 @@ foreach($name in @('TamilSandhi.ptxplg','TamilSandhi.Core.dll','rules.json','bui
     Copy-Item -LiteralPath (Join-Path $build $name) -Destination $destination -Force
     if((Get-FileHash -LiteralPath $destination).Hash -ne (Get-FileHash -LiteralPath (Join-Path $build $name)).Hash){throw "Installed checksum mismatch: $name"}
 }
-Write-Output "Installed and checksum-verified in $target. Restart Paratext, then open project menu > Tools > Checks > Tamil Sandhi QA."
+Write-Output "Installed $($identity.version) and checksum-verified in $target. Restart Paratext, then open project menu > Tools > Checks > Tamil Sandhi QA."

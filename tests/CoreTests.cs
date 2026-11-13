@@ -58,13 +58,21 @@ internal static class CoreTests
             Check(Scan("\\v 1-2 அவரை பார்த்தான்").Single().Verse=="1-2","bridge label retained");
             var one=Scan("அவரை பார்த்தான்").Single();Check(one.StartUtf8==0&&one.EndUtf8==Encoding.UTF8.GetByteCount(one.Original),"UTF8 offsets");
             Check(Scan("அவரை பார்த்தான்").Single().Id==one.Id,"stable scan identity");
+            File.WriteAllText(Path.Combine(root,"artifacts/build/finding-schema-sample.json"),Json.Write(FindingExport.ToSchema(one)),Encoding.UTF8);
+            Check(FindingExport.ToSchema(one).ContainsKey("suggested_patch"),"structured schema export");
             Check(!TextIdentity.Boundary("கா",1),"Tamil combining boundary");
             var selected=engine.Analyze(Snapshot("அவரை பார்த்தான்"),new HouseStyle(),new[]{new TextSpan{Start=0,Length=5}},null);Check(selected.Count==0,"partial selection limits");
+            string chapter1="\\c 1\n\\v 1 அவரை பார்த்தான்.\n\\v 2 படித்து கொடுத்தான்.\n",chapter2="\\c 2\n\\v 1 இந்த புத்தகம்.\n";
+            var first=Snapshot(chapter1);var second=new ChapterSnapshot{Project="test",Book=1,Chapter=2,Text=chapter2};string firstVerse="\\v 1 அவரை பார்த்தான்.\n";int selectionOffset=firstVerse.IndexOf("அவரை",StringComparison.Ordinal);string selectedRaw=(chapter1+chapter2).Substring(chapter1.IndexOf(firstVerse,StringComparison.Ordinal)+selectionOffset);
+            var map=SelectionMapper.Map(new[]{first,second},firstVerse,selectionOffset,selectedRaw);Check(map.Count==2&&map["1:1"].Start==chapter1.IndexOf("அவரை",StringComparison.Ordinal)&&map["1:2"].Length==chapter2.Length,"exact multi-chapter selection");
+            Throws(()=>SelectionMapper.Map(new[]{first,second},firstVerse,selectionOffset,selectedRaw+"changed"),"stale selected passage rejected");
+            Throws(()=>SelectionMapper.Map(new[]{Snapshot(chapter1+chapter1)},firstVerse,selectionOffset,selectedRaw),"ambiguous selection anchor rejected");
             var house=new HouseStyle();house.NoInsertBefore.Add("பார்த்தான்");Check(engine.Analyze(Snapshot(one.Original),house,null,null).Count==0,"opt-in house protection");
             var ev=new BoundaryEvidence{LeftStart=0,Rule="CASE-002-OVERT",Tags=new Dictionary<string,string>{{"case_marker","accusative"}},Ambiguous=false};
             Check(engine.Analyze(Snapshot(one.Original),new HouseStyle(),null,new[]{ev}).All(f=>f.Suggested==null),"required annotations gate");
             ev.Tags["lexical_ai_flag"]="false";ev.Ambiguous=true;Check(engine.Analyze(Snapshot(one.Original),new HouseStyle(),null,new[]{ev}).All(f=>f.Suggested==null),"ambiguous annotations abstain");
             ev.Ambiguous=false;ev.Tags["lexical_ai_flag"]="true";Check(engine.Analyze(Snapshot(one.Original),new HouseStyle(),null,new[]{ev}).All(f=>f.Suggested==null),"contradictory lexical ai evidence blocks insertion");
+            ev.Tags["lexical_ai_flag"]="false";Check(engine.Analyze(Snapshot(one.Original),new HouseStyle(),null,new[]{ev,ev}).All(f=>f.Suggested==null),"competing boundary analyses abstain");
             foreach(string replacement in new[]{"\\v 9 nope","a|lemma=x","a\nb","a\r","\u0BBEbad","\ud800",""}) Throws(()=>PatchService.Patch(one.Original,0,one.Original,replacement,"1"),"unsafe replacement rejected");
             var store=new MemoryStore{Text=one.Original};var journal=new MemoryJournal();var service=new PatchService(store,journal,"test-build");
             var applied=service.Apply(one,one.Suggested,"human",false,new HouseStyle().Hash);Check(store.Text==one.Suggested&&one.State==ReviewState.Applied,"safe apply");Check(journal.Rows.First().State=="pending"&&journal.Rows.Last().State=="applied","durable audit states");Check(!store.Locked,"lock released");
@@ -87,7 +95,10 @@ internal static class CoreTests
                 if(((string)row["id"]).StartsWith("B")) {bTotal++;if(scan.Any(f=>f.Suggested!=null)){bPredicted++;if(scan.Count==1&&scan[0].Suggested==(string)row["expected_text_if_approved"])bCorrect++;else throw new Exception("Incorrect supported B prediction: "+row["id"]);}}
             }
             Check(fixtures==99,"all fixtures consumed");
-            var report=new{assertions=count,fixturesConsumed=fixtures,conditionalSuggestionScenarios=bTotal,predictedWithoutExternalAnnotations=bPredicted,matchingExpectedSuggestions=bCorrect,notImplementedOrAbstained=bTotal-bPredicted,independentLinguisticEvaluation=false};
+            string journalPath=Path.Combine(root,"artifacts/build/synthetic-journal.jsonl");File.WriteAllText(journalPath,"",Encoding.UTF8);var durable=new FileJournal(journalPath);durable.Append(new AuditRecord{Transaction="synthetic",State="pending"});Check(durable.Read().Count==1,"file journal reload");File.AppendAllText(journalPath,"{truncated");Throws(()=>durable.Read(),"damaged journal fails closed");
+            File.WriteAllText(journalPath,Json.Write(new AuditRecord{SchemaVersion="999"}),Encoding.UTF8);Throws(()=>durable.Read(),"unknown audit schema fails closed");
+            string longChapter="\\c 1\n"+String.Join("\n",Enumerable.Range(1,176).Select(v=>"\\v "+v+" அவரை பார்த்தான்."));var watch=System.Diagnostics.Stopwatch.StartNew();var measured=Scan(longChapter);watch.Stop();Check(measured.Count==176,"176-verse synthetic scan");
+            var report=new{assertions=count,fixturesConsumed=fixtures,conditionalSuggestionScenarios=bTotal,predictedWithoutExternalAnnotations=bPredicted,matchingExpectedSuggestions=bCorrect,notImplementedOrAbstained=bTotal-bPredicted,independentLinguisticEvaluation=false,synthetic176VerseScanMilliseconds=watch.ElapsedMilliseconds};
             File.WriteAllText(Path.Combine(root,"artifacts/build/test-results.json"),Json.Write(report),Encoding.UTF8);
             Console.WriteLine(Json.Write(report));
             Console.WriteLine("PASS: "+count+" assertions; 99 fixtures consumed. Linguistic coverage is partial; unresolved cases are not counted as predictions.");

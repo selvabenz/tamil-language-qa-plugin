@@ -19,6 +19,14 @@ jobs:
       - name: Compile and test
         shell: powershell
         run: ./scripts/build.ps1 -ParatextDir artifacts/sdk -BuildNumber ${{ github.run_number }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate C# finding export against original schema
+        shell: powershell
+        run: |
+          python -m pip install -r requirements-dev.txt
+          python scripts/validate-export.py
       - name: Package plugin without host assemblies or project data
         shell: powershell
         run: ./scripts/package.ps1

@@ -22,7 +22,7 @@ namespace TamilSandhi
             foreach (string line in File.ReadAllLines(path,Encoding.UTF8))
             {
                 if (String.IsNullOrWhiteSpace(line)) continue;
-                try { records.Add(Json.Read<AuditRecord>(line)); }
+                try { var record=Json.Read<AuditRecord>(line);if(record==null||record.SchemaVersion!="1")throw new InvalidDataException("Unknown audit schema version.");records.Add(record); }
                 catch (Exception ex) { throw new InvalidDataException("Audit journal is damaged. Writes are blocked until it is recovered locally.",ex); }
             }
             return records;
@@ -67,12 +67,13 @@ namespace TamilSandhi
                 Reconcile(finding.Book,finding.Chapter,source);
                 string result=Patch(source,finding.Start,finding.Original,replacement,finding.Verse);
                 var record=new AuditRecord { Transaction=Guid.NewGuid().ToString("N"),FindingId=finding.Id,Project=finding.Project,Book=finding.Book,Chapter=finding.Chapter,Verse=finding.Verse,Start=finding.Start,Before=finding.Original,After=replacement,BeforeHash=finding.ChapterHash,AfterHash=TextIdentity.Hash(result),Reviewer=reviewer,Action=modified?"modify-and-apply":"apply",Build=build,Rule=finding.Rule,Catalog=finding.CatalogVersion,Config=finding.ConfigHash,Evidence=finding.Evidence,Timestamp=DateTime.UtcNow.ToString("o"),State="pending" };
+                record.Proposed=finding.Suggested;
                 journal.Append(record); // Durable intent must precede any host write.
                 try
                 {
                     store.Write(finding.Book,finding.Chapter,result);
                     if (store.Read(finding.Book,finding.Chapter)!=result) throw new IOException("The saved chapter differs from the proposed result.");
-                    record.State="applied";journal.Append(record);finding.State=ReviewState.Applied;return record;
+                    record.State="applied";journal.Append(record);finding.AppliedText=replacement;finding.State=ReviewState.Applied;return record;
                 }
                 catch { finding.State=ReviewState.Uncertain;record.State="uncertain";try { journal.Append(record); } catch { } throw; }
             }

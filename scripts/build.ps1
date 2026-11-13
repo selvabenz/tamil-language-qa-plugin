@@ -13,7 +13,10 @@ $baseVersion = (Get-Content -LiteralPath (Join-Path $repoRoot 'VERSION') -Raw).T
 if ($baseVersion -notmatch '^\d+\.\d+\.\d+-dev$' -or $BuildNumber -notmatch '^\d{1,5}$' -or [int]$BuildNumber -gt 65534) { throw 'Invalid version/build number.' }
 $commit = (& git -C $repoRoot rev-parse --short=8 HEAD).Trim()
 if ($LASTEXITCODE -ne 0) { throw 'Cannot resolve build commit.' }
+$sourceChanges = @(& git -C $repoRoot status --porcelain -- src scripts tests tests-host VERSION .github/workflows/build.yml)
+$dirty = $sourceChanges.Count -gt 0
 $version = "$baseVersion.$BuildNumber+g$commit"
+if ($dirty) {$version += '.dirty'}
 $numeric = ($baseVersion -replace '-dev$','') + ".$BuildNumber"
 $generated = Join-Path $output 'BuildInfo.cs'
 @"
@@ -52,5 +55,5 @@ if (!$CoreOnly) {
     if ($LASTEXITCODE -ne 0) { throw 'Host contract tests failed.' }
 }
 Copy-Item -LiteralPath (Join-Path $repoRoot 'reference\tamil_punarchi_agent_package\rules.json') -Destination $output
-@{ version=$version; commit=$commit; targetHost='9.5.110.1'; catalog='2026-11-13'; builtUtc=[DateTime]::UtcNow.ToString('o'); channel='prerelease' } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $output 'build.json') -Encoding UTF8
+@{ version=$version; commit=$commit; dirty=$dirty; targetHost='9.5.110.1'; catalog='2026-11-13'; builtUtc=[DateTime]::UtcNow.ToString('o'); channel='prerelease' } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $output 'build.json') -Encoding UTF8
 Write-Output "Build and tests passed: $version"

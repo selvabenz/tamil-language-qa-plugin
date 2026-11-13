@@ -29,6 +29,8 @@ To show inline highlights, enable **Tamil sandhi findings** in the project's ann
 
 Project decisions, opt-in house style, and the durable transaction journal stay under `%LOCALAPPDATA%\TamilSandhiQA\<hashed-project-ID>`. They contain local project text and must not be published. Reset saved decisions clears only stored occurrence decisions. House style uses exact no-insertion lexemes and is disabled by default.
 
+The current source also supports exact raw-USFM selected passages across verses/chapters, verse-unit counts and progress, local review history, and schema-validated findings export. Selection mapping fails closed when the host's selected raw text cannot be matched exactly. Exported numerical confidence remains uncalibrated (zero); read the evidence and explanation rather than treating it as a correctness probability.
+
 If a write is interrupted, the next edit reconciles its recorded before/after chapter hashes. An unrecognized outcome blocks further writes for that chapter; inspect the local journal and current text before recovery. Do not delete the journal to bypass this check.
 
 ## Remove or update

@@ -37,11 +37,12 @@ namespace TamilSandhi
     }
     public class ChapterSnapshot
     {
+        private string text,revision;
         public string Project { get; set; }
         public int Book { get; set; }
         public int Chapter { get; set; }
-        public string Text { get; set; }
-        public string Revision { get { return TextIdentity.Hash(Text); } }
+        public string Text { get { return text; } set { text=value; revision=value==null?null:TextIdentity.Hash(value); } }
+        public string Revision { get { return revision; } }
     }
     public enum ReviewState { Open, NeedsReview, Rejected, Ignored, Applied, Stale, Failed, Uncertain, Reverted }
     public class Finding
@@ -58,6 +59,7 @@ namespace TamilSandhi
         public string ChapterHash { get; set; }
         public string Original { get; set; }
         public string Suggested { get; set; }
+        public string AppliedText { get; set; }
         public string Context { get; set; }
         public string Rule { get; set; }
         public string Reason { get; set; }
@@ -117,6 +119,8 @@ namespace TamilSandhi
     }
     public class AuditRecord
     {
+        public AuditRecord() { SchemaVersion="1"; }
+        public string SchemaVersion { get; set; }
         public string Transaction { get; set; }
         public string FindingId { get; set; }
         public string Project { get; set; }
@@ -126,6 +130,7 @@ namespace TamilSandhi
         public int Start { get; set; }
         public string Before { get; set; }
         public string After { get; set; }
+        public string Proposed { get; set; }
         public string BeforeHash { get; set; }
         public string AfterHash { get; set; }
         public string State { get; set; }

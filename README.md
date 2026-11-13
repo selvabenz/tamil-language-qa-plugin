@@ -4,11 +4,13 @@ An offline Tamil புணர்ச்சி / sandhi review plugin targeting **
 
 **Development preview:** the C# plugin builds against the target host SDK. It includes a native embedded review window, scope scanning, contextual suggestions, Apply / Reject / Ignore / Modify & Apply, guarded reversion, and inline annotation integration. Exact-host installation and acceptance are reported separately in [implementation status](docs/IMPLEMENTATION_STATUS.md).
 
+Download [development prerelease v0.1.0-dev.1](https://github.com/selvabenz/tamil-language-qa-plugin/releases/tag/v0.1.0-dev.1). It is installed locally and its host context-menu entry is detected; full interactive host acceptance remains pending.
+
 ## Accuracy and coverage
 
 100% accuracy is the ambition, not an achieved result. The initial analyzer implements four suggestion families using small local lexical sets. Unknown or conflicting nominated boundaries remain for human review; it does not comprehensively detect every unsupported construction.
 
-Local validation passes 322 assertions and consumes all 99 supplied scenarios. It produces the expected correction for 10 of 24 conditional suggestion scenarios; the other 14 are unimplemented or abstained. These fixtures are not an independent accuracy evaluation. See the [remaining release gates](docs/IMPLEMENTATION_STATUS.md).
+Local validation passes 331 assertions and consumes all 99 supplied scenarios. It produces the expected correction for 10 of 24 conditional suggestion scenarios; the other 14 are unimplemented or abstained. These fixtures are not an independent accuracy evaluation. See the [remaining release gates](docs/IMPLEMENTATION_STATUS.md).
 
 ## Build, test and install
 
