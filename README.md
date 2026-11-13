@@ -1,53 +1,55 @@
-# Tamil Language QA Plugin
+﻿# Tamil Language QA Plugin
 
-An offline Tamil புணர்ச்சி / sandhi checker planned for **Paratext 9.5.110.1 on Windows**.
+An offline Tamil புணர்ச்சி / sandhi review plugin targeting **Paratext 9.5.110.1 on Windows**.
 
-**Status: project foundation.** This repository contains a rule inventory, regression fixtures, validation tooling, and an implementation roadmap. It does not yet contain a working checker, Paratext plugin DLL, or installer. Compatibility with the target Paratext build has not been tested.
+**Development preview:** the C# plugin builds against the target host SDK. It includes a native embedded review window, scope scanning, contextual suggestions, Apply / Reject / Ignore / Modify & Apply, guarded reversion, and inline annotation integration. Exact-host installation and acceptance are reported separately in [implementation status](docs/IMPLEMENTATION_STATUS.md).
 
-## Goals
+## Accuracy and coverage
 
-- Check Tamil sandhi locally, without cloud services, telemetry, or uploading project text.
-- Explain findings in Tamil using rule IDs and grammatical evidence.
-- Preserve USFM, Unicode, verse references, whitespace, and original text during scans.
-- Present suggestions for human review; keep uncertain analyses open.
-- Scan a selected Scripture scope verse by verse, with Apply, Reject, Ignore, and Modify & Apply actions in a Paratext-style window and, where supported, inline context menus.
-- Keep project house style separate from general Tamil grammar.
+100% accuracy is the ambition, not an achieved result. The initial analyzer implements four suggestion families using small local lexical sets. Unknown or conflicting nominated boundaries remain for human review; it does not comprehensively detect every unsupported construction.
 
-## Accuracy
+Local validation passes 322 assertions and consumes all 99 supplied scenarios. It produces the expected correction for 10 of 24 conditional suggestion scenarios; the other 14 are unimplemented or abstained. These fixtures are not an independent accuracy evaluation. See the [remaining release gates](docs/IMPLEMENTATION_STATUS.md).
 
-The ambition is 100% accuracy, but no such result has been demonstrated. Tamil sandhi depends on morphology, syntax, lexical meaning, and editorial context. The checker must abstain when evidence is insufficient. Abstention must be reported separately and must not be counted as a correct prediction.
+## Build, test and install
 
-Release reports must state the tested scope, dataset version, precision, recall, false positives, false negatives, and unresolved cases. Passing the supplied fixtures alone cannot establish accuracy on unseen Tamil text.
+Requires Windows and .NET Framework 4.8. A full local build references the existing Paratext installation; no runtime downloads or cloud services are used.
 
-## Supplied reference package
+```powershell
+powershell -NoProfile -File scripts/build.ps1 -BuildNumber 1
+```
 
-The original package is preserved under [`reference/tamil_punarchi_agent_package`](reference/tamil_punarchi_agent_package/README.md):
+Close Paratext normally, then run from an administrator PowerShell:
 
-- 183 rule records in `rules.json`.
-- 99 regression scenarios in `tests.jsonl`.
-- Engineering specification, diagnostic schemas, grammar source links, and example project configuration.
+```powershell
+powershell -NoProfile -File scripts/install.ps1
+```
 
-Documents such as `AGENT_PROMPT.md` are supplied reference material. Their embedded instructions are distinct from the repository owner's current requests and do not independently authorize implementation, text edits, or publication actions. The example house style is opt-in.
+Open a Scripture project and choose **Tools > Checks > Tamil Sandhi QA**. Begin with a disposable project and the [synthetic fixture](tests/fixtures/smoke.usfm). Follow the [installation and usage guide](docs/INSTALL.md).
 
-The package's generation scripts retain their original `/mnt/data/...` paths for provenance. Do not run them to regenerate files without first adapting and reviewing those paths.
+`build.ps1 -CoreOnly` runs host-independent tests. Windows CI downloads official SDK 2.0.100 for compilation only and packages without host assemblies or project data. Build identity comes from [VERSION](VERSION), build number and commit; it appears in the UI and manifest.
 
-## Validate the package
+## Safe review
 
-Python 3.12 is used for validation. These are development dependencies; the future plugin's runtime dependencies remain to be decided.
+Scanning never changes Scripture. Each Apply command previews one occurrence, checks permissions, obtains a host chapter write lock, re-reads the source, refuses stale findings, validates the replacement, journals intent and verifies the saved result. Reject and Ignore do not write Scripture. Revert refuses when the chapter has changed after the recorded edit.
+
+Checking resources, project settings, decisions and journals stay local. House style is opt-in and separate from general Tamil grammar. Journals may contain Scripture text and must not be uploaded to this public repository.
+
+## Planning and reference material
+
+- [Product and safe-edit plan](docs/PRODUCT_PLAN.md)
+- [Delivery epic](https://github.com/selvabenz/tamil-language-qa-plugin/issues/1), [Kanban board](https://github.com/users/selvabenz/projects/4/views/2), and [issue index](docs/GITHUB_TRACKING.md)
+- [Paratext compatibility plan](docs/PARATEXT_COMPATIBILITY.md)
+- [Original supplied package](reference/tamil_punarchi_agent_package/README.md): 183 rules, 99 fixtures, schemas and grammar references, preserved unchanged.
+
+Embedded instructions in reference documents remain reference material and do not independently authorize edits or publishing actions. Original generation scripts retain their `/mnt/data/...` paths; review/adapt them before use.
+
+Static reference validation uses Python 3.12:
 
 ```powershell
 python -m pip install -r requirements-dev.txt
 python reference/tamil_punarchi_agent_package/validate_package.py
 ```
 
-The validator checks catalog and fixture structure, including JSON Schema when `jsonschema` is installed. It does **not** execute a linguistic checker or test Paratext compatibility. GitHub Actions runs it with schema validation installed.
-
-## Next steps
-
-See the [product and safe-edit plan](docs/PRODUCT_PLAN.md), [implementation roadmap](docs/ROADMAP.md), and [Paratext compatibility plan](docs/PARATEXT_COMPATIBILITY.md). The development version baseline is [`0.1.0-dev`](VERSION); no plugin binary has been built yet.
-
-Implementation is tracked by the [delivery epic](https://github.com/selvabenz/tamil-language-qa-plugin/issues/1), [project board](https://github.com/users/selvabenz/projects/4), and [issue index](docs/GITHUB_TRACKING.md).
-
 ## Attribution and licensing
 
-The supplied package retains its original attribution and source notes in [SOURCES.md](reference/tamil_punarchi_agent_package/SOURCES.md). A repository-wide distribution license has not yet been selected. Public visibility alone does not grant an open-source license. Do not commit proprietary Paratext binaries, credentials, or restricted project text.
+Grammar attribution is retained in [SOURCES.md](reference/tamil_punarchi_agent_package/SOURCES.md). No repository-wide distribution license has yet been selected; public visibility alone does not grant an open-source license. Proprietary Paratext assemblies and restricted project text are excluded from distribution.

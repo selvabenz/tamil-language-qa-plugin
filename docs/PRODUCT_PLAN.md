@@ -1,6 +1,6 @@
 # Verse-by-verse Tamil Sandhi review
 
-This plan records the owner's requirements of 13 November 2026. It supersedes the earlier diagnostic-only release goal: the intended product includes explicit, human-triggered safe application. The supplied reference package remains unchanged. This is a plan, not an implemented plugin.
+This plan records the owner's requirements of 13 November 2026. It supersedes the earlier diagnostic-only release goal: the intended product includes explicit, human-triggered safe application. The supplied reference package remains unchanged. These are target requirements; see [implementation status](IMPLEMENTATION_STATUS.md) for implemented behavior and outstanding gates.
 
 ## Scope and scan behavior
 
