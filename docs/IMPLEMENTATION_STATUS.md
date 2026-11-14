@@ -33,6 +33,7 @@ Issues #16–#18 fix post-note checking, wrapped-boundary checking with exact wh
 
 ## Remaining release gates
 
+- OTCV local-export comparison is complete: 66 books, 31,102 verse units, 1,791 unadjudicated proposals and 3,929 review-only findings; all inputs unchanged. See [OTCV evaluation](OTCV_REFERENCE_EVALUATION.md). Enhanced TaOVM+ remains pending; Paratext API restrictions remain unchanged. BSI and OTCV proposals still need human adjudication.
 - Verify installation, discovery, navigation, annotation mapping/context menus and save/revert inside the exact host on a disposable project.
 - Verify exact selected-passage mapping, verse counts/progress, export and review-history interaction inside the host, including chapter and book boundaries and custom versification.
 - Expand morphology/syntax and licensed lexicons, independently review word classifications, and complete remaining suggestion and compound analyses.

@@ -6,6 +6,7 @@ from pathlib import Path
 parser = argparse.ArgumentParser()
 parser.add_argument('findings', nargs='+', type=Path)
 parser.add_argument('--output', required=True, type=Path)
+parser.add_argument('--reference-id', choices=['bsi', 'otcv'], default='bsi')
 args = parser.parse_args()
 rows = []
 for source in args.findings:
@@ -20,5 +21,7 @@ function key(r){return JSON.stringify([r.book,r.chapter,r.verse,r.rule,r.origina
 function render(){const root=document.getElementById('rows');root.replaceChildren();const q=document.getElementById('search').value.toLowerCase();let count=0;for(const r of data){if(!JSON.stringify(r).toLowerCase().includes(q))continue;count++;const a=document.createElement('article');const h=document.createElement('h3');h.textContent='Book '+r.book+' '+r.chapter+':'+r.verse+' | '+r.rule+' | '+r.operation;a.append(h);const p=document.createElement('pre');p.textContent=r.original+'\n→ '+r.suggested;a.append(p);const d=document.createElement('details');const s=document.createElement('summary');s.textContent='Verse context';const c=document.createElement('pre');c.textContent=r.context;d.append(s,c);a.append(d);const select=document.createElement('select');for(const [v,t] of [['open','Needs adjudication'],['correction','Approve modern correction'],['edition_variant','Keep reference: edition/style variant'],['false_positive','Reject: incorrect suggestion'],['uncertain','Uncertain: linguistic review needed']]){const o=document.createElement('option');o.value=v;o.textContent=t;select.append(o)}select.value=decisions[key(r)]||'open';select.onchange=()=>{decisions[key(r)]=select.value;try{localStorage.setItem(storageKey,JSON.stringify(decisions))}catch(e){}};a.append(select);root.append(a)}document.getElementById('count').textContent=count+' shown / '+data.length+' proposals. Decisions remain local until you save a file.'}
 document.getElementById('search').oninput=render;document.getElementById('export').onclick=()=>{const blob=new Blob([JSON.stringify({independentGold:false,proposals:data.map(r=>({book:r.book,chapter:r.chapter,verse:r.verse,rule:r.rule,original:r.original,suggested:r.suggested,decision:decisions[key(r)]||'open'}))},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='private-bsi-sandhi-adjudication.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};render();</script></html>'''
 args.output.parent.mkdir(parents=True, exist_ok=True)
+if args.reference_id == 'otcv':
+    page = page.replace('BSI OV', 'OTCV').replace('private-bsi-', 'private-otcv-')
 args.output.write_text(page.replace('PAYLOAD', payload), encoding='utf-8')
 print(f'Private review created: {len(rows)} proposals; no reference files changed.')

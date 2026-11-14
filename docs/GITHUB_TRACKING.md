@@ -1,5 +1,7 @@
 # GitHub delivery tracking
 
+OTCV follow-up: a user-supplied local export enabled read-only evaluation of all 66 books with unchanged build 8 rules. There are 1,791 unadjudicated proposals and 3,929 review-only findings; all inputs were unchanged. See [OTCV evidence](OTCV_REFERENCE_EVALUATION.md). Issue #31 remains open for adjudication, independent accuracy and enhanced TaOVM+ access; the OTCV local-text access subtask is complete.
+
 [Delivery epic](https://github.com/selvabenz/tamil-language-qa-plugin/issues/1) | [Project board](https://github.com/users/selvabenz/projects/4)
 
 The board is linked to this repository. All 14 implementation tasks are In Progress, with source, test evidence and remaining gates recorded in issue comments. The epic remains open until their acceptance gates pass. Priority, phase and planned release fields organize delivery; area/type/priority/phase labels provide repository filtering. Dependencies are recorded as issue relationships and in each task body.

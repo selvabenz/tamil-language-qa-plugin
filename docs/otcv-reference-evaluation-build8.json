@@ -1,0 +1,92 @@
+{
+  "profile": "scripture-modern-2",
+  "reference": "User-supplied local OTCV USFM",
+  "readOnly": true,
+  "allInputFilesUnchanged": true,
+  "independentNaturalErrorAccuracyMeasured": false,
+  "profileTunedOnThisCorpus": false,
+  "bookIdentity": "Canonical USFM id; filename numbers ignored",
+  "splits": [
+    {
+      "build": "0.1.0-dev.8+g7faca08f",
+      "profile": "scripture-modern-2",
+      "stage": "development",
+      "readOnly": true,
+      "reference": "User-supplied local OTCV USFM",
+      "books": 4,
+      "chapters": 249,
+      "verseUnits": 5943,
+      "examinedBoundaries": 58632,
+      "supportedBoundaries": 2578,
+      "unassessedBoundaries": 55452,
+      "proposedChangesToReviewedText": 297,
+      "reviewOnlyFindings": 602,
+      "proposedChangesByRule": {
+        "HARD-DEM": 56,
+        "HARD-LOCADV": 20,
+        "HARD-PART-AG": 20,
+        "CASE-004-OVERT": 87,
+        "HARD-PART-Y": 14,
+        "CASE-002-OVERT": 80,
+        "HARD-PART-I": 3,
+        "HARD-MANNER": 7,
+        "HARD-PART-HARDU": 10
+      },
+      "controlledMissingOttuCandidates": 6384,
+      "controlledMissingOttuRecovered": 2278,
+      "allInputFilesUnchanged": true,
+      "independentNaturalErrorAccuracyMeasured": false,
+      "elapsedMilliseconds": 1709
+    },
+    {
+      "build": "0.1.0-dev.8+g7faca08f",
+      "profile": "scripture-modern-2",
+      "stage": "holdout",
+      "readOnly": true,
+      "reference": "User-supplied local OTCV USFM",
+      "books": 62,
+      "chapters": 940,
+      "verseUnits": 25159,
+      "examinedBoundaries": 304549,
+      "supportedBoundaries": 10082,
+      "unassessedBoundaries": 291140,
+      "proposedChangesToReviewedText": 1494,
+      "reviewOnlyFindings": 3327,
+      "proposedChangesByRule": {
+        "HARD-DEM": 371,
+        "CASE-004-OVERT": 345,
+        "HARD-LOCADV": 132,
+        "HARD-PART-AG": 130,
+        "HARD-PART-HARDU": 58,
+        "CASE-002-OVERT": 309,
+        "HARD-PART-I": 45,
+        "HARD-PART-Y": 71,
+        "HARD-MANNER": 32,
+        "NO-PART-SOFTU": 1
+      },
+      "controlledMissingOttuCandidates": 29660,
+      "controlledMissingOttuRecovered": 8577,
+      "allInputFilesUnchanged": true,
+      "independentNaturalErrorAccuracyMeasured": false,
+      "elapsedMilliseconds": 7430
+    }
+  ],
+  "totals": {
+    "books": 66,
+    "chapters": 1189,
+    "verseUnits": 31102,
+    "examinedBoundaries": 363181,
+    "supportedBoundaries": 12660,
+    "unassessedBoundaries": 346592,
+    "proposedChangesToReviewedText": 1791,
+    "reviewOnlyFindings": 3929,
+    "controlledMissingOttuCandidates": 36044,
+    "controlledMissingOttuRecovered": 10855
+  },
+  "limitations": [
+    "Proposals are unadjudicated disagreements, not confirmed Scripture errors.",
+    "The legacy development/holdout names partition books; no tuning was performed on either OTCV split.",
+    "Controlled isolated-pair reconstruction is coverage, not natural-error accuracy.",
+    "Exact equivalence to the installed Paratext OTCV revision is unverified."
+  ]
+}
