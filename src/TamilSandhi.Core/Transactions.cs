@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace TamilSandhi
 {
@@ -41,8 +42,12 @@ namespace TamilSandhi
                 throw new InvalidOperationException("The source span has changed. Rescan before applying.");
             if (!TextIdentity.Boundary(source,start) || !TextIdentity.Boundary(source,start+before.Length) || !Usfm.ContainsSpan(source,start,before.Length,verse))
                 throw new InvalidOperationException("The span crosses a grapheme, verse or protected structure.");
-            if (String.IsNullOrWhiteSpace(after) || after.Length>4096 || after.Any(c=>Char.IsControl(c) || c=='\\' || c=='|' || c=='\u2028' || c=='\u2029'))
-                throw new InvalidOperationException("Replacement must be a nonempty text span without markers, attributes, controls or newlines.");
+            if (String.IsNullOrWhiteSpace(after) || after.Length>4096 || after.Any(c=>(Char.IsControl(c) && c!='\t' && c!='\r' && c!='\n') || c=='\\' || c=='|' || c=='\u2028' || c=='\u2029'))
+                throw new InvalidOperationException("Replacement must be a nonempty text span without markers, attributes or unsupported controls.");
+            // Existing USFM line wrapping and tabs belong to the source. Permit
+            // their exact sequence through Apply/Revert, never add or remove it.
+            if (!Regex.Matches(before,@"[\t\r\n]+").Cast<Match>().Select(m=>m.Value).SequenceEqual(Regex.Matches(after,@"[\t\r\n]+").Cast<Match>().Select(m=>m.Value)))
+                throw new InvalidOperationException("Replacement must preserve the source line breaks and tabs exactly.");
             // Strict UTF-8 encoding catches unpaired UTF-16 surrogate values.
             TextIdentity.Hash(after);
             var firstCategory=Char.GetUnicodeCategory(after,0);

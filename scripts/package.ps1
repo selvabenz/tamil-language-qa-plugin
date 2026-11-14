@@ -2,7 +2,8 @@ $ErrorActionPreference='Stop'
 $repoRoot=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $build=Join-Path $repoRoot 'artifacts\build'
 $info=Get-Content -LiteralPath (Join-Path $build 'build.json') -Raw | ConvertFrom-Json
-if($info.dirty){throw 'Commit source changes and rebuild before packaging a release.'}
+. (Join-Path $PSScriptRoot 'source-state.ps1')
+Assert-PackageSource -RepoRoot $repoRoot -Manifest $info -BuildDir $build
 $package=Join-Path $repoRoot ('artifacts\TamilSandhiQA-'+$info.version)
 New-Item -ItemType Directory -Force -Path $package | Out-Null
 foreach($name in @('TamilSandhi.ptxplg','TamilSandhi.Core.dll','rules.json','build.json')){Copy-Item -LiteralPath (Join-Path $build $name) -Destination $package -Force}

@@ -30,7 +30,7 @@ namespace TamilSandhi
                     var left=words[i]; var right=words[i+1];
                     int start=segment.Start+left.Index, end=segment.Start+right.Index+right.Length;
                     string gap=snapshot.Text.Substring(segment.Start+left.Index+left.Length,right.Index-left.Index-left.Length);
-                    if (gap.Length==0 || gap.Any(c => c!=' ' && c!='\t')) continue;
+                    if (gap.Length==0 || gap.Any(c => c!=' ' && c!='\t' && c!='\r' && c!='\n')) continue;
                     if (scope != null && !scope.Any(s => start>=s.Start && end<=s.End)) continue;
                     string a=left.Value.Normalize(), b=right.Value.Normalize();
                     if (style.NoInsertBefore.Contains(b) || SoftParticiples.Contains(a) || a=="அறிக்கை" || a=="கொலை") continue;

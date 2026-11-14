@@ -19,6 +19,9 @@ jobs:
       - name: Compile and test
         shell: powershell
         run: ./scripts/build.ps1 -ParatextDir artifacts/sdk -BuildNumber ${{ github.run_number }}
+      - name: Verify build and package source integrity
+        shell: powershell
+        run: ./tests/BuildIntegrity.Tests.ps1
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'

@@ -47,12 +47,32 @@ internal static class CoreTests
             Check(Scan("அவரைப் பார்த்தான்").Count==0,"idempotent corrected input");
             Check(Scan("மறை செய்தான்").All(f=>f.Suggested==null),"unknown suffix abstention");
             Check(Scan("படித்து, கொடுத்தான்").Count==0,"punctuation barrier");
-            Check(Scan("அவரை\nபார்த்தான்").Count==0,"newline barrier");
+            foreach(string whitespace in new[]{"\n","\r\n","\r","\t"," \r\n  "})
+            {
+                string wrapped="\\c 1\n\\p\n\\v 1 அவரை"+whitespace+"பார்த்தான்.";
+                var wrappedFinding=Scan(wrapped).Single();
+                Check(wrappedFinding.Suggested=="அவரைப்"+whitespace+"பார்த்தான்","source whitespace preserved in suggestion");
+                var wrappedStore=new MemoryStore{Text=wrapped};
+                var wrappedService=new PatchService(wrappedStore,new MemoryJournal(),"regression");
+                var wrappedApplied=wrappedService.Apply(wrappedFinding,wrappedFinding.Suggested,"test",false,new HouseStyle().Hash);
+                Check(wrappedStore.Text==wrapped.Replace("அவரை","அவரைப்"),"wrapped apply changes only the reviewed text");
+                wrappedService.Revert(wrappedApplied,"test");Check(wrappedStore.Text==wrapped,"wrapped revert restores exact USFM");
+                Throws(()=>PatchService.Patch(wrapped,wrappedFinding.Start,wrappedFinding.Original,wrappedFinding.Suggested.Replace(whitespace," "),"1"),"cannot remove source line breaks or tabs");
+            }
             string sfm="\\c 1\r\n\\p\r\n\\v 1 அவரை பார்த்தான். \\f + \\ft அவரை பார்த்தான்.\\f*\r\n\\s அவரை பார்த்தான்\r\n\\p\r\n\\v 2 படித்து கொடுத்தான்.\r\n";
             var findings=Scan(sfm);Check(findings.Count==2,"USFM notes/headings excluded");Check(findings[1].Verse=="2","verse references");
             Check(sfm==Snapshot(sfm).Text,"scan source untouched");
             Check(Scan("\\v 1 \\w அவரை|lemma=\"x\"\\w* பார்த்தான்").Count==0,"word attributes protected");
             Check(Scan("\\v 1 அவரை \\f + \\ft note\\f* பார்த்தான்").Count==0,"no crossing notes");
+            foreach(string note in new[]{"\\f + \\ft அவரை பார்த்தான்.\\f*","\\x + \\xo 1:1 \\xt அவரை பார்த்தான்.\\x*","\\f + \\ft குறிப்பு \\it அவரை பார்த்தான்.\\it*\\f*"})
+            {
+                string afterNote="\\c 1\n\\p\n\\v 1 தொடக்கம் "+note+" அவரை பார்த்தான்.";
+                var afterFinding=Scan(afterNote).Single();
+                Check(afterFinding.Start==afterNote.LastIndexOf("அவரை",StringComparison.Ordinal),"resume verse after closed note; exclude note contents");
+                string afterPatch=PatchService.Patch(afterNote,afterFinding.Start,afterFinding.Original,afterFinding.Suggested,"1");
+                Check(afterPatch.Contains(note)&&afterPatch.EndsWith("அவரைப் பார்த்தான்.",StringComparison.Ordinal),"patch after note preserves protected note byte-for-byte");
+            }
+            Check(Scan("\\v 1 தொடக்கம் \\f + \\ft அவரை பார்த்தான்.").Count==0,"unclosed note remains protected");
             Check(Scan("\\v 1 \\unknown அவரை பார்த்தான்").Count==0,"unknown marker fail closed");
             Check(Scan("\\v 1 அவரை \\v 2 பார்த்தான்").Count==0,"no cross verse patches");
             Check(Scan("\\v 1-2 அவரை பார்த்தான்").Single().Verse=="1-2","bridge label retained");

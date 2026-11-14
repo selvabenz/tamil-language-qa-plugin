@@ -31,7 +31,7 @@ namespace TamilSandhi
                     if (protectedStack.Count > 0 && protectedStack.Peek() == name) protectedStack.Pop();
                     // Do not resume unknown/heading text after an unmatched close marker.
                 }
-                else if (name == "c") { verse = null; scripture = false; }
+                else if (name == "c" && protectedStack.Count == 0) { verse = null; scripture = false; }
                 else if (name == "v" && protectedStack.Count == 0)
                 {
                     var vm = Verse.Match(raw.Substring(start, pair.Next-start));
@@ -43,7 +43,10 @@ namespace TamilSandhi
                 {
                     // A paired character/note/word marker protects everything until its exact close.
                     if (Regex.IsMatch(raw.Substring(start), @"\\\+?" + Regex.Escape(name) + @"\*")) protectedStack.Push(name);
-                    else scripture = false;
+                    // Unpaired note components such as ft/xt are contained by
+                    // their outer f/x marker. They must not disable the verse
+                    // text that resumes after the outer marker closes.
+                    else if (protectedStack.Count == 0) scripture = false;
                 }
                 if (scripture && protectedStack.Count == 0 && start < pair.Next)
                     result.Add(new TextSpan { Start=start, Length=pair.Next-start, Verse=verse });
