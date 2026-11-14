@@ -23,13 +23,13 @@ The first implementation is a development preview, not a production release or a
 - 403 current-source core assertions pass, consuming all 99 supplied scenarios for preservation, protected examples, finding contracts and limited prediction coverage. A 176-verse synthetic core scan took 11 ms locally; this is a baseline observation, not an end-to-end host performance guarantee.
 - Of 24 conditional suggestion scenarios, 10 receive the expected suggestion without external annotations; 14 are unimplemented or abstained. This is development-fixture coverage, not independent accuracy evidence.
 - Host-contract tests load both interfaces, enumerate menus and construct/layout the native control against SDK 2.0.100. They are not in-host acceptance tests.
-- Administrative installation succeeded after the initial Windows access denial. All four installed files were checksum-verified in `C:\Program Files\Paratext 9\plugins\TamilSandhiQA`; the installed identity is `0.1.0-dev.4+gcf4dc861`.
+- Administrative installation succeeded after the initial Windows access denial. All four installed files were checksum-verified in `C:\Program Files\Paratext 9\plugins\TamilSandhiQA`; the installed identity is `0.1.0-dev.6+g73fb595c`.
 - [Exact-host build 3 transaction tests](host-acceptance-build3.json) pass in Paratext 9.5.110.1: lock/apply/readback, stale refusal, exact Revert, Modify & Apply/Revert, and exact original disposable-chapter restoration. Paratext also displayed the native review window, build identity and scope selector. A current-chapter scope bug was discovered and fixed. [Build 4 host regression tests](host-acceptance-build4.json) pass, including the production window scope. The normal plugin then completed a native chapter scan of seven synthetic verses with zero failures and zero findings. The disposable fixture used for transaction tests separately yields three actionable findings. The consumed helper was removed. Full interactive host acceptance remains pending. Modal dialog automation has been unreliable; a guarded, one-shot disposable-project acceptance runner is documented in [HOST_ACCEPTANCE.md](HOST_ACCEPTANCE.md). No real Scripture edits were performed by this test session.
-- GitHub Windows build and reference-validation workflows pass. [Development prerelease v0.1.0-dev.4](https://github.com/selvabenz/tamil-language-qa-plugin/releases/tag/v0.1.0-dev.4) contains the plugin ZIP.
+- GitHub Windows build and reference-validation workflows pass. [Development prerelease v0.1.0-dev.6](https://github.com/selvabenz/tamil-language-qa-plugin/releases/tag/v0.1.0-dev.6) contains the plugin ZIP.
 
 ## Review fixes in current source
 
-Issues #16–#18 fix post-note checking, wrapped-boundary checking with exact whitespace-preserving Apply/Revert, and build/package provenance. Core regressions and isolated Git/package tests pass. These fixes are not installed or host-tested yet; installed build 4 predates them. See [developer handoff](DEVELOPER_HANDOFF.md) for reproduction, commands and next acceptance work.
+Issues #16–#18 fix post-note checking, wrapped-boundary checking with exact whitespace-preserving Apply/Revert, and build/package provenance. Core regressions and isolated Git/package tests pass. The fixes are included in installed build 6. Exact-host post-note Apply/Revert and corrected export state pass. The SDK canonicalizes raw wrapping, so native wrapped-source acceptance is explicitly unexercised; core whitespace-preservation tests pass separately. See [developer handoff](DEVELOPER_HANDOFF.md) for reproduction, commands and next acceptance work.
 
 ## Remaining release gates
 
@@ -40,3 +40,7 @@ Issues #16–#18 fix post-note checking, wrapped-boundary checking with exact wh
 - Complete accessibility, appearance, long-scope performance, offline-host, concurrent-write and restart/recovery acceptance; establish measured budgets.
 
 Issues stay open until their full acceptance criteria have evidence. A prerelease ZIP does not mean all 14 tasks are finished. The [product plan](PRODUCT_PLAN.md) remains the target behavior.
+
+## Whole-app follow-up
+
+[All seven review fixes and their regression evidence](WHOLE_APP_REVIEW_FIXES.md) are included in build 6. [Exact-host evidence](host-acceptance-build6.json) records successful transaction/post-note checks, exact disposable restoration, helper removal and a normal seven-verse scan. The developer-only fixture/recovery incident and the wrapped-source host limitation are documented in [the handoff](DEVELOPER_HANDOFF.md).

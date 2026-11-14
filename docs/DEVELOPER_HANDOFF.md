@@ -6,8 +6,8 @@ Updated 2026-11-14 after review fixes #16–#25.
 
 - Repository: https://github.com/selvabenz/tamil-language-qa-plugin ; branch `main`. [Project board](https://github.com/users/selvabenz/projects/4).
 - Original delivery issues #1–#15 remain open until their broader acceptance criteria pass.
-- Installed and last published host-tested build: `0.1.0-dev.4+gcf4dc861`, targeting Paratext **9.5.110.1**, SDK **2.0.100**, .NET Framework **4.8**.
-- Current source contains the review fixes below. Build number 6 is the corrected local candidate. These fixes have not been installed or tested inside Paratext; do not transfer build 4's host acceptance to this candidate.
+- Installed and last published host-tested build: `0.1.0-dev.6+g73fb595c`, targeting Paratext **9.5.110.1**, SDK **2.0.100**, .NET Framework **4.8**.
+- Build 6 is installed, checksum-verified and published as a development prerelease. The consumed developer helper was removed. [Exact-host build 6 evidence](host-acceptance-build6.json) records the completed transaction/post-note/export tests and original disposable-chapter restoration.
 - Local validation: **403 core assertions**, SDK/native-control/toolbar/narrow-layout checks, finding schema and original reference validators, and isolated Git/package-integrity regression tests pass. Check the Actions run for the exact checkout before claiming CI acceptance.
 - Linguistic coverage remains 10 expected predictions out of 24 conditional development scenarios; the other 14 are unimplemented or abstained. All 99 supplied fixtures are consumed for their relevant checks. Independent linguistic accuracy is unmeasured; 100% accuracy is not achieved.
 
@@ -47,7 +47,7 @@ Commit the complete source/documentation change, rebuild, then run `./scripts/pa
 
 [Build 4 evidence](host-acceptance-build4.json) records real lock/Apply/readback, stale refusal, Revert, Modify & Apply/Revert, exact disposable-chapter restoration, and a native seven-verse scan. One startup after the helper run faulted in host `xul.DLL`; the next startup without the helper succeeded. Cause is unestablished. The consumed helper was removed from the installed plugin directory.
 
-1. Test post-note and wrapped boundaries in the exact host on a marked disposable project. Verify UI preview, Apply, Modify & Apply, Revert, protected content and exact restoration. Follow [HOST_ACCEPTANCE.md](HOST_ACCEPTANCE.md); build the helper against the same core version as the installed candidate.
+1. Post-note editing and corrected export state passed exact-host tests. Raw wrapped-source host acceptance remains unexercised because PutUSFM canonicalizes wrapping; do not repeat a normalized fixture and claim wrapped-source coverage. Extend full UI preview and both review surfaces on marked disposable data. Follow [HOST_ACCEPTANCE.md](HOST_ACCEPTANCE.md); build the helper against the same core version as the installed candidate.
 2. Complete selection/book boundaries, custom versification, inline/context actions, review decisions, history/export, cancellation and accessibility checks. Record exact build identity and observed results.
 3. Investigate startup stability; complete offline-host, concurrent-edit and restart/recovery acceptance before production approval.
 4. Expand linguistic coverage with licensed resources and expert-reviewed held-out evaluation. Measure precision, recall and abstention separately.
@@ -56,4 +56,10 @@ Keep helpers, backups, journals, configuration and Scripture text under `artifac
 
 ## Whole-app review follow-up
 
-[Issues #19–#25 and regression evidence](WHOLE_APP_REVIEW_FIXES.md) cover all seven further findings. Build 6 installation and exact-host testing are in progress; the installed identity above will be updated after verification. Keep generated helpers, backups and journals private.
+[Issues #19–#25 and regression evidence](WHOLE_APP_REVIEW_FIXES.md) cover all seven further findings. All seven defects have code/regression coverage and the installed build is verified. [Build 6 evidence](host-acceptance-build6.json) records native transaction tests and the subsequent normal seven-verse scan. Keep generated helpers, backups and journals private.
+
+## Build 6 deployment and test incident
+
+Product source: commit 73fb595cb091a364d23be57afb82e4ef60092f0f. Installed identity: 0.1.0-dev.6+g73fb595c. Native normal-plugin scan after helper removal: one chapter, seven verses, zero failures, zero findings; no Scripture changed. Core line-wrap and exact Apply/Revert tests pass separately. No native wrapped-source acceptance is claimed.
+
+An expanded developer fixture initially omitted its required book header. The host rejected it; the helper had advanced its cleanup expectation too early. The helper now retains the verified pre-write state on failure. Guarded recovery compared the disposable chapter against the prior journal's exact final reverted hash before restoring the private original backup. Subsequent tests verified exact restoration again; original backup hashes match across runs. No real Scripture project was edited. Recovery requires an explicit local request and verified disposable identity; never widen it to other projects or publish backup/journal data.

@@ -1,0 +1,30 @@
+{
+    "build":  "0.1.0-dev.6+g73fb595c",
+    "host":  "9.5.110.1",
+    "utc":  "2026-11-14T05:05:35.5959046Z",
+    "results":  [
+                    "production-window-current-chapter-scope: PASS",
+                    "disposable-marker-and-edit-permission: PASS",
+                    "host-read-and-protected-USFM-scan: PASS",
+                    "real-host-lock-apply-and-readback: PASS",
+                    "stale-finding-rejected-without-write: PASS",
+                    "real-host-revert-exact: PASS",
+                    "modify-apply-and-revert: PASS",
+                    "post-note-host-apply-revert-and-export: PASS",
+                    "wrapped-source-host-acceptance: NOT_EXERCISED (host canonicalizes source wrapping; core whitespace regressions are separate)",
+                    "original-disposable-chapter-restored-exactly: PASS"
+                ],
+    "localCoreAssertions":  403,
+    "installedArtifactHashesVerified":  true,
+    "helperRemoved":  true,
+    "originalBackupHashesMatchAcrossRuns":  true,
+    "helperIncident":  "An expanded developer fixture initially omitted the required book header and was rejected by the host. The helper cleanup expectation was corrected; exact journal-checkpoint recovery restored the original disposable chapter. Final tests restored it exactly again. Only the marked disposable project was edited.",
+    "normalPluginScan":  {
+                             "scriptureChanged":  false,
+                             "findings":  0,
+                             "failed":  0,
+                             "verses":  7,
+                             "buildIdentityVisible":  true,
+                             "chapters":  1
+                         }
+}

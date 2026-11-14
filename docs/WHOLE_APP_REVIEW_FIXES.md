@@ -1,6 +1,6 @@
 # Whole-app review fixes
 
-The seven findings from the second whole-app review are tracked separately from the original delivery gates. Build 6 is the corrected candidate; installation and exact-host results will be recorded in the developer handoff after verification.
+The seven findings from the second whole-app review are tracked separately from the original delivery gates. Build 6 is installed and published. [Exact-host evidence](host-acceptance-build6.json) and [developer handoff](DEVELOPER_HANDOFF.md) distinguish completed checks from remaining acceptance gates.
 
 | Issue | Fix | Regression evidence |
 | --- | --- | --- |

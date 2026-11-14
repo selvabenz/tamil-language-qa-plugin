@@ -21,7 +21,7 @@ The board is linked to this repository. All 14 implementation tasks are In Progr
 | P3 | Offline resources and responsiveness | [#13](https://github.com/selvabenz/tamil-language-qa-plugin/issues/13) |
 | P3 | Release validation | [#15](https://github.com/selvabenz/tamil-language-qa-plugin/issues/15) |
 
-The [development prerelease](https://github.com/selvabenz/tamil-language-qa-plugin/releases/tag/v0.1.0-dev.4) provides the last installed host-tested build. See [implementation status](IMPLEMENTATION_STATUS.md) for its 403 current-source passing assertions, partial linguistic coverage and pending exact-host acceptance. A prerelease is not production completion.
+The [development prerelease](https://github.com/selvabenz/tamil-language-qa-plugin/releases/tag/v0.1.0-dev.6) provides the last installed host-tested build. See [implementation status](IMPLEMENTATION_STATUS.md) for its 403 current-source passing assertions, partial linguistic coverage and pending exact-host acceptance. A prerelease is not production completion.
 
 ## Review fixes
 
@@ -30,3 +30,5 @@ The [development prerelease](https://github.com/selvabenz/tamil-language-qa-plug
 - [#18](https://github.com/selvabenz/tamil-language-qa-plugin/issues/18): clean source and catalog provenance before packaging.
 
 These bounded defects have regression coverage; broader host acceptance remains in #15. See [developer handoff](DEVELOPER_HANDOFF.md).
+
+Whole-app review issues [#19–#25](https://github.com/selvabenz/tamil-language-qa-plugin/issues?q=is%3Aissue+label%3Abug) have individual labels, build 6 board targets and completion evidence. Their fixes do not close the broader acceptance gates in original issues #1–#15. See [review fix matrix](WHOLE_APP_REVIEW_FIXES.md).

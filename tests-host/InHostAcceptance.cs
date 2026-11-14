@@ -65,7 +65,9 @@ public sealed class InHostAcceptance : IParatextStartupAutomaticPlugin
             {
                 if(held==null)throw new InvalidOperationException("Fixture lock unavailable.");
                 if(store.Read(1,1)!=original)throw new InvalidOperationException("Disposable chapter changed before fixture write.");
-                touched=true;lastKnown=fixture;store.Write(1,1,fixture);lastKnown=store.Read(1,1);
+                touched=true;lastKnown=original;
+                try{store.Write(1,1,fixture);lastKnown=store.Read(1,1);}
+                catch{string current=store.Read(1,1);if(current==original||current==fixture)lastKnown=current;throw;}
             }
             var catalog=Json.Read<Catalog>(File.ReadAllText(Path.Combine(root,"rules.json"),Encoding.UTF8));
             var style=new HouseStyle();var engine=new SandhiEngine(catalog);
@@ -103,13 +105,13 @@ public sealed class InHostAcceptance : IParatextStartupAutomaticPlugin
                     try{store.Write(1,1,raw);lastKnown=store.Read(1,1);}
                     catch{string current=store.Read(1,1);if(current==beforeFixture||current==raw)lastKnown=current;throw;}
                 }
-                if(raw.Contains("அவரை\nபார்த்தான்")&&!lastKnown.Contains("அவரை\nபார்த்தான்")&&!lastKnown.Contains("அவரை\r\nபார்த்தான்"))throw new InvalidOperationException("Host normalized away the wrapped boundary; wrapped acceptance cannot be claimed.");
+                if(raw.Contains("அவரை\nபார்த்தான்")&&!lastKnown.Contains("அவரை\nபார்த்தான்")&&!lastKnown.Contains("அவரை\r\nபார்த்தான்")){results.Add("wrapped-source-host-acceptance: NOT_EXERCISED (host canonicalizes source wrapping; core whitespace regressions are separate)");continue;}
                 string exactFixture=lastKnown;var target=scan().Single(f=>f.Actionable);
                 var edit=service.Apply(target,target.Suggested,"developer acceptance",false,style.Hash);lastKnown=store.Read(1,1);
                 service.Revert(edit,"developer acceptance",target);lastKnown=store.Read(1,1);
                 if(lastKnown!=exactFixture||target.State!=ReviewState.Reverted||(string)FindingExport.ToSchema(target)["status"]=="accepted")throw new InvalidOperationException("Regression fixture revert/outcome mismatch.");
+                results.Add(raw.Contains("\\ft")?"post-note-host-apply-revert-and-export: PASS":"wrapped-source-host-apply-revert-and-export: PASS");
             }
-            results.Add("post-note-and-wrapped-apply-revert-and-export: PASS");
         }
         catch(Exception ex){results.Add("ERROR: "+ex.ToString());}
         finally
