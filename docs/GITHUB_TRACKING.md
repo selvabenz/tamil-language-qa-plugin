@@ -21,7 +21,7 @@ The board is linked to this repository. All 14 implementation tasks are In Progr
 | P3 | Offline resources and responsiveness | [#13](https://github.com/selvabenz/tamil-language-qa-plugin/issues/13) |
 | P3 | Release validation | [#15](https://github.com/selvabenz/tamil-language-qa-plugin/issues/15) |
 
-The [development prerelease](https://github.com/selvabenz/tamil-language-qa-plugin/releases/tag/v0.1.0-dev.6) provides the last installed host-tested build. See [implementation status](IMPLEMENTATION_STATUS.md) for its 403 current-source passing assertions, partial linguistic coverage and pending exact-host acceptance. A prerelease is not production completion.
+The [development prerelease](https://github.com/selvabenz/tamil-language-qa-plugin/releases/tag/v0.1.0-dev.8) provides the last installed host-tested build. See [implementation status](IMPLEMENTATION_STATUS.md) for its 708 current-source passing assertions, partial linguistic coverage and pending exact-host acceptance. A prerelease is not production completion.
 
 ## Review fixes
 
@@ -46,3 +46,5 @@ The five findings in the [sandhi review](SANDHI_RULES_REVIEW.md) have separate i
 See [fix evidence and remaining limits](SCRIPTURE_CONTEXT_FIXES.md). These bounded tasks do not close the broader independent linguistic-evaluation gates in #5 and #15.
 
 [Issue #31](https://github.com/selvabenz/tamil-language-qa-plugin/issues/31) records the confirmed host resource-access blocker for OTCV/TAOVBSI/TaOVM+, approved-access requirements and held-out accuracy evaluation. It remains In Progress with P0/QA/linguistics/research labels, phase P3, and a production-evaluation target. Zero resource chapters read must never be reported as zero errors.
+
+Build 8 resolves the bounded SR-01 through SR-05 tasks with 708 assertions and exact-host insertion/replacement/removal/abstention tests. The BSI export enabled read-only 66-book evaluation after the host resource API refusal. Issue #31 and broader gates #5/#15 remain open for adjudicating 264 proposals, independent natural-error data and the other approved resources.

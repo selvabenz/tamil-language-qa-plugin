@@ -2,7 +2,7 @@
 
 Updated 2026-11-14 after review fixes #16–#30.
 
-## Scripture-context revision (build 8 candidate)
+## Current Scripture-context build 8
 
 Current source includes the [Scripture-context fixes](SCRIPTURE_CONTEXT_FIXES.md) for SR-01–SR-05, tracked in #26–#30. Local build passes **708 core assertions**, 51 synthetic Scripture-style cases, the native SDK suite, all finding-export schema checks and reference/build-integrity validators. All 22 unambiguous B corrections are mandatory; B004 abstains and B010 is idempotent. See the complete [rule capability matrix](RULE_CAPABILITIES.md).
 
@@ -10,9 +10,13 @@ The revised engine uses `ScriptureRuleProfile.cs`: 11 bounded modern addition fa
 
 The user authorized a read-only comparison with OTCV, TAOVBSI and enhanced TaOVM+, and normal restarts. Candidate `0.1.0-dev.7+g78186d91` was installed and checksum-verified. The resource benchmark was blocked by the host: OTCV/TAOVBSI denied GetUSFM and TaOVM+ was not exposed as readable IProject. **Zero chapters were read and no accuracy score exists.** See [aggregate access evidence](resource-benchmark-build7.json) and [remaining gate #31](https://github.com/selvabenz/tamil-language-qa-plugin/issues/31). The developer-only helper must respect this refusal; no token borrowing, private API or decryption workaround is permitted. Build 6 evidence below remains historical until a new host acceptance report is recorded.
 
-The user subsequently supplied a local 66-book BSI OV USFM reference. The revised profile and evaluation protocol are documented in [local reference evaluation](BSI_REFERENCE_EVALUATION.md). The original host API block remains for the resources, but this export permits a read-only BSI comparison. Build 8 is the candidate for the reference-driven changes; build 7 host evidence is historical.
+The user subsequently supplied a local 66-book BSI OV USFM reference. The revised profile and evaluation protocol are documented in [local reference evaluation](BSI_REFERENCE_EVALUATION.md). The original host API block remains for the resources, but this export permits a read-only BSI comparison. Build 8 is installed for the reference-driven changes; build 7 host evidence is historical.
 
 Frozen-profile BSI evaluation completed across 66 books, 1,189 chapters and 31,102 verse units, with all inputs unchanged. There are 264 unadjudicated proposals and 1,596 review-only findings; 13,652/33,589 controlled missing-ஒற்று cases are reconstructed (coverage, not natural-error accuracy). See [aggregate results](bsi-reference-evaluation-build8.json). Remaining work: adjudicate proposals, confirm edition/register policy, expand unsupported morphology/compounds, obtain separate natural-error gold data, and obtain approved access for the other resources. Do not promise 100% reliability from a clean or low-finding scan.
+
+Installed product: **0.1.0-dev.8+g7faca08f**, source `7faca08f64c38ad297a1459ba732a7531f1e5d9b`. [Exact-host build 8 evidence](host-acceptance-build8.json) passes insertion/replacement/removal Apply/Revert, post-note edits, stale refusal, Modify & Apply, homograph/naming/deity abstention and exact original disposable-chapter restoration. The consumed developer helper was removed; only the normal product plugin remains. Wrapped raw-source host coverage remains unexercised because the host canonicalizes wrapping; core whitespace regressions pass. Package SHA-256: `b9ff4432566c55caaceccda3708084232e3a42f4dcb9b576b089a869a151f11c`.
+
+The private reviewer page is `artifacts/private-bsi-sandhi-review.html`. It contains the 264 proposals and verse context; do not commit or upload it or its saved decisions. It is a local adjudication tool, not an editor. The corpus and private findings remain outside release artifacts.
 
 ## Historical build 6 baseline
 
@@ -38,7 +42,7 @@ Original reference-package files are unchanged. Packaging now also requires docu
 Run from the repository root in Windows PowerShell:
 
 ```powershell
-./scripts/build.ps1 -BuildNumber 6
+./scripts/build.ps1 -BuildNumber 8
 ./tests/BuildIntegrity.Tests.ps1
 python scripts/validate-export.py
 python reference/tamil_punarchi_agent_package/validate_package.py

@@ -11,7 +11,7 @@ rows = []
 for source in args.findings:
     rows.extend(row for row in json.loads(source.read_text(encoding='utf-8-sig')) if row.get('suggested'))
 payload = json.dumps(rows, ensure_ascii=True).replace('<', '\\u003c').replace('>', '\\u003e').replace('&', '\\u0026')
-page = '''<!doctype html><html lang="en"><meta charset="utf-8"><title>Private BSI OV sandhi review</title>
+page = r'''<!doctype html><html lang="en"><meta charset="utf-8"><title>Private BSI OV sandhi review</title>
 <style>body{font:16px system-ui;margin:24px;max-width:1100px;background:#f6f6f4;color:#222}header{position:sticky;top:0;background:#f6f6f4;padding:12px 0}input,select,button{font:inherit;padding:8px}article{background:white;border:1px solid #ddd;border-radius:6px;padding:18px;margin:14px 0}pre{white-space:pre-wrap;font:18px/1.7 system-ui}small{color:#555}</style>
 <header><h1>Private BSI OV sandhi review</h1><p>Unadjudicated proposals, not confirmed errors. Review verse meaning, edition style and grammar. This page makes no Scripture changes and uses no network services.</p><input id="search" placeholder="Filter reference, rule or text"><button id="export">Save review decisions</button><p id="count"></p></header><main id="rows"></main>
 <script>const data=PAYLOAD;

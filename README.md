@@ -4,7 +4,7 @@ An offline Tamil புணர்ச்சி / sandhi review plugin targeting **
 
 **Development preview:** the C# plugin builds against the target host SDK. It includes a native embedded review window, scope scanning, contextual suggestions, Apply / Reject / Ignore / Modify & Apply, guarded reversion, and inline annotation integration. Exact-host installation and acceptance are reported separately in [implementation status](docs/IMPLEMENTATION_STATUS.md).
 
-Download [development prerelease v0.1.0-dev.6](https://github.com/selvabenz/tamil-language-qa-plugin/releases/tag/v0.1.0-dev.6). It is installed locally and its host context-menu entry is detected; full interactive host acceptance remains pending.
+Download [development prerelease v0.1.0-dev.8](https://github.com/selvabenz/tamil-language-qa-plugin/releases/tag/v0.1.0-dev.8). It is installed locally and its safe-edit/context-abstention tests pass in Paratext 9.5.110.1; broader interactive host acceptance remains pending.
 
 ## Accuracy and coverage
 
@@ -56,3 +56,5 @@ python reference/tamil_punarchi_agent_package/validate_package.py
 ## Attribution and licensing
 
 Grammar attribution is retained in [SOURCES.md](reference/tamil_punarchi_agent_package/SOURCES.md). No repository-wide distribution license has yet been selected; public visibility alone does not grant an open-source license. Proprietary Paratext assemblies and restricted project text are excluded from distribution.
+
+The user-supplied BSI OV reference was scanned read-only across 66 books and 31,102 verse units. There are 264 unadjudicated proposals. Controlled missing-ottu recovery is 13,652/33,589 (40.64% coverage), showing substantial remaining gaps. See the [aggregate evaluation](docs/BSI_REFERENCE_EVALUATION.md); this is not a natural-error accuracy score.
