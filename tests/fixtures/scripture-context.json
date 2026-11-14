@@ -25,7 +25,7 @@
     {"id":"bridge","usfm":"\\v 22-23 அவனை பார்த்தான்.","original":"அவனை பார்த்தான்","replacement":"அவனைப் பார்த்தான்","operation":"insert"},
     {"id":"ambiguous-pronoun","usfm":"\\v 24 அவர் அவரை பார்த்தார்.","original":"அவரை பார்த்தார்","replacement":null,"operation":"review"},
     {"id":"ambiguous-crop","usfm":"\\v 25 ஒரு கூடை அவரை கொடுத்தான்.","original":"அவரை கொடுத்தான்","replacement":null,"operation":"review"},
-    {"id":"unknown-case","usfm":"\\v 26 மரத்தை பார்த்தான்.","original":"மரத்தை பார்த்தான்","replacement":null,"operation":"review"},
+    {"id":"unknown-case","usfm":"\\v 26 அந்நியவடிவத்தை பார்த்தான்.","original":"அந்நியவடிவத்தை பார்த்தான்","replacement":null,"operation":"review"},
     {"id":"proper-subject","usfm":"\\v 27 கர்த்தர் சொன்னார்.","operation":"none"},
     {"id":"soft-correct","usfm":"\\v 28 அவன் வந்து சென்றான்.","operation":"none"},
     {"id":"mid-correct","usfm":"\\v 29 அவர் செய்து தந்தார்.","operation":"none"},
@@ -43,6 +43,14 @@
     {"id":"wrapped-replacement","usfm":"\\v 42 இந்தக்\r\n  புத்தகம் திறக்கப்பட்டது.","original":"இந்தக்\r\n  புத்தகம்","replacement":"இந்தப்\r\n  புத்தகம்","operation":"replace"},
     {"id":"tab-removal","usfm":"\\v 43 வந்தப்\tபையன் கேட்டான்.","original":"வந்தப்\tபையன்","replacement":"வந்த\tபையன்","operation":"remove"},
     {"id":"wrapped-insertion","usfm":"\\v 44 அவன் ஓடி\nபோனான்.","original":"ஓடி\nபோனான்","replacement":"ஓடிப்\nபோனான்","operation":"insert"},
-    {"id":"known-case-unknown-verb","usfm":"\\v 45 அவனை தழுவினார்.","original":"அவனை தழுவினார்","replacement":null,"operation":"review"}
+    {"id":"known-case-unknown-verb","usfm":"\\v 45 அவனை தழுவினார்.","original":"அவனை தழுவினார்","replacement":"அவனைத் தழுவினார்","operation":"insert"},
+    {"id":"demonstrative-deity-policy","usfm":"\\v 46 இந்த தேவன் இருக்கிறார்.","original":"இந்த தேவன்","replacement":null,"operation":"review"},
+    {"id":"unknown-correct-ottu","usfm":"\\v 47 அந்நியவடிவத்தைப் பார்த்தான்.","operation":"none"},
+    {"id":"pronoun-plural-case","usfm":"\\v 48 அவர்களை காப்பாற்றினார்.","original":"அவர்களை காப்பாற்றினார்","replacement":"அவர்களைக் காப்பாற்றினார்","operation":"insert"},
+    {"id":"participle-object-between-verbs","usfm":"\\v 49 பார்த்து கட்டளையை அறிந்தான்.","original":"பார்த்து கட்டளையை","replacement":"பார்த்துக் கட்டளையை","operation":"insert"},
+    {"id":"noun-ending-ai-is-not-case","usfm":"\\v 50 மலை காட்சியளித்தது.","original":"மலை காட்சியளித்தது","replacement":null,"operation":"review"},
+    {"id":"naming-context","usfm":"\\v 51 அவனுக்கு புதியபெயர் என்று பேரிட்டான்.","original":"அவனுக்கு புதியபெயர்","replacement":null,"operation":"review"},
+    {"id":"deity-inflection-right","usfm":"\\v 52 என்னை தேவனுடைய பிள்ளை என்றார்.","original":"என்னை தேவனுடைய","replacement":null,"operation":"review"},
+    {"id":"divine-editorial-lexeme","usfm":"\\v 53 அவனை தேவசாயலாக உருவாக்கினார்.","original":"அவனை தேவசாயலாக","replacement":null,"operation":"review"}
   ]
 }

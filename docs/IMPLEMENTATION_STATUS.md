@@ -20,7 +20,7 @@ The first implementation is a development preview, not a production release or a
 ## Validation evidence so far
 
 - Local build against Paratext 9.5.110.1's installed assemblies succeeds with warnings treated as errors.
-- 661 current-source core assertions pass, consuming all 99 supplied scenarios plus 43 synthetic Scripture-style cases covering narrative, speech, poetry barriers, notes, names, ambiguity, wrong/unnecessary consonants and safe Apply/Revert. A 176-verse synthetic core scan took 9 ms in the clean candidate build; this is not an end-to-end host performance guarantee.
+- 708 current-source core assertions pass, consuming all 99 supplied scenarios plus 51 synthetic Scripture-style cases covering narrative, speech, poetry barriers, notes, names, ambiguity, wrong/unnecessary consonants and safe Apply/Revert. A 176-verse synthetic core scan took 9 ms in the clean candidate build; this is not an end-to-end host performance guarantee.
 - The 24 imported B rows contain 22 unambiguous corrections, one ambiguous correction-needed input (B004), and one already-correct input (B010). All 22 expected corrections are mandatory and produced; B004 abstains and B010 remains unchanged. These are development fixtures, not independent accuracy evidence. The original import is unchanged; maintained expectation corrections are explicit.
 - Host-contract tests load both interfaces, enumerate menus and construct/layout the native control against SDK 2.0.100. They are not in-host acceptance tests.
 - Administrative installation succeeded after the initial Windows access denial. All four installed files were checksum-verified in `C:\Program Files\Paratext 9\plugins\TamilSandhiQA`; the installed identity is `0.1.0-dev.6+g73fb595c`.

@@ -1,6 +1,6 @@
 # Runtime rule capabilities
 
-Profile `scripture-modern-1`. All 183 imported entries are listed. Bounded lexical support does not mean complete coverage of the grammar construction. Six review-tier promotions are explicitly enumerated in `ScriptureRuleProfile.cs`; other tiers/registers cannot execute.
+Profile `scripture-modern-2`. All 183 imported entries are listed. Bounded lexical support does not mean complete coverage of the grammar construction. Six review-tier promotions are explicitly enumerated in `ScriptureRuleProfile.cs`; other tiers/registers cannot execute.
 
 | Catalog ID | Runtime capability |
 |---|---|

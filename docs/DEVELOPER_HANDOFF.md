@@ -2,13 +2,15 @@
 
 Updated 2026-11-14 after review fixes #16–#30.
 
-## Scripture-context candidate (build 7)
+## Scripture-context revision (build 8 candidate)
 
-Current source includes the [Scripture-context fixes](SCRIPTURE_CONTEXT_FIXES.md) for SR-01–SR-05, tracked in #26–#30. Local build passes **661 core assertions**, 43 synthetic Scripture-style cases, the native SDK suite, all finding-export schema checks and reference/build-integrity validators. All 22 unambiguous B corrections are mandatory; B004 abstains and B010 is idempotent. See the complete [rule capability matrix](RULE_CAPABILITIES.md).
+Current source includes the [Scripture-context fixes](SCRIPTURE_CONTEXT_FIXES.md) for SR-01–SR-05, tracked in #26–#30. Local build passes **708 core assertions**, 51 synthetic Scripture-style cases, the native SDK suite, all finding-export schema checks and reference/build-integrity validators. All 22 unambiguous B corrections are mandatory; B004 abstains and B010 is idempotent. See the complete [rule capability matrix](RULE_CAPABILITIES.md).
 
-The new engine uses `ScriptureRuleProfile.cs`: 11 bounded modern addition families and 5 non-addition checks, with insertion/replacement/removal, ambiguity blockers, enforced tier/register, and explicit coverage counts. All data stays offline. Full sentence semantics and independent Scripture accuracy remain unverified. Original reference files remain unchanged; maintained expectation corrections are in `tests/fixtures/reference-overrides.json`.
+The revised engine uses `ScriptureRuleProfile.cs`: 11 bounded modern addition families and 5 non-addition checks, with insertion/replacement/removal, ambiguity blockers, enforced tier/register, and explicit coverage counts. All data stays offline. Full sentence semantics and independent Scripture accuracy remain unverified. Original reference files remain unchanged; maintained expectation corrections are in `tests/fixtures/reference-overrides.json`.
 
 The user authorized a read-only comparison with OTCV, TAOVBSI and enhanced TaOVM+, and normal restarts. Candidate `0.1.0-dev.7+g78186d91` was installed and checksum-verified. The resource benchmark was blocked by the host: OTCV/TAOVBSI denied GetUSFM and TaOVM+ was not exposed as readable IProject. **Zero chapters were read and no accuracy score exists.** See [aggregate access evidence](resource-benchmark-build7.json) and [remaining gate #31](https://github.com/selvabenz/tamil-language-qa-plugin/issues/31). The developer-only helper must respect this refusal; no token borrowing, private API or decryption workaround is permitted. Build 6 evidence below remains historical until a new host acceptance report is recorded.
+
+The user subsequently supplied a local 66-book BSI OV USFM reference. The revised profile and evaluation protocol are documented in [local reference evaluation](BSI_REFERENCE_EVALUATION.md). The original host API block remains for the resources, but this export permits a read-only BSI comparison. Build 8 is the candidate for the reference-driven changes; build 7 host evidence is historical.
 
 ## Current state
 

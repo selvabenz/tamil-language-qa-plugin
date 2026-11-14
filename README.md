@@ -10,7 +10,7 @@ Download [development prerelease v0.1.0-dev.6](https://github.com/selvabenz/tami
 
 100% accuracy is the ambition, not an achieved result. The current analyzer implements 11 bounded modern addition families and 5 non-addition checks using local lexical sets; it can insert, replace or remove an ottu in supported contexts. Unknown or conflicting nominated boundaries remain for human review; it does not comprehensively detect every unsupported construction.
 
-Current-source local validation passes 661 assertions and consumes all 99 supplied scenarios plus 43 synthetic Scripture-style context cases. Of the 24 imported B rows, 22 unambiguous corrections are required and produced, one ambiguous input abstains, and one already-correct input is left unchanged. These fixtures are not an independent accuracy evaluation. See the [Scripture-context fixes](docs/SCRIPTURE_CONTEXT_FIXES.md) and [complete capability matrix](docs/RULE_CAPABILITIES.md). See the [remaining release gates](docs/IMPLEMENTATION_STATUS.md).
+Current-source local validation passes 708 assertions and consumes all 99 supplied scenarios plus 51 synthetic Scripture-style context cases. Of the 24 imported B rows, 22 unambiguous corrections are required and produced, one ambiguous input abstains, and one already-correct input is left unchanged. These fixtures are not an independent accuracy evaluation. See the [Scripture-context fixes](docs/SCRIPTURE_CONTEXT_FIXES.md) and [complete capability matrix](docs/RULE_CAPABILITIES.md). See the [remaining release gates](docs/IMPLEMENTATION_STATUS.md).
 
 ## Build, test and install
 
