@@ -139,7 +139,10 @@ namespace TamilSandhi.Plugin
         {
             if(at==null)throw new InvalidOperationException("Choose a Scripture reference first.");
             var work=new List<Work>();
-            var chosen=selected.AvailableBooks.Where(b=>b.InProjectScope).OrderBy(b=>b.Number).ToList();
+            // The user's checker scope selects among books actually available in the
+            // project. InProjectScope is a separate project-planning setting and can
+            // be false even for the chapter currently open in a disposable project.
+            var chosen=selected.AvailableBooks.OrderBy(b=>b.Number).ToList();
             if(selectedScope<=3)chosen=chosen.Where(b=>b.Number==at.BookNum).ToList();
             if(selectedScope==4)
             {

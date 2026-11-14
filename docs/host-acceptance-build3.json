@@ -1,0 +1,14 @@
+﻿{
+    "build":  "0.1.0-dev.3+gc9d89992",
+    "host":  "9.5.110.1",
+    "utc":  "2026-11-14T03:54:05.2061604Z",
+    "results":  [
+                    "disposable-marker-and-edit-permission: PASS",
+                    "host-read-and-protected-USFM-scan: PASS",
+                    "real-host-lock-apply-and-readback: PASS",
+                    "stale-finding-rejected-without-write: PASS",
+                    "real-host-revert-exact: PASS",
+                    "modify-apply-and-revert: PASS",
+                    "original-disposable-chapter-restored-exactly: PASS"
+                ]
+}

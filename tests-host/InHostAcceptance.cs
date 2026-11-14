@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Paratext.PluginInterfaces;
 using TamilSandhi;
@@ -33,6 +34,14 @@ public sealed class InHostAcceptance : IParatextStartupAutomaticPlugin
             if(!original.Contains("Synthetic test only"))throw new InvalidOperationException("Disposable chapter marker missing; refused.");
             store=new HostStore(p,this);
             if(!store.CanEdit(1,1))throw new InvalidOperationException("Disposable chapter not editable.");
+            var product=Assembly.LoadFrom(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),"TamilSandhi.ptxplg"));
+            var reviewType=product.GetType("TamilSandhi.Plugin.ReviewControl",true);
+            using(var control=(IDisposable)Activator.CreateInstance(reviewType))
+            {
+                var work=(System.Collections.ICollection)reviewType.GetMethod("CreateWork",BindingFlags.Instance|BindingFlags.NonPublic).Invoke(control,new object[]{p,p.Versification.CreateReference(1,1,1),2});
+                if(work.Count!=1)throw new InvalidOperationException("Current chapter scope did not select exactly one chapter.");
+            }
+            results.Add("production-window-current-chapter-scope: PASS");
             File.WriteAllText(Path.Combine(root,"original.usfm"),original,new UTF8Encoding(false));
             File.WriteAllText(Path.Combine(root,"original.sha256"),TextIdentity.Hash(original));
             results.Add("disposable-marker-and-edit-permission: PASS");
