@@ -54,26 +54,31 @@ namespace TamilSandhi.Plugin
             scope.Items.AddRange(new object[]{"Current verse","Selected passage","Current chapter","Current book","Selected books","Whole project"});scope.SelectedIndex=selection?1:0;
             filter.Items.AddRange(new object[]{"All","Open","NeedsReview","Applied","Rejected","Ignored","Stale"});filter.SelectedIndex=0;
             list.Columns.Add("Reference",100);list.Columns.Add("Original",200);list.Columns.Add("Suggestion",200);list.Columns.Add("Status",100);list.Columns.Add("Rule",140);
-            var toolbar=new FlowLayoutPanel {Dock=DockStyle.Top,AutoSize=true,WrapContents=true,Padding=new Padding(6)};
-            toolbar.Controls.AddRange(new Control[]{new Label{Text="Scope:",AutoSize=true,Padding=new Padding(0,7,0,0)},scope,books,scan,cancel,filter,new Button{Text="About "+BuildInfo.Version.Split('+')[0],AutoSize=true}});
-            ((Button)toolbar.Controls[6]).Click+=delegate {MessageBox.Show(this,"Tamil Sandhi QA\n"+BuildInfo.Version+"\nTarget: Paratext 9.5.110.1\nCatalog: 2026-11-13\nConfig: "+style.Hash+"\nLocal data: "+projectFolder+"\nDevelopment preview. Four supported suggestion families; remaining analyses need review.","About Tamil Sandhi QA",MessageBoxButtons.OK,MessageBoxIcon.Information);};
-            var actions=new FlowLayoutPanel {Dock=DockStyle.Bottom,AutoSize=true,Padding=new Padding(6)};
+            var toolbar=new ToolStrip {Dock=DockStyle.Top,GripStyle=ToolStripGripStyle.Hidden,RenderMode=ToolStripRenderMode.System,CanOverflow=true,AccessibleName="Scan toolbar"};
+            var bookItem=new ToolStripControlHost(books){AutoSize=false,Width=100,Available=false};
+            toolbar.Items.Add(new ToolStripControlHost(scope){AutoSize=false,Width=160});toolbar.Items.Add(bookItem);toolbar.Items.Add(ToolButton(scan));toolbar.Items.Add(ToolButton(cancel));toolbar.Items.Add(new ToolStripControlHost(filter){AutoSize=false,Width=130});
+            var about=new ToolStripButton("About "+BuildInfo.Version.Split('+')[0]);toolbar.Items.Add(about);
+            about.Click+=delegate {MessageBox.Show(this,"Tamil Sandhi QA\n"+BuildInfo.Version+"\nTarget: Paratext 9.5.110.1\nCatalog: 2026-11-13\nConfig: "+style.Hash+"\nLocal data: "+projectFolder+"\nDevelopment preview. Four supported suggestion families; remaining analyses need review.","About Tamil Sandhi QA",MessageBoxButtons.OK,MessageBoxIcon.Information);};
+            var actions=new ToolStrip {Dock=DockStyle.Bottom,GripStyle=ToolStripGripStyle.Hidden,RenderMode=ToolStripRenderMode.System,CanOverflow=true,AccessibleName="Review actions"};
             var reject=Button("&Reject",delegate{Decide(ReviewState.Rejected,false);});
             var ignore=Button("&Ignore",delegate{Decide(ReviewState.Ignored,false);});
             var persist=Button("Ignore occurrence (project)",delegate{Decide(ReviewState.Ignored,true);});
             var reopen=Button("&Leave open",delegate{Decide(ReviewState.Open,true);});
             var reset=Button("Reset saved decisions",delegate{decisions.Clear();SaveDecisions();foreach(var f in findings.Where(x=>x.State==ReviewState.Rejected||x.State==ReviewState.Ignored))f.State=f.Suggested==null?ReviewState.NeedsReview:ReviewState.Open;RefreshList();Changed();});
-            actions.Controls.AddRange(new Control[]{apply,modify,reject,ignore,persist,reopen,Button("Previous",delegate{NavigateFinding(-1);}),Button("Next",delegate{NavigateFinding(1);}),revert,reset,Button("House style...",EditHouseStyle)});
-            actions.Controls.Add(Button("Review history...",ShowHistory));actions.Controls.Add(Button("Export findings...",ExportFindings));
+            foreach(var b in new[]{apply,modify,reject,ignore,persist,reopen,Button("Previous",delegate{NavigateFinding(-1);}),Button("Next",delegate{NavigateFinding(1);}),revert,reset,Button("House style...",EditHouseStyle),Button("Review history...",ShowHistory),Button("Export findings...",ExportFindings)})actions.Items.Add(ToolButton(b));
             var split=new SplitContainer {Dock=DockStyle.Fill,Orientation=Orientation.Horizontal,SplitterDistance=200};split.Panel1.Controls.Add(list);split.Panel2.Controls.Add(context);
-            var footer=new FlowLayoutPanel {Dock=DockStyle.Bottom,AutoSize=true,Padding=new Padding(6)};footer.Controls.Add(status);
+            var footer=new Panel {Dock=DockStyle.Bottom,Height=36,Padding=new Padding(4)};status.AutoSize=false;status.AutoEllipsis=true;status.Dock=DockStyle.Fill;footer.Controls.Add(status);
             Controls.Add(split);Controls.Add(footer);Controls.Add(actions);Controls.Add(toolbar);
             scan.Click+=delegate{StartScan();};cancel.Click+=delegate{cancelRequested=true;};filter.SelectedIndexChanged+=delegate{RefreshList();};list.SelectedIndexChanged+=delegate{ShowFinding();};
             apply.Click+=delegate{Preview(false);};modify.Click+=delegate{Preview(true);};revert.Click+=Revert;
             list.ContextMenuStrip=MenuForSelection();
-            scope.SelectedIndexChanged+=delegate{books.Enabled=scope.SelectedIndex==4;};books.Enabled=scope.SelectedIndex==4;
+            scope.SelectedIndexChanged+=delegate{books.Enabled=scope.SelectedIndex==4;bookItem.Available=scope.SelectedIndex==4;};books.Enabled=scope.SelectedIndex==4;
         }
         private static Button Button(string text,EventHandler click){var b=new Button{Text=text,AutoSize=true};b.Click+=click;return b;}
+        private static ToolStripButton ToolButton(Button button)
+        {
+            var item=new ToolStripButton(button.Text){Enabled=button.Enabled,DisplayStyle=ToolStripItemDisplayStyle.Text};item.Click+=delegate{button.PerformClick();};button.EnabledChanged+=delegate{item.Enabled=button.Enabled;};return item;
+        }
         public override void OnAddedToParent(IPluginChildWindow window,IWindowPluginHost pluginHost,string state)
         {
             parent=window;host=pluginHost;parent.SetTitle("Tamil Sandhi QA "+BuildInfo.Version.Split('+')[0]);

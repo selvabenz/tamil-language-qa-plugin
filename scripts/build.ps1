@@ -49,7 +49,7 @@ if (!$CoreOnly) {
     & $compiler /nologo /target:library /optimize+ /warnaserror+ /r:System.Core.dll /r:System.Web.Extensions.dll /r:System.Drawing.dll /r:System.Windows.Forms.dll "/r:$netstandard" "/r:$core" $references "/out:$(Join-Path $output 'TamilSandhi.ptxplg')" $pluginSources
     if ($LASTEXITCODE -ne 0) { throw 'Plugin compilation failed.' }
     $hostTests=Join-Path $output 'HostContractTests.exe'
-    & $compiler /nologo /target:exe /warnaserror+ /r:System.Core.dll /r:System.Windows.Forms.dll "/out:$hostTests" (Join-Path $repoRoot 'tests-host\HostContractTests.cs')
+    & $compiler /nologo /target:exe /warnaserror+ /r:System.Core.dll /r:System.Windows.Forms.dll /r:System.Drawing.dll "/out:$hostTests" (Join-Path $repoRoot 'tests-host\HostContractTests.cs')
     if ($LASTEXITCODE -ne 0) { throw 'Host contract test compilation failed.' }
     & $hostTests $output $ParatextDir
     if ($LASTEXITCODE -ne 0) { throw 'Host contract tests failed.' }
