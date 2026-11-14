@@ -30,9 +30,24 @@ public sealed class InHostAcceptance : IParatextStartupAutomaticPlugin
             if(host.ApplicationVersion!=new Version(9,5,110,1))throw new InvalidOperationException("Unexpected host version; refused.");
             var p=host.GetAllProjects(false).Single(x=>x.ShortName=="NSTest");
             if(p.LongName!="Note Suggestions Disposable Test"||p.IsResource)throw new InvalidOperationException("Disposable project identity mismatch; refused.");
+            store=new HostStore(p,this);
+            string recoveryRequest=Path.Combine(root,"recover-from.txt");
+            if(File.Exists(recoveryRequest))
+            {
+                string previous=Path.GetFullPath(File.ReadAllText(recoveryRequest).Trim());
+                if(Path.GetDirectoryName(previous)!=Path.GetDirectoryName(root)||!Path.GetFileName(previous).StartsWith("host-acceptance-",StringComparison.Ordinal))throw new InvalidOperationException("Invalid recovery directory.");
+                string backup=File.ReadAllText(Path.Combine(previous,"original.usfm"),Encoding.UTF8);
+                var checkpoint=new FileJournal(Path.Combine(previous,"journal.jsonl")).Read().Last();
+                if(!backup.Contains("Synthetic test only")||checkpoint.State!="reverted"||checkpoint.Project!=p.ID)throw new InvalidOperationException("Recovery identity/checkpoint refused.");
+                using(var held=store.Lock(1,1))
+                {
+                    if(held==null||TextIdentity.Hash(store.Read(1,1))!=checkpoint.AfterHash)throw new InvalidOperationException("Recovery source differs from verified journal checkpoint; refused.");
+                    store.Write(1,1,backup);if(store.Read(1,1)!=backup)throw new InvalidOperationException("Recovery restoration mismatch.");
+                }
+                results.Add("previous-run-original-restored-from-exact-journal-checkpoint: PASS");
+            }
             original=p.GetUSFM(1,1);
             if(!original.Contains("Synthetic test only"))throw new InvalidOperationException("Disposable chapter marker missing; refused.");
-            store=new HostStore(p,this);
             if(!store.CanEdit(1,1))throw new InvalidOperationException("Disposable chapter not editable.");
             var product=Assembly.LoadFrom(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),"TamilSandhi.ptxplg"));
             var reviewType=product.GetType("TamilSandhi.Plugin.ReviewControl",true);
@@ -79,12 +94,14 @@ public sealed class InHostAcceptance : IParatextStartupAutomaticPlugin
             service.Revert(changed,"developer acceptance");lastKnown=store.Read(1,1);
             if(lastKnown!=baseline)throw new InvalidOperationException("Modified revert mismatch.");
             results.Add("modify-apply-and-revert: PASS");
-            foreach(string raw in new[]{"\\c 1\n\\p\n\\v 1 தொடக்கம் \\f + \\ft குறிப்பு\\f* அவரை பார்த்தான்.","\\c 1\n\\p\n\\v 1 அவரை\nபார்த்தான்."})
+            foreach(string raw in new[]{"\\id GEN Synthetic regression\n\\c 1\n\\p\n\\v 1 தொடக்கம் \\f + \\ft குறிப்பு\\f* அவரை பார்த்தான்.","\\id GEN Synthetic regression\n\\c 1\n\\p\n\\v 1 அவரை\nபார்த்தான்."})
             {
                 using(var held=store.Lock(1,1))
                 {
                     if(held==null||store.Read(1,1)!=lastKnown)throw new InvalidOperationException("Regression fixture lock/source mismatch.");
-                    lastKnown=raw;store.Write(1,1,raw);lastKnown=store.Read(1,1);
+                    string beforeFixture=lastKnown;
+                    try{store.Write(1,1,raw);lastKnown=store.Read(1,1);}
+                    catch{string current=store.Read(1,1);if(current==beforeFixture||current==raw)lastKnown=current;throw;}
                 }
                 if(raw.Contains("அவரை\nபார்த்தான்")&&!lastKnown.Contains("அவரை\nபார்த்தான்")&&!lastKnown.Contains("அவரை\r\nபார்த்தான்"))throw new InvalidOperationException("Host normalized away the wrapped boundary; wrapped acceptance cannot be claimed.");
                 string exactFixture=lastKnown;var target=scan().Single(f=>f.Actionable);
