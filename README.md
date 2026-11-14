@@ -10,7 +10,7 @@ Download [development prerelease v0.1.0-dev.4](https://github.com/selvabenz/tami
 
 100% accuracy is the ambition, not an achieved result. The initial analyzer implements four suggestion families using small local lexical sets. Unknown or conflicting nominated boundaries remain for human review; it does not comprehensively detect every unsupported construction.
 
-Current-source local validation passes 367 assertions and consumes all 99 supplied scenarios. It produces the expected correction for 10 of 24 conditional suggestion scenarios; the other 14 are unimplemented or abstained. These fixtures are not an independent accuracy evaluation. See the [remaining release gates](docs/IMPLEMENTATION_STATUS.md).
+Current-source local validation passes 403 assertions and consumes all 99 supplied scenarios. It produces the expected correction for 10 of 24 conditional suggestion scenarios; the other 14 are unimplemented or abstained. These fixtures are not an independent accuracy evaluation. See the [remaining release gates](docs/IMPLEMENTATION_STATUS.md).
 
 ## Build, test and install
 

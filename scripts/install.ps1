@@ -15,6 +15,9 @@ foreach($name in @('TamilSandhi.ptxplg','TamilSandhi.Core.dll','rules.json','bui
 }
 $identity=Get-Content -LiteralPath (Join-Path $build 'build.json') -Raw | ConvertFrom-Json
 if($identity.dirty){throw 'Install a committed release build, not a dirty working-tree build.'}
+. (Join-Path $PSScriptRoot 'artifact-integrity.ps1')
+if($PackageDir){Assert-PackageChecksums -PackageDir $build}
+Assert-BuildArtifacts -BuildDir $build -Manifest $identity
 New-Item -ItemType Directory -Path $target -Force | Out-Null
 foreach($name in @('TamilSandhi.ptxplg','TamilSandhi.Core.dll','rules.json','build.json')) {
     $destination=Join-Path $target $name

@@ -33,11 +33,12 @@ internal static class HostContractTests
                 var toolbar=control.Controls.OfType<ToolStrip>().First(t=>t.Dock==DockStyle.Top);
                 toolbar.Items.OfType<ToolStripButton>().First(i=>i.Text==scan.Text).PerformClick();
                 if(invoked!=1)throw new Exception("Toolbar action did not reach the shared command.");
+                WindowRegressions.Run(control,output,sdk);
                 form.Size=new Size(280,650);form.PerformLayout();
                 if(control.Controls.OfType<ToolStrip>().Any(t=>t.Height>60))throw new Exception("Narrow dock toolbars wrapped vertically.");
                 using(var image=new Bitmap(form.Width,form.Height)){form.DrawToBitmap(image,new Rectangle(Point.Empty,form.Size));image.Save(Path.Combine(output,"review-narrow.png"));}
             }
-            Console.WriteLine("PASS: SDK interfaces, menus, native control, toolbar command relay and narrow-dock layout verified. This is not an in-host acceptance test.");return 0;
+            Console.WriteLine("PASS: SDK interfaces, menus, native control, toolbar relay, narrow layout, cleared selection, failed-chapter continuation and settings invalidation. This is not an in-host acceptance test.");return 0;
         }
         catch(Exception ex){Console.Error.WriteLine(ex);return 1;}
     }

@@ -79,6 +79,20 @@ public sealed class InHostAcceptance : IParatextStartupAutomaticPlugin
             service.Revert(changed,"developer acceptance");lastKnown=store.Read(1,1);
             if(lastKnown!=baseline)throw new InvalidOperationException("Modified revert mismatch.");
             results.Add("modify-apply-and-revert: PASS");
+            foreach(string raw in new[]{"\\c 1\n\\p\n\\v 1 தொடக்கம் \\f + \\ft குறிப்பு\\f* அவரை பார்த்தான்.","\\c 1\n\\p\n\\v 1 அவரை\nபார்த்தான்."})
+            {
+                using(var held=store.Lock(1,1))
+                {
+                    if(held==null||store.Read(1,1)!=lastKnown)throw new InvalidOperationException("Regression fixture lock/source mismatch.");
+                    lastKnown=raw;store.Write(1,1,raw);lastKnown=store.Read(1,1);
+                }
+                if(raw.Contains("அவரை\nபார்த்தான்")&&!lastKnown.Contains("அவரை\nபார்த்தான்")&&!lastKnown.Contains("அவரை\r\nபார்த்தான்"))throw new InvalidOperationException("Host normalized away the wrapped boundary; wrapped acceptance cannot be claimed.");
+                string exactFixture=lastKnown;var target=scan().Single(f=>f.Actionable);
+                var edit=service.Apply(target,target.Suggested,"developer acceptance",false,style.Hash);lastKnown=store.Read(1,1);
+                service.Revert(edit,"developer acceptance",target);lastKnown=store.Read(1,1);
+                if(lastKnown!=exactFixture||target.State!=ReviewState.Reverted||(string)FindingExport.ToSchema(target)["status"]=="accepted")throw new InvalidOperationException("Regression fixture revert/outcome mismatch.");
+            }
+            results.Add("post-note-and-wrapped-apply-revert-and-export: PASS");
         }
         catch(Exception ex){results.Add("ERROR: "+ex.ToString());}
         finally

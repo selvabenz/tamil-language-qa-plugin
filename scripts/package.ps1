@@ -11,6 +11,7 @@ Copy-Item -LiteralPath (Join-Path $repoRoot 'docs\INSTALL.md') -Destination $pac
 Copy-Item -LiteralPath (Join-Path $repoRoot 'reference\tamil_punarchi_agent_package\SOURCES.md') -Destination $package -Force
 $names=@('TamilSandhi.ptxplg','TamilSandhi.Core.dll','rules.json','build.json','INSTALL.md','SOURCES.md')
 $names | ForEach-Object { $hash=Get-FileHash -LiteralPath (Join-Path $package $_) -Algorithm SHA256; $hash.Hash.ToLowerInvariant()+'  '+$_ } | Set-Content -LiteralPath (Join-Path $package 'SHA256SUMS.txt') -Encoding ASCII
+Assert-PackageChecksums -PackageDir $package
 $zip=$package+'.zip'
 Compress-Archive -LiteralPath (@($names)+@('SHA256SUMS.txt') | ForEach-Object {Join-Path $package $_}) -DestinationPath $zip -Force
 Write-Output $zip

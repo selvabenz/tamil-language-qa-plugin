@@ -49,12 +49,14 @@ if (!$CoreOnly) {
     & $compiler /nologo /target:library /optimize+ /warnaserror+ /r:System.Core.dll /r:System.Web.Extensions.dll /r:System.Drawing.dll /r:System.Windows.Forms.dll "/r:$netstandard" "/r:$core" $references "/out:$(Join-Path $output 'TamilSandhi.ptxplg')" $pluginSources
     if ($LASTEXITCODE -ne 0) { throw 'Plugin compilation failed.' }
     $hostTests=Join-Path $output 'HostContractTests.exe'
-    & $compiler /nologo /target:exe /warnaserror+ /r:System.Core.dll /r:System.Windows.Forms.dll /r:System.Drawing.dll "/out:$hostTests" (Join-Path $repoRoot 'tests-host\HostContractTests.cs')
+    & $compiler /nologo /target:exe /warnaserror+ /r:System.Core.dll /r:System.Windows.Forms.dll /r:System.Drawing.dll "/out:$hostTests" (Join-Path $repoRoot 'tests-host\HostContractTests.cs') (Join-Path $repoRoot 'tests-host\WindowRegressions.cs')
     if ($LASTEXITCODE -ne 0) { throw 'Host contract test compilation failed.' }
     & $hostTests $output $ParatextDir
     if ($LASTEXITCODE -ne 0) { throw 'Host contract tests failed.' }
 }
 Copy-Item -LiteralPath (Join-Path $repoRoot 'reference\tamil_punarchi_agent_package\rules.json') -Destination $output
 $catalogHash=(Get-FileHash -LiteralPath (Join-Path $output 'rules.json') -Algorithm SHA256).Hash.ToLowerInvariant()
-@{ version=$version; commit=$commit; sourceCommit=$sourceState.Commit; dirty=$dirty; catalogSha256=$catalogHash; targetHost='9.5.110.1'; catalog='2026-11-13'; builtUtc=[DateTime]::UtcNow.ToString('o'); channel='prerelease' } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $output 'build.json') -Encoding UTF8
+$fileHashes=@{};foreach($name in @('TamilSandhi.Core.dll','rules.json')){$fileHashes[$name]=(Get-FileHash -LiteralPath (Join-Path $output $name) -Algorithm SHA256).Hash.ToLowerInvariant()}
+if(!$CoreOnly){$fileHashes['TamilSandhi.ptxplg']=(Get-FileHash -LiteralPath (Join-Path $output 'TamilSandhi.ptxplg') -Algorithm SHA256).Hash.ToLowerInvariant()}
+@{ version=$version; commit=$commit; sourceCommit=$sourceState.Commit; dirty=$dirty; coreOnly=[bool]$CoreOnly; fileHashes=$fileHashes; catalogSha256=$catalogHash; targetHost='9.5.110.1'; catalog='2026-11-13'; builtUtc=[DateTime]::UtcNow.ToString('o'); channel='prerelease' } | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath (Join-Path $output 'build.json') -Encoding UTF8
 Write-Output "Build and tests passed: $version"

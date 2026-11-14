@@ -20,7 +20,7 @@ The first implementation is a development preview, not a production release or a
 ## Validation evidence so far
 
 - Local build against Paratext 9.5.110.1's installed assemblies succeeds with warnings treated as errors.
-- 367 current-source core assertions pass, consuming all 99 supplied scenarios for preservation, protected examples, finding contracts and limited prediction coverage. A 176-verse synthetic core scan took 11 ms locally; this is a baseline observation, not an end-to-end host performance guarantee.
+- 403 current-source core assertions pass, consuming all 99 supplied scenarios for preservation, protected examples, finding contracts and limited prediction coverage. A 176-verse synthetic core scan took 11 ms locally; this is a baseline observation, not an end-to-end host performance guarantee.
 - Of 24 conditional suggestion scenarios, 10 receive the expected suggestion without external annotations; 14 are unimplemented or abstained. This is development-fixture coverage, not independent accuracy evidence.
 - Host-contract tests load both interfaces, enumerate menus and construct/layout the native control against SDK 2.0.100. They are not in-host acceptance tests.
 - Administrative installation succeeded after the initial Windows access denial. All four installed files were checksum-verified in `C:\Program Files\Paratext 9\plugins\TamilSandhiQA`; the installed identity is `0.1.0-dev.4+gcf4dc861`.

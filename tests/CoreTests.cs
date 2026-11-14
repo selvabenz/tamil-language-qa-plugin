@@ -19,10 +19,10 @@ internal static class CoreTests
         public string ProjectId {get{return "test";}}
         public string Text;
         public bool Editable=true,Locked,FailWrite,MutateOnLock,NormalizeOnWrite;
-        public int Writes;
+        public int Writes;public Action OnLock;
         public string Read(int b,int c){return Text;}
         public bool CanEdit(int b,int c){return Editable;}
-        public IDisposable Lock(int b,int c){if(Locked)return null;Locked=true;if(MutateOnLock)Text+=" later";return new Handle(()=>Locked=false);}
+        public IDisposable Lock(int b,int c){if(Locked)return null;Locked=true;if(MutateOnLock)Text+=" later";if(OnLock!=null)OnLock();return new Handle(()=>Locked=false);}
         public void Write(int b,int c,string text){Check(Locked,"writes require lock");Writes++;if(FailWrite)throw new IOException("Simulated write failure");Text=NormalizeOnWrite?text+" ":text;}
     }
     private sealed class Handle : IDisposable { private Action close; public Handle(Action c){close=c;}public void Dispose(){close();} }
@@ -73,6 +73,12 @@ internal static class CoreTests
                 Check(afterPatch.Contains(note)&&afterPatch.EndsWith("அவரைப் பார்த்தான்.",StringComparison.Ordinal),"patch after note preserves protected note byte-for-byte");
             }
             Check(Scan("\\v 1 தொடக்கம் \\f + \\ft அவரை பார்த்தான்.").Count==0,"unclosed note remains protected");
+            foreach(string marker in new[]{"f","fe","x"})foreach(string resume in new[]{"\\p ","\\v 2 ","\\c 2\n\\p\n\\v 1 "})
+            {
+                string damaged="\\c 1\n\\p\n\\v 1 தொடக்கம் \\"+marker+" + \\ft குறிப்பு\n"+resume+"அவரை பார்த்தான்.";
+                Check(Scan(damaged).Count==0,"unclosed note cannot resume through paragraph/verse/chapter markers");
+                Throws(()=>PatchService.Patch(damaged,damaged.IndexOf("அவரை",StringComparison.Ordinal),"அவரை பார்த்தான்","அவரைப் பார்த்தான்","1"),"malformed note patch refused");
+            }
             Check(Scan("\\v 1 \\unknown அவரை பார்த்தான்").Count==0,"unknown marker fail closed");
             Check(Scan("\\v 1 அவரை \\v 2 பார்த்தான்").Count==0,"no cross verse patches");
             Check(Scan("\\v 1-2 அவரை பார்த்தான்").Single().Verse=="1-2","bridge label retained");
@@ -97,7 +103,10 @@ internal static class CoreTests
             var store=new MemoryStore{Text=one.Original};var journal=new MemoryJournal();var service=new PatchService(store,journal,"test-build");
             var applied=service.Apply(one,one.Suggested,"human",false,new HouseStyle().Hash);Check(store.Text==one.Suggested&&one.State==ReviewState.Applied,"safe apply");Check(journal.Rows.First().State=="pending"&&journal.Rows.Last().State=="applied","durable audit states");Check(!store.Locked,"lock released");
             Throws(()=>service.Apply(one,one.Suggested,"human",false,new HouseStyle().Hash),"repeated apply blocked");
-            service.Revert(applied,"human");Check(store.Text==one.Original,"guarded revert");
+            service.Revert(applied,"human",one);Check(store.Text==one.Original,"guarded revert");
+            Check(one.State==ReviewState.Reverted&&one.AppliedText==null,"revert refreshes finding outcome");
+            Check((string)FindingExport.ToSchema(one)["status"]!="accepted","reverted export is not accepted");
+            Check(ReviewHistory.Current(journal.Read()).Single(r=>r.Transaction==applied.Transaction).State=="reverted","history links revert to applied transaction");
             store.Text=applied.After+" later";Throws(()=>service.Revert(applied,"human"),"stale revert blocked");
             one=Scan("அவரை பார்த்தான்").Single();store.Text=one.Original;store.MutateOnLock=true;Throws(()=>service.Apply(one,one.Suggested,"human",false,new HouseStyle().Hash),"concurrent edit under lock detected");Check(!store.Locked,"stale lock released");store.MutateOnLock=false;
             one=Scan("அவரை பார்த்தான்").Single();store.Text=one.Original;store.Editable=false;int writes=store.Writes;Throws(()=>service.Apply(one,one.Suggested,"human",false,new HouseStyle().Hash),"permission denied");Check(store.Writes==writes,"no forbidden write");store.Editable=true;
@@ -115,8 +124,24 @@ internal static class CoreTests
                 if(((string)row["id"]).StartsWith("B")) {bTotal++;if(scan.Any(f=>f.Suggested!=null)){bPredicted++;if(scan.Count==1&&scan[0].Suggested==(string)row["expected_text_if_approved"])bCorrect++;else throw new Exception("Incorrect supported B prediction: "+row["id"]);}}
             }
             Check(fixtures==99,"all fixtures consumed");
-            string journalPath=Path.Combine(root,"artifacts/build/synthetic-journal.jsonl");File.WriteAllText(journalPath,"",Encoding.UTF8);var durable=new FileJournal(journalPath);durable.Append(new AuditRecord{Transaction="synthetic",State="pending"});Check(durable.Read().Count==1,"file journal reload");File.AppendAllText(journalPath,"{truncated");Throws(()=>durable.Read(),"damaged journal fails closed");
+            string journalPath=Path.Combine(root,"artifacts/build/synthetic-journal.jsonl");File.WriteAllText(journalPath,"",Encoding.UTF8);var durable=new FileJournal(journalPath);durable.Append(applied);Check(durable.Read().Count==1,"file journal reload");File.AppendAllText(journalPath,"{truncated");Throws(()=>durable.Read(),"damaged journal fails closed");
             File.WriteAllText(journalPath,Json.Write(new AuditRecord{SchemaVersion="999"}),Encoding.UTF8);Throws(()=>durable.Read(),"unknown audit schema fails closed");
+            foreach(string invalid in new[]{"{}","{\"SchemaVersion\":\"1\",\"Transaction\":\"incomplete\",\"State\":\"pending\"}",Json.Write(new AuditRecord{SchemaVersion="1",State="nonsense"})})
+            {
+                File.WriteAllText(journalPath,invalid,Encoding.UTF8);Throws(()=>durable.Read(),"semantically corrupt journal refused");
+                var blockedStore=new MemoryStore{Text="அவரை பார்த்தான்"};var blockedFinding=Scan(blockedStore.Text).Single();
+                Throws(()=>new PatchService(blockedStore,durable,"test").Apply(blockedFinding,blockedFinding.Suggested,"test",false,new HouseStyle().Hash),"corrupt journal blocks new transaction");Check(blockedStore.Writes==0&&!blockedStore.Locked,"corrupt journal causes no write and releases lock");
+            }
+            string settingsPath=Path.Combine(root,"artifacts/build/settings-regression-"+Guid.NewGuid().ToString("N")+".json");
+            var settingsA=new HouseStyleStore(settingsPath);var settingsB=new HouseStyleStore(settingsPath);var oldSettings=settingsA.Load();
+            var settingStore=new MemoryStore{Text="அவரை பார்த்தான்"};var settingFinding=Scan(settingStore.Text).Single();
+            var newSettings=new HouseStyle{Version="changed",NoInsertBefore=new List<string>{"பார்த்தான்"}};
+            settingsB.Save(newSettings);Check(settingsA.Load().Hash==newSettings.Hash,"other window reads current shared settings");
+            Throws(()=>settingsA.WithCurrent(current=>new PatchService(settingStore,new MemoryJournal(),"test",()=>settingsA.Load().Hash).Apply(settingFinding,settingFinding.Suggested,"test",false,current.Hash)),"old pane cannot bypass updated settings");Check(settingStore.Writes==0,"updated settings prevent write");
+            settingsB.Save(oldSettings);settingStore.OnLock=()=>settingsB.Save(newSettings);
+            Throws(()=>settingsA.WithCurrent(current=>new PatchService(settingStore,new MemoryJournal(),"test",()=>settingsA.Load().Hash).Apply(settingFinding,settingFinding.Suggested,"test",false,current.Hash)),"settings revalidated under chapter lock");Check(settingStore.Writes==0&&!settingStore.Locked,"configuration race releases lock without write");
+            var prepared=new[]{ScopePreparation.Read("test",1,1,()=>"\\v 1 அவரை பார்த்தான்"),ScopePreparation.Read("test",1,2,()=>{throw new IOException("Synthetic unreadable chapter");}),ScopePreparation.Read("test",1,3,()=>"\\v 1 இந்த புத்தகம்")};
+            Check(prepared.Count(p=>p.Snapshot!=null)==2&&prepared.Count(p=>p.Error!=null)==1,"unreadable chapter does not discard later chapters");
             string longChapter="\\c 1\n"+String.Join("\n",Enumerable.Range(1,176).Select(v=>"\\v "+v+" அவரை பார்த்தான்."));var watch=System.Diagnostics.Stopwatch.StartNew();var measured=Scan(longChapter);watch.Stop();Check(measured.Count==176,"176-verse synthetic scan");
             var report=new{assertions=count,fixturesConsumed=fixtures,conditionalSuggestionScenarios=bTotal,predictedWithoutExternalAnnotations=bPredicted,matchingExpectedSuggestions=bCorrect,notImplementedOrAbstained=bTotal-bPredicted,independentLinguisticEvaluation=false,synthetic176VerseScanMilliseconds=watch.ElapsedMilliseconds};
             File.WriteAllText(Path.Combine(root,"artifacts/build/test-results.json"),Json.Write(report),Encoding.UTF8);

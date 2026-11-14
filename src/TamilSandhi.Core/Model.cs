@@ -122,6 +122,7 @@ namespace TamilSandhi
         public AuditRecord() { SchemaVersion="1"; }
         public string SchemaVersion { get; set; }
         public string Transaction { get; set; }
+        public string RevertsTransaction { get; set; }
         public string FindingId { get; set; }
         public string Project { get; set; }
         public int Book { get; set; }

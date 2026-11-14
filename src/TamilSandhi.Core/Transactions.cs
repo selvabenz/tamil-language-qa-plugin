@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace TamilSandhi
 {
@@ -13,6 +14,7 @@ namespace TamilSandhi
         public FileJournal(string filename) { path=filename; Directory.CreateDirectory(Path.GetDirectoryName(path)); }
         public void Append(AuditRecord record)
         {
+            AuditValidation.Validate(record);
             using (var stream=new FileStream(path,FileMode.Append,FileAccess.Write,FileShare.Read))
             using (var writer=new StreamWriter(stream,new UTF8Encoding(false))) { writer.WriteLine(Json.Write(record)); writer.Flush(); stream.Flush(true); }
         }
@@ -23,10 +25,35 @@ namespace TamilSandhi
             foreach (string line in File.ReadAllLines(path,Encoding.UTF8))
             {
                 if (String.IsNullOrWhiteSpace(line)) continue;
-                try { var record=Json.Read<AuditRecord>(line);if(record==null||record.SchemaVersion!="1")throw new InvalidDataException("Unknown audit schema version.");records.Add(record); }
+                try { var fields=Json.Read<Dictionary<string,object>>(line);if(fields==null||!fields.ContainsKey("SchemaVersion"))throw new InvalidDataException("Missing audit schema version.");var record=Json.Read<AuditRecord>(line);AuditValidation.Validate(record);records.Add(record); }
                 catch (Exception ex) { throw new InvalidDataException("Audit journal is damaged. Writes are blocked until it is recovered locally.",ex); }
             }
             return records;
+        }
+    }
+
+    public static class AuditValidation
+    {
+        public static void Validate(AuditRecord r)
+        {
+            DateTimeOffset timestamp;
+            if(r==null||r.SchemaVersion!="1"||new[]{r.Transaction,r.FindingId,r.Project,r.Verse,r.Build,r.Rule,r.Catalog,r.Config,r.Before,r.BeforeHash,r.Action,r.State}.Any(String.IsNullOrWhiteSpace)||r.Book<1||r.Chapter<1||r.Start<0||!DateTimeOffset.TryParse(r.Timestamp,CultureInfo.InvariantCulture,DateTimeStyles.RoundtripKind,out timestamp)||!Hash(r.BeforeHash)||!Hash(r.Config))throw new InvalidDataException("Incomplete or invalid audit record.");
+            if(r.State=="reviewed")
+            {
+                if(!new[]{"rejected-occurrence","ignored-occurrence","ignored-project","open-project"}.Contains(r.Action))throw new InvalidDataException("Invalid review action.");
+            }
+            else if(!new[]{"apply","modify-and-apply","revert"}.Contains(r.Action)||!new[]{"pending","applied","uncertain","not-applied","reverted"}.Contains(r.State)||String.IsNullOrWhiteSpace(r.After)||!Hash(r.AfterHash)||(r.Action=="revert"&&r.State=="applied")||(r.Action!="revert"&&r.State=="reverted"))throw new InvalidDataException("Incomplete or invalid write transaction.");
+        }
+        private static bool Hash(string value){return value!=null&&Regex.IsMatch(value,@"\A[0-9a-f]{64}\z");}
+    }
+    public static class ReviewHistory
+    {
+        public static IList<AuditRecord> Current(IList<AuditRecord> records)
+        {
+            var latest=records.GroupBy(r=>r.Transaction).Select(g=>Json.Read<AuditRecord>(Json.Write(g.Last()))).ToList();
+            foreach(var revert in latest.Where(r=>r.Action=="revert"&&r.State=="reverted").ToList())
+                foreach(var original in latest.Where(r=>r.Action!="revert"&&(r.Transaction==revert.RevertsTransaction||(String.IsNullOrEmpty(revert.RevertsTransaction)&&r.FindingId==revert.FindingId&&r.AfterHash==revert.BeforeHash&&String.CompareOrdinal(r.Timestamp,revert.Timestamp)<=0))))original.State="reverted";
+            return latest;
         }
     }
 
@@ -35,7 +62,8 @@ namespace TamilSandhi
         private readonly IChapterStore store;
         private readonly IJournal journal;
         private readonly string build;
-        public PatchService(IChapterStore chapterStore,IJournal audit,string buildVersion) { store=chapterStore;journal=audit;build=buildVersion; }
+        private readonly Func<string> currentConfig;
+        public PatchService(IChapterStore chapterStore,IJournal audit,string buildVersion,Func<string> currentConfiguration=null) { store=chapterStore;journal=audit;build=buildVersion;currentConfig=currentConfiguration; }
         public static string Patch(string source,int start,string before,string after,string verse)
         {
             if (start<0 || before.Length==0 || start+before.Length>source.Length || source.Substring(start,before.Length)!=before)
@@ -67,6 +95,7 @@ namespace TamilSandhi
             using (var held=store.Lock(finding.Book,finding.Chapter))
             {
                 if (held==null) throw new InvalidOperationException("Chapter write lock is unavailable.");
+                if(currentConfig!=null&&currentConfig()!=finding.ConfigHash){finding.State=ReviewState.Stale;throw new InvalidOperationException("Project house style changed. Rescan before applying.");}
                 string source=store.Read(finding.Book,finding.Chapter);
                 if (TextIdentity.Hash(source)!=finding.ChapterHash) { finding.State=ReviewState.Stale;throw new InvalidOperationException("Chapter changed since scanning. Rescan before applying."); }
                 Reconcile(finding.Book,finding.Chapter,source);
@@ -94,7 +123,7 @@ namespace TamilSandhi
                 journal.Append(r);
             }
         }
-        public void Revert(AuditRecord applied,string reviewer)
+        public void Revert(AuditRecord applied,string reviewer,Finding finding=null)
         {
             if (applied.Project!=store.ProjectId || !store.CanEdit(applied.Book,applied.Chapter)) throw new InvalidOperationException("Cannot revert this project/chapter.");
             using(var held=store.Lock(applied.Book,applied.Chapter))
@@ -104,9 +133,9 @@ namespace TamilSandhi
                 Reconcile(applied.Book,applied.Chapter,source);
                 if(TextIdentity.Hash(source)!=applied.AfterHash) throw new InvalidOperationException("Chapter changed after this edit. Revert is blocked to preserve later edits.");
                 string result=Patch(source,applied.Start,applied.After,applied.Before,applied.Verse);
-                var r=Json.Read<AuditRecord>(Json.Write(applied));r.Transaction=Guid.NewGuid().ToString("N");r.Action="revert";r.State="pending";r.Reviewer=reviewer;r.Timestamp=DateTime.UtcNow.ToString("o");r.Before=applied.After;r.After=applied.Before;r.BeforeHash=applied.AfterHash;r.AfterHash=TextIdentity.Hash(result);
+                var r=Json.Read<AuditRecord>(Json.Write(applied));r.Transaction=Guid.NewGuid().ToString("N");r.RevertsTransaction=applied.Transaction;r.Action="revert";r.State="pending";r.Reviewer=reviewer;r.Timestamp=DateTime.UtcNow.ToString("o");r.Before=applied.After;r.After=applied.Before;r.BeforeHash=applied.AfterHash;r.AfterHash=TextIdentity.Hash(result);
                 journal.Append(r);
-                try { store.Write(r.Book,r.Chapter,result);if(store.Read(r.Book,r.Chapter)!=result) throw new IOException("Revert verification failed.");r.State="reverted";journal.Append(r); }
+                try { store.Write(r.Book,r.Chapter,result);if(store.Read(r.Book,r.Chapter)!=result) throw new IOException("Revert verification failed.");r.State="reverted";journal.Append(r);if(finding!=null&&finding.Id==applied.FindingId){finding.State=ReviewState.Reverted;finding.AppliedText=null;} }
                 catch { r.State="uncertain";try { journal.Append(r); } catch { } throw; }
             }
         }

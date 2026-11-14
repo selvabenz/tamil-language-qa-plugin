@@ -22,6 +22,9 @@ namespace TamilSandhi.Plugin
         private readonly bool selectionRequested;
         private SandhiEngine engine;
         private HouseStyle style=new HouseStyle();
+        private HouseStyleStore styleStore;
+        private static event Action<string> HouseStyleChanged;
+        private readonly List<string> scanErrors=new List<string>();
         private IJournal journal;
         private readonly List<Finding> findings=new List<Finding>();
         private readonly ConcurrentDictionary<string,string> sourceCache=new ConcurrentDictionary<string,string>();
@@ -52,7 +55,7 @@ namespace TamilSandhi.Plugin
             selectionRequested=selection;reference=initial==null?null:initial.VerseRef;
             Dock=DockStyle.Fill;AutoScaleMode=AutoScaleMode.Dpi;Font=SystemFonts.MessageBoxFont;
             scope.Items.AddRange(new object[]{"Current verse","Selected passage","Current chapter","Current book","Selected books","Whole project"});scope.SelectedIndex=selection?1:0;
-            filter.Items.AddRange(new object[]{"All","Open","NeedsReview","Applied","Rejected","Ignored","Stale"});filter.SelectedIndex=0;
+            filter.Items.AddRange(new object[]{"All","Open","NeedsReview","Applied","Rejected","Ignored","Stale","Reverted"});filter.SelectedIndex=0;
             list.Columns.Add("Reference",100);list.Columns.Add("Original",200);list.Columns.Add("Suggestion",200);list.Columns.Add("Status",100);list.Columns.Add("Rule",140);
             var toolbar=new ToolStrip {Dock=DockStyle.Top,GripStyle=ToolStripGripStyle.Hidden,RenderMode=ToolStripRenderMode.System,CanOverflow=true,AccessibleName="Scan toolbar"};
             var bookItem=new ToolStripControlHost(books){AutoSize=false,Width=100,Available=false};
@@ -86,6 +89,7 @@ namespace TamilSandhi.Plugin
             parent.AllowUserToChangeProject=true;
             parent.ProjectChanged+=ProjectChanged;parent.VerseRefChanged+=ReferenceChanged;
             host.ActiveWindowSelectionChanged+=SelectionChanged;
+            HouseStyleChanged+=OnHouseStyleChanged;
             SetProject(parent.CurrentState.Project);
         }
         public override string GetState(){return null;}
@@ -94,15 +98,22 @@ namespace TamilSandhi.Plugin
         private void ReferenceChanged(IPluginChildWindow sender,IVerseRef oldRef,IVerseRef newRef){reference=newRef;}
         private void SelectionChanged(IPluginHost sender,IParatextChildState active,IReadOnlyList<ISelection> selections)
         {
-            if(active==null||active.Project==null||project==null||active.Project.ID!=project.ID||selections==null)return;
-            var next=selections.OfType<IScriptureTextSelection>().FirstOrDefault();
-            if(next!=null){initialSelection=next;selectionProject=active.Project.ID;}
+            if(active==null||active.Project==null||project==null||active.Project.ID!=project.ID)return;
+            initialSelection=selections==null?null:selections.OfType<IScriptureTextSelection>().FirstOrDefault();selectionProject=initialSelection==null?null:active.Project.ID;
+        }
+        private void OnHouseStyleChanged(string projectId)
+        {
+            if(disposed||project==null||project.ID!=projectId)return;
+            if(InvokeRequired){BeginInvoke((Action)delegate{OnHouseStyleChanged(projectId);});return;}
+            cancelRequested=true;foreach(var f in findings.Where(f=>f.State!=ReviewState.Applied&&f.State!=ReviewState.Reverted))f.State=ReviewState.Stale;
+            try{style=styleStore.Load();status.Text="Project house style changed. Rescan required.";}catch(Exception ex){scan.Enabled=false;Error(ex);}
+            RefreshList();Changed();
         }
         private void SetProject(IProject next)
         {
             cancelRequested=true;
             if(project!=null){project.ScriptureDataChanged-=ScriptureChanged;ReviewControl current;if(Sessions.TryGetValue(project.ID,out current)&&current==this){ReviewControl removed;Sessions.TryRemove(project.ID,out removed);}}
-            project=next;engine=null;findings.Clear();sourceCache.Clear();decisions.Clear();lastApplied=null;revert.Enabled=false;
+            project=next;engine=null;findings.Clear();sourceCache.Clear();decisions.Clear();scanErrors.Clear();lastApplied=null;revert.Enabled=false;
             if(project==null)return;
             if(selectionProject!=project.ID)initialSelection=null;
             Sessions[project.ID]=this;project.ScriptureDataChanged+=ScriptureChanged;
@@ -112,10 +123,9 @@ namespace TamilSandhi.Plugin
             {
                 string catalogFile=Path.Combine(Path.GetDirectoryName(typeof(TamilSandhiPlugin).Assembly.Location),"rules.json");
                 engine=new SandhiEngine(Json.Read<Catalog>(File.ReadAllText(catalogFile,Encoding.UTF8)));
-                string config=Path.Combine(projectFolder,"house-style.json");style=File.Exists(config)?Json.Read<HouseStyle>(File.ReadAllText(config,Encoding.UTF8)):new HouseStyle();
-                if(style==null||style.NoInsertBefore==null||String.IsNullOrWhiteSpace(style.Version))throw new InvalidDataException("Invalid house style configuration.");
+                styleStore=new HouseStyleStore(Path.Combine(projectFolder,"house-style.json"));style=styleStore.Load();
                 string saved=Path.Combine(projectFolder,"decisions.json");if(File.Exists(saved))foreach(var kv in Json.Read<Dictionary<string,ReviewState>>(File.ReadAllText(saved,Encoding.UTF8)))decisions[kv.Key]=kv.Value;
-                var history=journal.Read().GroupBy(r=>r.FindingId).Select(g=>g.Last()).Where(r=>r.State=="applied").OrderByDescending(r=>r.Timestamp).FirstOrDefault();lastApplied=history;revert.Enabled=history!=null;
+                var history=ReviewHistory.Current(journal.Read()).Where(r=>r.State=="applied").OrderByDescending(r=>r.Timestamp).FirstOrDefault();lastApplied=history;revert.Enabled=history!=null;
                 var font=project.Language.Font;context.Font=new Font(font.FontFamily,Math.Max(font.Size,12));list.Font=context.Font;
                 status.Text="Project: "+project.ShortName+" | Ready. Suggestions cover a limited lexical subset.";
                 books.Text=reference==null?"GEN":reference.BookCode;
@@ -170,32 +180,37 @@ namespace TamilSandhi.Plugin
         private async void StartScan()
         {
             if(scanning||project==null||engine==null)return;
-            scanning=true;cancelRequested=false;scan.Enabled=false;cancel.Enabled=true;apply.Enabled=modify.Enabled=false;findings.Clear();sourceCache.Clear();
+            scanning=true;cancelRequested=false;scan.Enabled=false;cancel.Enabled=true;apply.Enabled=modify.Enabled=false;findings.Clear();sourceCache.Clear();scanErrors.Clear();
             IProject selected=project;var at=reference;int mode=scope.SelectedIndex;var selectedEngine=engine;var selectedStyle=style;
+            var selectedPassage=initialSelection;
             try
             {
+                style=styleStore.Load();selectedStyle=style;
                 var work=CreateWork(selected,at,mode);int completed=0,failed=0,verseCount=0;
                 status.Text="Scope: "+selected.ShortName+" | "+scope.Text+" | "+work.Count+" chapter(s). Preparing verse count...";
                 RefreshList();Changed();
                 foreach(var item in work)
                 {
                     if(cancelRequested||disposed||project!=selected){if(!disposed)status.Text="Cancelled during scope preparation.";return;}
-                    item.Snapshot=new ChapterSnapshot{Project=selected.ID,Book=item.Book,Chapter=item.Chapter,Text=selected.GetUSFM(item.Book,item.Chapter)};
+                    var prepared=ScopePreparation.Read(selected.ID,item.Book,item.Chapter,()=>selected.GetUSFM(item.Book,item.Chapter));
+                    item.Snapshot=prepared.Snapshot;
+                    if(item.Snapshot==null){failed++;scanErrors.Add(prepared.Error);continue;}
                     item.Scope=Usfm.Segments(item.Snapshot.Text);
                     if(mode==0)item.Scope=item.Scope.Where(s=>Usfm.VerseContains(s.Verse,at.VerseNum)).ToList();
                     await Task.Delay(1);
                 }
                 if(mode==1)
                 {
-                    var sr=initialSelection.VerseRefStart;
+                    if(work.Any(w=>w.Snapshot==null))throw new InvalidOperationException("Selected passage contains an unreadable chapter; selection checking was refused without widening scope.");
+                    var sr=selectedPassage.VerseRefStart;
                     string verseText=selected.GetUSFM(sr.BookNum,sr.ChapterNum,sr.VerseNum);
-                    var mapped=SelectionMapper.Map(work.Select(w=>w.Snapshot).ToList(),verseText,initialSelection.Offset,initialSelection.SelectedText);
+                    var mapped=SelectionMapper.Map(work.Select(w=>w.Snapshot).ToList(),verseText,selectedPassage.Offset,selectedPassage.SelectedText);
                     foreach(var item in work){TextSpan span;item.Scope=mapped.TryGetValue(item.Book+":"+item.Chapter,out span)?new List<TextSpan>{span}:new List<TextSpan>();}
                 }
-                int plannedVerses=work.Sum(w=>Usfm.Segments(w.Snapshot.Text).Where(s=>w.Scope.Any(t=>s.Start<t.End&&s.End>t.Start)).Select(s=>s.Verse).Distinct().Count());
+                int plannedVerses=work.Where(w=>w.Snapshot!=null).Sum(w=>Usfm.Segments(w.Snapshot.Text).Where(s=>w.Scope.Any(t=>s.Start<t.End&&s.End>t.Start)).Select(s=>s.Verse).Distinct().Count());
                 status.Text="Scope ready: "+selected.ShortName+" | "+plannedVerses+" verse units in "+work.Count+" chapters. Bridges count as one unit.";
                 await Task.Delay(1);
-                foreach(var item in work)
+                foreach(var item in work.Where(w=>w.Snapshot!=null))
                 {
                     if(cancelRequested||disposed||project!=selected)break;
                     try
@@ -215,11 +230,13 @@ namespace TamilSandhi.Plugin
                         foreach(var f in found){ReviewState saved;if(f.State!=ReviewState.Stale&&decisions.TryGetValue(f.Id,out saved))f.State=saved;findings.Add(f);}
                         sourceCache[item.Book+":"+item.Chapter]=item.Snapshot.Text;completed++;
                     }
-                    catch(Exception ex){failed++;status.Text="Chapter "+item.Book+" "+item.Chapter+" skipped: "+ex.Message;}
+                    catch(Exception ex){failed++;scanErrors.Add(item.Book+" "+item.Chapter+": "+ex.Message);status.Text="Chapter "+item.Book+" "+item.Chapter+" skipped: "+ex.Message;}
                     status.Text=(cancelRequested?"Cancelled. ":"Scanning. ")+completed+"/"+work.Count+" chapters; "+verseCount+" verses; "+failed+" failed; "+findings.Count+" findings.";
                     RefreshList();await Task.Delay(1);
                 }
                 status.Text=(cancelRequested?"Cancelled; partial results. ":"Scan finished. ")+completed+" chapters; "+verseCount+" verses; "+failed+" failed; "+findings.Count+" findings. No Scripture changed.";
+                if(scanErrors.Count>0)status.Text+=" Errors: "+String.Join("; ",scanErrors);
+                RefreshList();
                 Changed();
             }
             catch(Exception ex){Error(ex);}
@@ -239,7 +256,7 @@ namespace TamilSandhi.Plugin
         private void ShowFinding()
         {
             var f=Selected;apply.Enabled=modify.Enabled=!scanning&&f!=null&&f.Actionable;
-            if(f==null){context.Clear();return;}
+            if(f==null){context.Text=String.Join(Environment.NewLine,scanErrors);return;}
             context.Text=f.Context+"\n\n"+f.Original+"\n→ "+(f.AppliedText??f.Suggested??"No verified replacement — leave open for human review")+"\n\n"+f.Reason+"\n\n"+f.Rule+" | "+f.State+"\n"+f.Evidence+"\n"+String.Join("\n",f.Sources);
             int target=context.Text.IndexOf(f.Original,StringComparison.Ordinal);if(target>=0){context.Select(target,f.Original.Length);context.SelectionBackColor=SystemColors.Info;context.Select(0,0);}
         }
@@ -273,8 +290,8 @@ namespace TamilSandhi.Plugin
                 if(dialog.ShowDialog(this)!=DialogResult.OK)return;
                 try
                 {
-                    applying=true;var service=new PatchService(new HostStore(project,this),journal,BuildInfo.Version);
-                    lastApplied=service.Apply(f,replacement.Text,host.UserInfo==null?null:host.UserInfo.Name,modified,style.Hash);revert.Enabled=true;
+                    applying=true;
+                    lastApplied=styleStore.WithCurrent(current=>new PatchService(new HostStore(project,this),journal,BuildInfo.Version,()=>styleStore.Load().Hash).Apply(f,replacement.Text,host.UserInfo==null?null:host.UserInfo.Name,modified,current.Hash));revert.Enabled=true;
                     foreach(var other in findings.Where(o=>o.Book==f.Book&&o.Chapter==f.Chapter&&o!=f&&o.State!=ReviewState.Applied))other.State=ReviewState.Stale;
                     status.Text="Applied one reviewed occurrence. Rescan the chapter to refresh context.";
                 }
@@ -286,7 +303,7 @@ namespace TamilSandhi.Plugin
         {
             if(lastApplied==null||scanning||applying)return;
             if(MessageBox.Show(this,lastApplied.After+"\n→ "+lastApplied.Before+"\n\nRevert this edit only if its chapter has not changed?","Revert last edit",MessageBoxButtons.OKCancel,MessageBoxIcon.Question)!=DialogResult.OK)return;
-            try{new PatchService(new HostStore(project,this),journal,BuildInfo.Version).Revert(lastApplied,host.UserInfo==null?null:host.UserInfo.Name);lastApplied=null;revert.Enabled=false;status.Text="Edit reverted. Rescan to refresh findings.";}
+            try{new PatchService(new HostStore(project,this),journal,BuildInfo.Version).Revert(lastApplied,host.UserInfo==null?null:host.UserInfo.Name,findings.FirstOrDefault(f=>f.Id==lastApplied.FindingId));lastApplied=null;revert.Enabled=false;RefreshList();Changed();status.Text="Edit reverted. Rescan to refresh findings.";}
             catch(Exception ex){Error(ex);}
         }
         private void EditHouseStyle(object sender,EventArgs e)
@@ -296,7 +313,7 @@ namespace TamilSandhi.Plugin
             {
                 var text=new TextBox{Multiline=true,Dock=DockStyle.Fill,Text=String.Join(Environment.NewLine,style.NoInsertBefore),Font=context.Font,AccessibleName="No-insertion lexemes, one per line"};
                 var save=Button("Save for this project",delegate{d.DialogResult=DialogResult.OK;});save.Dock=DockStyle.Bottom;d.Controls.Add(text);d.Controls.Add(save);
-                if(d.ShowDialog(this)==DialogResult.OK){style=new HouseStyle{Version=DateTime.UtcNow.ToString("o"),NoInsertBefore=text.Lines.Select(l=>l.Trim().Normalize()).Where(l=>l.Length>0).Distinct().ToList()};File.WriteAllText(Path.Combine(projectFolder,"house-style.json"),Json.Write(style),new UTF8Encoding(false));foreach(var f in findings)f.State=ReviewState.Stale;RefreshList();Changed();status.Text="Project house style saved. Rescan required.";}
+                if(d.ShowDialog(this)==DialogResult.OK)try{var next=new HouseStyle{Version=DateTime.UtcNow.ToString("o"),NoInsertBefore=text.Lines.Select(l=>l.Trim().Normalize()).Where(l=>l.Length>0).Distinct().ToList()};styleStore.Save(next);var changed=HouseStyleChanged;if(changed!=null)changed(project.ID);}catch(Exception ex){Error(ex);}
             }
         }
         private ContextMenuStrip MenuForSelection()
@@ -325,7 +342,7 @@ namespace TamilSandhi.Plugin
             if(journal==null||scanning||applying)return;
             try
             {
-                var records=journal.Read().GroupBy(r=>r.Transaction).Select(g=>g.Last()).OrderByDescending(r=>r.Timestamp).ToList();
+                var records=ReviewHistory.Current(journal.Read()).OrderByDescending(r=>r.Timestamp).ToList();
                 using(var dialog=new Form{Text="Local review history and recovery",Width=850,Height=550,StartPosition=FormStartPosition.CenterParent})
                 {
                     var rows=new ListView{View=View.Details,FullRowSelect=true,MultiSelect=false,Dock=DockStyle.Fill,HideSelection=false};rows.Columns.Add("Time",180);rows.Columns.Add("Reference",90);rows.Columns.Add("Action",120);rows.Columns.Add("Outcome",100);rows.Columns.Add("Reviewer",130);
@@ -341,6 +358,7 @@ namespace TamilSandhi.Plugin
         protected override void Dispose(bool disposing)
         {
             disposed=true;cancelRequested=true;
+            if(disposing)HouseStyleChanged-=OnHouseStyleChanged;
             if(disposing){if(project!=null){project.ScriptureDataChanged-=ScriptureChanged;ReviewControl current;if(Sessions.TryGetValue(project.ID,out current)&&current==this){ReviewControl removed;Sessions.TryRemove(project.ID,out removed);}}if(parent!=null){parent.ProjectChanged-=ProjectChanged;parent.VerseRefChanged-=ReferenceChanged;}if(host!=null)host.ActiveWindowSelectionChanged-=SelectionChanged;}
             base.Dispose(disposing);
         }

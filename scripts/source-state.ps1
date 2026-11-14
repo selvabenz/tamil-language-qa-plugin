@@ -1,3 +1,4 @@
+. (Join-Path $PSScriptRoot 'artifact-integrity.ps1')
 function Get-SourceState {
     param([Parameter(Mandatory=$true)][string]$RepoRoot)
     $sourceCommit=(& git -C $RepoRoot rev-parse HEAD).Trim()
@@ -16,4 +17,5 @@ function Assert-PackageSource {
     $builtCatalog=(Get-FileHash -LiteralPath (Join-Path $BuildDir 'rules.json') -Algorithm SHA256).Hash.ToLowerInvariant()
     $sourceCatalog=(Get-FileHash -LiteralPath (Join-Path $RepoRoot 'reference\tamil_punarchi_agent_package\rules.json') -Algorithm SHA256).Hash.ToLowerInvariant()
     if(!$Manifest.catalogSha256 -or $Manifest.catalogSha256 -ne $builtCatalog -or $sourceCatalog -ne $builtCatalog){throw 'Rule catalog differs from the recorded source/build; rebuild before packaging.'}
+    Assert-BuildArtifacts -BuildDir $BuildDir -Manifest $Manifest
 }

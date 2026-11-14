@@ -42,7 +42,7 @@ namespace TamilSandhi
                 else if (!end)
                 {
                     // A paired character/note/word marker protects everything until its exact close.
-                    if (Regex.IsMatch(raw.Substring(start), @"\\\+?" + Regex.Escape(name) + @"\*")) protectedStack.Push(name);
+                    if (name=="f" || name=="fe" || name=="x" || Regex.IsMatch(raw.Substring(start), @"\\\+?" + Regex.Escape(name) + @"\*")) protectedStack.Push(name);
                     // Unpaired note components such as ft/xt are contained by
                     // their outer f/x marker. They must not disable the verse
                     // text that resumes after the outer marker closes.
