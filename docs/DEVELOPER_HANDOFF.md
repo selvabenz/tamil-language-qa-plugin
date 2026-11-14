@@ -1,6 +1,14 @@
 # Developer handoff
 
-Updated 2026-11-14 after review fixes #16–#25.
+Updated 2026-11-14 after review fixes #16–#30.
+
+## Scripture-context candidate (build 7)
+
+Current source includes the [Scripture-context fixes](SCRIPTURE_CONTEXT_FIXES.md) for SR-01–SR-05, tracked in #26–#30. Local build passes **661 core assertions**, 43 synthetic Scripture-style cases, the native SDK suite, all finding-export schema checks and reference/build-integrity validators. All 22 unambiguous B corrections are mandatory; B004 abstains and B010 is idempotent. See the complete [rule capability matrix](RULE_CAPABILITIES.md).
+
+The new engine uses `ScriptureRuleProfile.cs`: 11 bounded modern addition families and 5 non-addition checks, with insertion/replacement/removal, ambiguity blockers, enforced tier/register, and explicit coverage counts. All data stays offline. Full sentence semantics and independent Scripture accuracy remain unverified. Original reference files remain unchanged; maintained expectation corrections are in `tests/fixtures/reference-overrides.json`.
+
+The user authorized a read-only comparison with the Paratext resources Tamil BSI OV Edited and OTCV, and normal restarts. The developer-only `ReadOnlyResourceBenchmark.cs` must use public SDK access only, keep resource text private, and respect any host access-token refusal. The installed and published baseline below is still build 6 until candidate installation and verification are recorded. Do not claim build 7 host acceptance from build 6 evidence.
 
 ## Current state
 
@@ -37,7 +45,7 @@ Commit the complete source/documentation change, rebuild, then run `./scripts/pa
 ## Code map and invariants
 
 - `src/TamilSandhi.Core/Usfm.cs`: raw UTF-16 spans, verse segmentation and protected structures. Never reconstruct or normalize Scripture. Notes remain barriers; text after a note may be checked independently.
-- `Engine.cs`: four limited suggestion families with small local lexical sets. Unsupported nominated boundaries abstain; no general suffix-based insertion.
+- `Engine.cs` and `ScriptureRuleProfile.cs`: bounded modern lexical constructions, insertion/replacement/removal, explicit homograph abstention and coverage accounting. Unsupported nominated boundaries abstain; no general suffix-based insertion.
 - `Transactions.cs`: permissions, host lock, fresh chapter hash, protected/grapheme validation, durable intent, minimal patch, exact save verification and guarded Revert. Wrapped replacements preserve existing control-whitespace runs; other controls and marker insertion remain forbidden.
 - `SelectionMapper.cs`: exact raw-USFM selection mapping; refuse ambiguity or stale source without widening scope.
 - `src/TamilSandhi.Plugin/ReviewControl.cs`: native scope/review window, local decisions/history/export. `HostStore.cs` adapts host read/write locks. `Annotations.cs` maps current findings to inline annotations.

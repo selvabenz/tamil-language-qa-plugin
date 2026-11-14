@@ -1,0 +1,235 @@
+[
+  {
+    "id": "B001",
+    "input": "கதையை படித்தான்",
+    "expected": "கதையைப் படித்தான்",
+    "unchanged": false,
+    "findings": [
+      {
+        "rule": "CASE-002-OVERT",
+        "suggested": "கதையைப் படித்தான்"
+      }
+    ]
+  },
+  {
+    "id": "B002",
+    "input": "மலரை பறித்தான்",
+    "expected": "மலரைப் பறித்தான்",
+    "unchanged": false,
+    "findings": [
+      {
+        "rule": "SAFE-010",
+        "suggested": null
+      }
+    ]
+  },
+  {
+    "id": "B003",
+    "input": "கதவை தட்டு",
+    "expected": "கதவைத் தட்டு",
+    "unchanged": false,
+    "findings": [
+      {
+        "rule": "SAFE-010",
+        "suggested": null
+      }
+    ]
+  },
+  {
+    "id": "B004",
+    "input": "அவரை பார்த்தான்",
+    "expected": "அவரைப் பார்த்தான்",
+    "unchanged": false,
+    "findings": [
+      {
+        "rule": "CASE-002-OVERT",
+        "suggested": "அவரைப் பார்த்தான்"
+      }
+    ]
+  },
+  {
+    "id": "B005",
+    "input": "ஊருக்கு போனான்",
+    "expected": "ஊருக்குப் போனான்",
+    "unchanged": false,
+    "findings": [
+      {
+        "rule": "SAFE-010",
+        "suggested": null
+      }
+    ]
+  },
+  {
+    "id": "B006",
+    "input": "எனக்கு கொடு",
+    "expected": "எனக்குக் கொடு",
+    "unchanged": false,
+    "findings": [
+      {
+        "rule": "CASE-004-OVERT",
+        "suggested": "எனக்குக் கொடு"
+      }
+    ]
+  },
+  {
+    "id": "B007",
+    "input": "அந்த பையன்",
+    "expected": "அந்தப் பையன்",
+    "unchanged": false,
+    "findings": [
+      {
+        "rule": "HARD-DEM",
+        "suggested": "அந்தப் பையன்"
+      }
+    ]
+  },
+  {
+    "id": "B008",
+    "input": "இந்த குழந்தை",
+    "expected": "இந்தக் குழந்தை",
+    "unchanged": false,
+    "findings": [
+      {
+        "rule": "HARD-DEM",
+        "suggested": "இந்தக் குழந்தை"
+      }
+    ]
+  },
+  {
+    "id": "B009",
+    "input": "எந்த பொருள்",
+    "expected": "எந்தப் பொருள்",
+    "unchanged": false,
+    "findings": [
+      {
+        "rule": "HARD-DEM",
+        "suggested": "எந்தப் பொருள்"
+      }
+    ]
+  },
+  {
+    "id": "B010",
+    "input": "அப்படிச் சொல்",
+    "expected": "அப்படிச் சொல்",
+    "unchanged": true,
+    "findings": []
+  },
+  {
+    "id": "B011",
+    "input": "வர சொன்னான்",
+    "expected": "வரச் சொன்னான்",
+    "unchanged": false,
+    "findings": []
+  },
+  {
+    "id": "B012",
+    "input": "உண்ண போனான்",
+    "expected": "உண்ணப் போனான்",
+    "unchanged": false,
+    "findings": []
+  },
+  {
+    "id": "B013",
+    "input": "ஓடி போனான்",
+    "expected": "ஓடிப் போனான்",
+    "unchanged": false,
+    "findings": []
+  },
+  {
+    "id": "B014",
+    "input": "தேடி பார்த்தான்",
+    "expected": "தேடிப் பார்த்தான்",
+    "unchanged": false,
+    "findings": []
+  },
+  {
+    "id": "B015",
+    "input": "போய் பார்த்தான்",
+    "expected": "போய்ப் பார்த்தான்",
+    "unchanged": false,
+    "findings": []
+  },
+  {
+    "id": "B016",
+    "input": "படித்து கொடுத்தான்",
+    "expected": "படித்துக் கொடுத்தான்",
+    "unchanged": false,
+    "findings": [
+      {
+        "rule": "HARD-PART-HARDU",
+        "suggested": "படித்துக் கொடுத்தான்"
+      }
+    ]
+  },
+  {
+    "id": "B017",
+    "input": "கற்று கொடுத்தான்",
+    "expected": "கற்றுக் கொடுத்தான்",
+    "unchanged": false,
+    "findings": []
+  },
+  {
+    "id": "B018",
+    "input": "நன்றாக சொன்னான்",
+    "expected": "நன்றாகச் சொன்னான்",
+    "unchanged": false,
+    "findings": []
+  },
+  {
+    "id": "B019",
+    "input": "ஓடா குதிரை",
+    "expected": "ஓடாக் குதிரை",
+    "unchanged": false,
+    "findings": []
+  },
+  {
+    "id": "B020",
+    "input": "காணா பொருள்",
+    "expected": "காணாப் பொருள்",
+    "unchanged": false,
+    "findings": []
+  },
+  {
+    "id": "B021",
+    "input": "செல்லா காசு",
+    "expected": "செல்லாக் காசு",
+    "unchanged": false,
+    "findings": []
+  },
+  {
+    "id": "B022",
+    "input": "அறிக்கையை சமர்ப்பித்தான்",
+    "expected": "அறிக்கையைச் சமர்ப்பித்தான்",
+    "unchanged": false,
+    "findings": [
+      {
+        "rule": "CASE-002-OVERT",
+        "suggested": "அறிக்கையைச் சமர்ப்பித்தான்"
+      }
+    ]
+  },
+  {
+    "id": "B023",
+    "input": "கொலையை செய்தான்",
+    "expected": "கொலையைச் செய்தான்",
+    "unchanged": false,
+    "findings": [
+      {
+        "rule": "CASE-002-OVERT",
+        "suggested": "கொலையைச் செய்தான்"
+      }
+    ]
+  },
+  {
+    "id": "B024",
+    "input": "கர்த்தருக்கு சொன்னான்",
+    "expected": "கர்த்தருக்குச் சொன்னான்",
+    "unchanged": false,
+    "findings": [
+      {
+        "rule": "CASE-004-OVERT",
+        "suggested": "கர்த்தருக்குச் சொன்னான்"
+      }
+    ]
+  }
+]

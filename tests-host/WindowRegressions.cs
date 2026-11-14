@@ -33,7 +33,7 @@ internal static class WindowRegressions
             if(n=="get_ShortName")return "Synthetic";
             if(n=="get_AvailableBooks")return books;
             if(n=="get_Versification")return versification;
-            if(n=="GetUSFM"){int chapter=(int)a[1];if(chapter==2)throw new IOException("Synthetic unreadable chapter");return chapter==1?"\\c 1\n\\v 1 அறிக்கை செய்தான்.":"\\c 3\n\\v 1 அவரை பார்த்தான்.";}
+            if(n=="GetUSFM"){int chapter=(int)a[1];if(chapter==2)throw new IOException("Synthetic unreadable chapter");return chapter==1?"\\c 1\n\\v 1 அறிக்கை செய்தான்.":"\\c 3\n\\v 1 அவனை பார்த்தான்.";}
             return null;
         }).GetTransparentProxy();
         object state=new Stub(type("IParatextChildState"),(n,a)=>n=="get_Project"?project:null).GetTransparentProxy();
@@ -60,6 +60,7 @@ internal static class WindowRegressions
             Application.DoEvents();
             string status=((Label)review.GetField("status",flags).GetValue(control)).Text;
             if((bool)review.GetField("scanning",flags).GetValue(control)||!status.Contains("2 chapters")||!status.Contains("1 failed")||!status.Contains("1 findings"))throw new Exception("Chapter failure did not continue accurately: "+status);
+            if(!status.StartsWith("Limited coverage.")||!((RichTextBox)review.GetField("context",flags).GetValue(control)).Text.Contains("not a correctness certificate"))throw new Exception("Rule coverage limitations are missing from the native result view.");
             review.GetMethod("OnHouseStyleChanged",flags).Invoke(control,new object[]{"synthetic-window-regression"});
             var findings=(System.Collections.IEnumerable)review.GetField("findings",flags).GetValue(control);
             foreach(var finding in findings)if(finding.GetType().GetProperty("State").GetValue(finding,null).ToString()!="Stale")throw new Exception("Project settings notification did not invalidate findings.");

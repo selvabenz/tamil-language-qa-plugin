@@ -1,0 +1,110 @@
+[
+  {
+    "input": "இந்த புத்தகம்",
+    "findings": [
+      {
+        "rule": "HARD-DEM",
+        "suggested": "இந்தப் புத்தகம்",
+        "state": "Open"
+      }
+    ]
+  },
+  {
+    "input": "அவரை பார்த்தான்",
+    "findings": [
+      {
+        "rule": "CASE-002-OVERT",
+        "suggested": "அவரைப் பார்த்தான்",
+        "state": "Open"
+      }
+    ]
+  },
+  {
+    "input": "எனக்கு கொடு",
+    "findings": [
+      {
+        "rule": "CASE-004-OVERT",
+        "suggested": "எனக்குக் கொடு",
+        "state": "Open"
+      }
+    ]
+  },
+  {
+    "input": "படித்து கொடுத்தான்",
+    "findings": [
+      {
+        "rule": "HARD-PART-HARDU",
+        "suggested": "படித்துக் கொடுத்தான்",
+        "state": "Open"
+      }
+    ]
+  },
+  {
+    "input": "மலரை பறித்தான்",
+    "findings": [
+      {
+        "rule": "SAFE-010",
+        "suggested": null,
+        "state": "NeedsReview"
+      }
+    ]
+  },
+  {
+    "input": "கதவை தட்டு",
+    "findings": [
+      {
+        "rule": "SAFE-010",
+        "suggested": null,
+        "state": "NeedsReview"
+      }
+    ]
+  },
+  {
+    "input": "ஊருக்கு போனான்",
+    "findings": [
+      {
+        "rule": "SAFE-010",
+        "suggested": null,
+        "state": "NeedsReview"
+      }
+    ]
+  },
+  {
+    "input": "கற்று கொடுத்தான்",
+    "findings": []
+  },
+  {
+    "input": "ஓடி போனான்",
+    "findings": []
+  },
+  {
+    "input": "அப்படிச் சொல்",
+    "findings": []
+  },
+  {
+    "input": "இந்தக் புத்தகம்",
+    "findings": []
+  },
+  {
+    "input": "வந்தப் பையன்",
+    "findings": []
+  },
+  {
+    "input": "எனக்குப் கொடு",
+    "findings": []
+  },
+  {
+    "input": "வந்து சென்றான்",
+    "findings": []
+  },
+  {
+    "input": "அவரை கொடுத்தான்",
+    "findings": [
+      {
+        "rule": "CASE-002-OVERT",
+        "suggested": "அவரைக் கொடுத்தான்",
+        "state": "Open"
+      }
+    ]
+  }
+]

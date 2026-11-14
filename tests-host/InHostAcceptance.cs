@@ -96,7 +96,7 @@ public sealed class InHostAcceptance : IParatextStartupAutomaticPlugin
             service.Revert(changed,"developer acceptance");lastKnown=store.Read(1,1);
             if(lastKnown!=baseline)throw new InvalidOperationException("Modified revert mismatch.");
             results.Add("modify-apply-and-revert: PASS");
-            foreach(string raw in new[]{"\\id GEN Synthetic regression\n\\c 1\n\\p\n\\v 1 தொடக்கம் \\f + \\ft குறிப்பு\\f* அவரை பார்த்தான்.","\\id GEN Synthetic regression\n\\c 1\n\\p\n\\v 1 அவரை\nபார்த்தான்."})
+            foreach(string raw in new[]{"\\id GEN Synthetic regression\n\\c 1\n\\p\n\\v 1 தொடக்கம் \\f + \\ft குறிப்பு\\f* அவனை பார்த்தான்.","\\id GEN Synthetic regression\n\\c 1\n\\p\n\\v 1 அவனை\nபார்த்தான்."})
             {
                 using(var held=store.Lock(1,1))
                 {
@@ -105,7 +105,7 @@ public sealed class InHostAcceptance : IParatextStartupAutomaticPlugin
                     try{store.Write(1,1,raw);lastKnown=store.Read(1,1);}
                     catch{string current=store.Read(1,1);if(current==beforeFixture||current==raw)lastKnown=current;throw;}
                 }
-                if(raw.Contains("அவரை\nபார்த்தான்")&&!lastKnown.Contains("அவரை\nபார்த்தான்")&&!lastKnown.Contains("அவரை\r\nபார்த்தான்")){results.Add("wrapped-source-host-acceptance: NOT_EXERCISED (host canonicalizes source wrapping; core whitespace regressions are separate)");continue;}
+                if(raw.Contains("அவனை\nபார்த்தான்")&&!lastKnown.Contains("அவனை\nபார்த்தான்")&&!lastKnown.Contains("அவனை\r\nபார்த்தான்")){results.Add("wrapped-source-host-acceptance: NOT_EXERCISED (host canonicalizes source wrapping; core whitespace regressions are separate)");continue;}
                 string exactFixture=lastKnown;var target=scan().Single(f=>f.Actionable);
                 var edit=service.Apply(target,target.Suggested,"developer acceptance",false,style.Hash);lastKnown=store.Read(1,1);
                 service.Revert(edit,"developer acceptance",target);lastKnown=store.Read(1,1);

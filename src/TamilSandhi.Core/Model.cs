@@ -67,6 +67,8 @@ namespace TamilSandhi
         public string CatalogVersion { get; set; }
         public string ConfigHash { get; set; }
         public string[] Sources { get; set; }
+        public string Operation { get; set; }
+        public string[] Blockers { get; set; }
         public ReviewState State { get; set; }
         public bool Actionable { get { return Suggested != null && State == ReviewState.Open; } }
         public string Reference { get { return Book + " " + Chapter + ":" + Verse; } }
@@ -76,6 +78,9 @@ namespace TamilSandhi
         public string id { get; set; }
         public string decision { get; set; }
         public string layer { get; set; }
+        public string tier { get; set; }
+        public string preconditions { get; set; }
+        public string notes { get; set; }
         public string[] requires_annotations { get; set; }
         public string[] source_ids { get; set; }
     }
@@ -100,6 +105,23 @@ namespace TamilSandhi
         public List<string> NoInsertBefore { get; set; }
         public HouseStyle() { Version = "1"; NoInsertBefore = new List<string>(); }
         public string Hash { get { return TextIdentity.Hash(Version + "\n" + String.Join("\n", NoInsertBefore.OrderBy(s => s, StringComparer.Ordinal))); } }
+    }
+    public class AnalysisReport
+    {
+        public List<Finding> Findings { get; set; }
+        public int ExaminedBoundaries { get; set; }
+        public int SupportedBoundaries { get; set; }
+        public int UnresolvedBoundaries { get; set; }
+        public int UnassessedBoundaries { get; set; }
+        public int SuppressedBoundaries { get; set; }
+        public AnalysisReport(){Findings=new List<Finding>();}
+        public void Add(AnalysisReport other)
+        {
+            Findings.AddRange(other.Findings);ExaminedBoundaries+=other.ExaminedBoundaries;
+            SupportedBoundaries+=other.SupportedBoundaries;UnresolvedBoundaries+=other.UnresolvedBoundaries;
+            UnassessedBoundaries+=other.UnassessedBoundaries;SuppressedBoundaries+=other.SuppressedBoundaries;
+        }
+        public string Summary {get{return SupportedBoundaries+" supported; "+UnresolvedBoundaries+" unresolved; "+UnassessedBoundaries+" unassessed; "+SuppressedBoundaries+" editorial/protected word pairs. Limited rule coverage; not a correctness certificate.";}}
     }
     public class BoundaryEvidence
     {

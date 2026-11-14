@@ -42,6 +42,7 @@ namespace TamilSandhi.Plugin
         private readonly Button modify=new Button {Text="&Modify && Apply...",AutoSize=true,Enabled=false};
         private readonly Button revert=new Button {Text="&Revert last edit...",AutoSize=true,Enabled=false};
         private bool scanning,cancelRequested,disposed,applying;
+        private string lastCoverage="Limited modern rule coverage. Unassessed words are not certified correct.";
         private string projectFolder;
         private AuditRecord lastApplied;
         public static readonly ConcurrentDictionary<string,ReviewControl> Sessions=new ConcurrentDictionary<string,ReviewControl>();
@@ -61,7 +62,7 @@ namespace TamilSandhi.Plugin
             var bookItem=new ToolStripControlHost(books){AutoSize=false,Width=100,Available=false};
             toolbar.Items.Add(new ToolStripControlHost(scope){AutoSize=false,Width=160});toolbar.Items.Add(bookItem);toolbar.Items.Add(ToolButton(scan));toolbar.Items.Add(ToolButton(cancel));toolbar.Items.Add(new ToolStripControlHost(filter){AutoSize=false,Width=130});
             var about=new ToolStripButton("About "+BuildInfo.Version.Split('+')[0]);toolbar.Items.Add(about);
-            about.Click+=delegate {MessageBox.Show(this,"Tamil Sandhi QA\n"+BuildInfo.Version+"\nTarget: Paratext 9.5.110.1\nCatalog: 2026-11-13\nConfig: "+style.Hash+"\nLocal data: "+projectFolder+"\nDevelopment preview. Four supported suggestion families; remaining analyses need review.","About Tamil Sandhi QA",MessageBoxButtons.OK,MessageBoxIcon.Information);};
+            about.Click+=delegate {MessageBox.Show(this,"Tamil Sandhi QA\n"+BuildInfo.Version+"\nTarget: Paratext 9.5.110.1\nCatalog: 2026-11-13\nProfile: "+ScriptureRuleProfile.Version+"\nConfig: "+style.Hash+"\nLocal data: "+projectFolder+"\nDevelopment preview. 11 bounded addition families and 5 non-addition checks. Full sentence meaning and independent Scripture accuracy are unverified. Review every suggestion.","About Tamil Sandhi QA",MessageBoxButtons.OK,MessageBoxIcon.Information);};
             var actions=new ToolStrip {Dock=DockStyle.Bottom,GripStyle=ToolStripGripStyle.Hidden,RenderMode=ToolStripRenderMode.System,CanOverflow=true,AccessibleName="Review actions"};
             var reject=Button("&Reject",delegate{Decide(ReviewState.Rejected,false);});
             var ignore=Button("&Ignore",delegate{Decide(ReviewState.Ignored,false);});
@@ -114,6 +115,7 @@ namespace TamilSandhi.Plugin
             cancelRequested=true;
             if(project!=null){project.ScriptureDataChanged-=ScriptureChanged;ReviewControl current;if(Sessions.TryGetValue(project.ID,out current)&&current==this){ReviewControl removed;Sessions.TryRemove(project.ID,out removed);}}
             project=next;engine=null;findings.Clear();sourceCache.Clear();decisions.Clear();scanErrors.Clear();lastApplied=null;revert.Enabled=false;
+            lastCoverage="Limited modern rule coverage. Unassessed words are not certified correct.";
             if(project==null)return;
             if(selectionProject!=project.ID)initialSelection=null;
             Sessions[project.ID]=this;project.ScriptureDataChanged+=ScriptureChanged;
@@ -181,12 +183,13 @@ namespace TamilSandhi.Plugin
         {
             if(scanning||project==null||engine==null)return;
             scanning=true;cancelRequested=false;scan.Enabled=false;cancel.Enabled=true;apply.Enabled=modify.Enabled=false;findings.Clear();sourceCache.Clear();scanErrors.Clear();
+            lastCoverage="Scan in progress; results and coverage are partial.";
             IProject selected=project;var at=reference;int mode=scope.SelectedIndex;var selectedEngine=engine;var selectedStyle=style;
             var selectedPassage=initialSelection;
             try
             {
                 style=styleStore.Load();selectedStyle=style;
-                var work=CreateWork(selected,at,mode);int completed=0,failed=0,verseCount=0;
+                var work=CreateWork(selected,at,mode);int completed=0,failed=0,verseCount=0;var coverage=new AnalysisReport();
                 status.Text="Scope: "+selected.ShortName+" | "+scope.Text+" | "+work.Count+" chapter(s). Preparing verse count...";
                 RefreshList();Changed();
                 foreach(var item in work)
@@ -222,7 +225,8 @@ namespace TamilSandhi.Plugin
                         {
                             if(cancelRequested||disposed||project!=selected)break;
                             var verseScope=segments.Where(s=>s.Verse==verse).SelectMany(s=>item.Scope.Select(t=>new TextSpan{Start=Math.Max(s.Start,t.Start),Length=Math.Max(0,Math.Min(s.End,t.End)-Math.Max(s.Start,t.Start))})).Where(s=>s.Length>0).ToList();
-                            found.AddRange(await Task.Run(()=>selectedEngine.Analyze(item.Snapshot,selectedStyle,verseScope,null)));
+                            var analysis=await Task.Run(()=>selectedEngine.AnalyzeDetailed(item.Snapshot,selectedStyle,verseScope,null));
+                            found.AddRange(analysis.Findings);coverage.Add(analysis);
                             verseCount++;status.Text="Checking verse "+verseCount+"/"+plannedVerses+" | "+item.Book+" "+item.Chapter+":"+verse;
                         }
                         if(disposed||project!=selected||cancelRequested)break;
@@ -235,6 +239,7 @@ namespace TamilSandhi.Plugin
                     RefreshList();await Task.Delay(1);
                 }
                 status.Text=(cancelRequested?"Cancelled; partial results. ":"Scan finished. ")+completed+" chapters; "+verseCount+" verses; "+failed+" failed; "+findings.Count+" findings. No Scripture changed.";
+                lastCoverage=coverage.Summary;status.Text="Limited coverage. "+status.Text;
                 if(scanErrors.Count>0)status.Text+=" Errors: "+String.Join("; ",scanErrors);
                 RefreshList();
                 Changed();
@@ -256,8 +261,9 @@ namespace TamilSandhi.Plugin
         private void ShowFinding()
         {
             var f=Selected;apply.Enabled=modify.Enabled=!scanning&&f!=null&&f.Actionable;
-            if(f==null){context.Text=String.Join(Environment.NewLine,scanErrors);return;}
+            if(f==null){context.Text=lastCoverage+Environment.NewLine+String.Join(Environment.NewLine,scanErrors);return;}
             context.Text=f.Context+"\n\n"+f.Original+"\n→ "+(f.AppliedText??f.Suggested??"No verified replacement — leave open for human review")+"\n\n"+f.Reason+"\n\n"+f.Rule+" | "+f.State+"\n"+f.Evidence+"\n"+String.Join("\n",f.Sources);
+            context.AppendText("\n\n"+lastCoverage);
             int target=context.Text.IndexOf(f.Original,StringComparison.Ordinal);if(target>=0){context.Select(target,f.Original.Length);context.SelectionBackColor=SystemColors.Info;context.Select(0,0);}
         }
         private void NavigateFinding(int delta)

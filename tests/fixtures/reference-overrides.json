@@ -1,0 +1,4 @@
+{
+  "B004": {"expected_action":"review", "reason":"அவரை is a lexical homograph: pronoun accusative or bean crop. Surface words alone cannot resolve it."},
+  "B010": {"expected_action":"unchanged", "reason":"Input already equals expected output அப்படிச் சொல். Treat as idempotence, preserving the original import."}
+}
