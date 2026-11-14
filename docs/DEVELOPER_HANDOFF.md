@@ -8,7 +8,7 @@ Current source includes the [Scripture-context fixes](SCRIPTURE_CONTEXT_FIXES.md
 
 The new engine uses `ScriptureRuleProfile.cs`: 11 bounded modern addition families and 5 non-addition checks, with insertion/replacement/removal, ambiguity blockers, enforced tier/register, and explicit coverage counts. All data stays offline. Full sentence semantics and independent Scripture accuracy remain unverified. Original reference files remain unchanged; maintained expectation corrections are in `tests/fixtures/reference-overrides.json`.
 
-The user authorized a read-only comparison with the Paratext resources Tamil BSI OV Edited and OTCV, and normal restarts. The developer-only `ReadOnlyResourceBenchmark.cs` must use public SDK access only, keep resource text private, and respect any host access-token refusal. The installed and published baseline below is still build 6 until candidate installation and verification are recorded. Do not claim build 7 host acceptance from build 6 evidence.
+The user authorized a read-only comparison with OTCV, TAOVBSI and enhanced TaOVM+, and normal restarts. Candidate `0.1.0-dev.7+g78186d91` was installed and checksum-verified. The resource benchmark was blocked by the host: OTCV/TAOVBSI denied GetUSFM and TaOVM+ was not exposed as readable IProject. **Zero chapters were read and no accuracy score exists.** See [aggregate access evidence](resource-benchmark-build7.json) and [remaining gate #31](https://github.com/selvabenz/tamil-language-qa-plugin/issues/31). The developer-only helper must respect this refusal; no token borrowing, private API or decryption workaround is permitted. Build 6 evidence below remains historical until a new host acceptance report is recorded.
 
 ## Current state
 

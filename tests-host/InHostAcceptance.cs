@@ -96,8 +96,16 @@ public sealed class InHostAcceptance : IParatextStartupAutomaticPlugin
             service.Revert(changed,"developer acceptance");lastKnown=store.Read(1,1);
             if(lastKnown!=baseline)throw new InvalidOperationException("Modified revert mismatch.");
             results.Add("modify-apply-and-revert: PASS");
-            foreach(string raw in new[]{"\\id GEN Synthetic regression\n\\c 1\n\\p\n\\v 1 தொடக்கம் \\f + \\ft குறிப்பு\\f* அவனை பார்த்தான்.","\\id GEN Synthetic regression\n\\c 1\n\\p\n\\v 1 அவனை\nபார்த்தான்."})
+            foreach(var regression in new[]{
+                new{Name="post-note",Text="தொடக்கம் \\f + \\ft குறிப்பு\\f* அவனை பார்த்தான்.",Operation="insert"},
+                new{Name="wrapped-source",Text="அவனை\nபார்த்தான்.",Operation="insert"},
+                new{Name="wrong-demonstrative",Text="இந்தக் புத்தகம்.",Operation="replace"},
+                new{Name="wrong-dative",Text="எனக்குப் கொடு.",Operation="replace"},
+                new{Name="relative-participle",Text="வந்தப் பையன்.",Operation="remove"},
+                new{Name="soft-participle",Text="வந்துச் சென்றான்.",Operation="remove"},
+                new{Name="homograph-abstention",Text="அவரை கொடுத்தான்.",Operation="review"}})
             {
+                string raw="\\id GEN Synthetic regression\n\\c 1\n\\p\n\\v 1 "+regression.Text;
                 using(var held=store.Lock(1,1))
                 {
                     if(held==null||store.Read(1,1)!=lastKnown)throw new InvalidOperationException("Regression fixture lock/source mismatch.");
@@ -106,11 +114,18 @@ public sealed class InHostAcceptance : IParatextStartupAutomaticPlugin
                     catch{string current=store.Read(1,1);if(current==beforeFixture||current==raw)lastKnown=current;throw;}
                 }
                 if(raw.Contains("அவனை\nபார்த்தான்")&&!lastKnown.Contains("அவனை\nபார்த்தான்")&&!lastKnown.Contains("அவனை\r\nபார்த்தான்")){results.Add("wrapped-source-host-acceptance: NOT_EXERCISED (host canonicalizes source wrapping; core whitespace regressions are separate)");continue;}
+                if(regression.Operation=="review")
+                {
+                    var uncertain=scan().Single();
+                    if(uncertain.Actionable||uncertain.State!=ReviewState.NeedsReview||!uncertain.Blockers.Contains("lexical_homograph_unresolved"))throw new InvalidOperationException("Host homograph did not abstain");
+                    results.Add("homograph-host-review-only-no-apply: PASS");continue;
+                }
                 string exactFixture=lastKnown;var target=scan().Single(f=>f.Actionable);
+                if(target.Operation!=regression.Operation)throw new InvalidOperationException("Unexpected correction operation");
                 var edit=service.Apply(target,target.Suggested,"developer acceptance",false,style.Hash);lastKnown=store.Read(1,1);
                 service.Revert(edit,"developer acceptance",target);lastKnown=store.Read(1,1);
                 if(lastKnown!=exactFixture||target.State!=ReviewState.Reverted||(string)FindingExport.ToSchema(target)["status"]=="accepted")throw new InvalidOperationException("Regression fixture revert/outcome mismatch.");
-                results.Add(raw.Contains("\\ft")?"post-note-host-apply-revert-and-export: PASS":"wrapped-source-host-apply-revert-and-export: PASS");
+                results.Add(regression.Name+"-host-apply-revert-and-export: PASS");
             }
         }
         catch(Exception ex){results.Add("ERROR: "+ex.ToString());}

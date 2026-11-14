@@ -1,0 +1,15 @@
+{
+  "build": "0.1.0-dev.7+g78186d91",
+  "host": "9.5.110.1",
+  "status": "blocked_by_host_resource_access",
+  "readOnly": true,
+  "scriptureWrites": 0,
+  "chaptersRead": 0,
+  "independentAccuracyMeasured": false,
+  "resources": [
+    {"shortName":"OTCV", "result":"ParatextPluginException: Plugin does not have access to GetUSFM for this project."},
+    {"shortName":"TAOVBSI", "result":"ParatextPluginException: Plugin does not have access to GetUSFM for this project."},
+    {"shortName":"TaOVM+", "result":"Listed in enhanced-resource metadata but not exposed as a readable IProject by GetAllProjects(true)."}
+  ],
+  "notes": "No text was read through the benchmark API. No resource was substituted, modified or uploaded. Zero chapters is not zero errors or evidence of accuracy. The helper respected host access controls. The visible TAOVBSI passage was inspected in the normal UI, which is not a corpus evaluation."
+}

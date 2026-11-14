@@ -1,4 +1,4 @@
-param([string]$ParatextDir='C:\Program Files\Paratext 9')
+param([string]$ParatextDir='C:\Program Files\Paratext 9',[ValidateSet('OTCV','TAOVBSI','TaOVM+')][string[]]$ResourceShortNames=@('OTCV'))
 $ErrorActionPreference='Stop'
 $repoRoot=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $build=Join-Path $repoRoot 'artifacts\build'
@@ -12,5 +12,6 @@ $refs+=@('CorePluginInterfaces.dll','PluginInterfaces.dll')|ForEach-Object{'/r:'
 & $compiler /nologo /target:library /warnaserror+ /r:System.Core.dll /r:System.Web.Extensions.dll ('/r:'+(Join-Path $build 'TamilSandhi.Core.dll')) $refs ('/out:'+(Join-Path $runRoot 'TamilSandhi.ResourceBenchmark.ptxplg')) (Join-Path $repoRoot 'tests-host\ReadOnlyResourceBenchmark.cs') (Join-Path $runRoot 'Paths.cs')
 if($LASTEXITCODE -ne 0){throw 'Read-only benchmark compilation failed'}
 Copy-Item -LiteralPath (Join-Path $build 'rules.json') -Destination $runRoot
+ConvertTo-Json -InputObject @($ResourceShortNames) | Set-Content -LiteralPath (Join-Path $runRoot 'selected-resources.json') -Encoding UTF8
 'User selected Tamil BSI OV Edited and OTCV for read-only local comparison'|Set-Content (Join-Path $runRoot 'request.txt')
 Write-Output $runRoot

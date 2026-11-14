@@ -32,3 +32,17 @@ The [development prerelease](https://github.com/selvabenz/tamil-language-qa-plug
 These bounded defects have regression coverage; broader host acceptance remains in #15. See [developer handoff](DEVELOPER_HANDOFF.md).
 
 Whole-app review issues [#19–#25](https://github.com/selvabenz/tamil-language-qa-plugin/issues?q=is%3Aissue+label%3Abug) have individual labels, build 6 board targets and completion evidence. Their fixes do not close the broader acceptance gates in original issues #1–#15. See [review fix matrix](WHOLE_APP_REVIEW_FIXES.md).
+
+## Scripture-context review
+
+The five findings in the [sandhi review](SANDHI_RULES_REVIEW.md) have separate issues, bug/linguistics/phase/priority labels and project cards targeting build 7:
+
+- [#26](https://github.com/selvabenz/tamil-language-qa-plugin/issues/26): lexical ambiguity and honest evidence.
+- [#27](https://github.com/selvabenz/tamil-language-qa-plugin/issues/27): wrong/unnecessary consonant replacement and removal.
+- [#28](https://github.com/selvabenz/tamil-language-qa-plugin/issues/28): bounded Scripture-style coverage and explicit unassessed counts.
+- [#29](https://github.com/selvabenz/tamil-language-qa-plugin/issues/29): contradictory fixture corrections and mandatory expected predictions.
+- [#30](https://github.com/selvabenz/tamil-language-qa-plugin/issues/30): rule register/tier gates and editorial policy provenance.
+
+See [fix evidence and remaining limits](SCRIPTURE_CONTEXT_FIXES.md). These bounded tasks do not close the broader independent linguistic-evaluation gates in #5 and #15.
+
+[Issue #31](https://github.com/selvabenz/tamil-language-qa-plugin/issues/31) records the confirmed host resource-access blocker for OTCV/TAOVBSI/TaOVM+, approved-access requirements and held-out accuracy evaluation. It remains In Progress with P0/QA/linguistics/research labels, phase P3, and a production-evaluation target. Zero resource chapters read must never be reported as zero errors.
