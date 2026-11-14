@@ -1,10 +1,10 @@
-﻿# Tamil Language QA Plugin
+# Tamil Language QA Plugin
 
 An offline Tamil புணர்ச்சி / sandhi review plugin targeting **Paratext 9.5.110.1 on Windows**.
 
 **Development preview:** the C# plugin builds against the target host SDK. It includes a native embedded review window, scope scanning, contextual suggestions, Apply / Reject / Ignore / Modify & Apply, guarded reversion, and inline annotation integration. Exact-host installation and acceptance are reported separately in [implementation status](docs/IMPLEMENTATION_STATUS.md).
 
-Download [development prerelease v0.1.0-dev.1](https://github.com/selvabenz/tamil-language-qa-plugin/releases/tag/v0.1.0-dev.1). It is installed locally and its host context-menu entry is detected; full interactive host acceptance remains pending.
+Download [development prerelease v0.1.0-dev.3](https://github.com/selvabenz/tamil-language-qa-plugin/releases/tag/v0.1.0-dev.3). It is installed locally and its host context-menu entry is detected; full interactive host acceptance remains pending.
 
 ## Accuracy and coverage
 

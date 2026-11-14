@@ -23,9 +23,9 @@ The first implementation is a development preview, not a production release or a
 - 331 core assertions pass, consuming all 99 supplied scenarios for preservation, protected examples, finding contracts and limited prediction coverage. A 176-verse synthetic core scan took 11 ms locally; this is a baseline observation, not an end-to-end host performance guarantee.
 - Of 24 conditional suggestion scenarios, 10 receive the expected suggestion without external annotations; 14 are unimplemented or abstained. This is development-fixture coverage, not independent accuracy evidence.
 - Host-contract tests load both interfaces, enumerate menus and construct/layout the native control against SDK 2.0.100. They are not in-host acceptance tests.
-- Administrative installation succeeded after the initial Windows access denial. All four installed files were checksum-verified in `C:\Program Files\Paratext 9\plugins\TamilSandhiQA`; the installed identity is `0.1.0-dev.1+ge6dd8f41`.
-- Paratext restarted and displayed the installed Scripture context-menu command. Full interactive host acceptance remains pending: Windows automation detected active user input and UI testing stopped to avoid interference. No real Scripture edits were performed by this test session.
-- GitHub Windows build and reference-validation workflows pass. [Development prerelease v0.1.0-dev.1](https://github.com/selvabenz/tamil-language-qa-plugin/releases/tag/v0.1.0-dev.1) contains the plugin ZIP and machine-readable test summary.
+- Administrative installation succeeded after the initial Windows access denial. All four installed files were checksum-verified in `C:\Program Files\Paratext 9\plugins\TamilSandhiQA`; the installed identity is `0.1.0-dev.3+gc9d89992`.
+- Paratext restarted and displayed the installed Scripture context-menu command. Full interactive host acceptance remains pending. Modal dialog automation has been unreliable; a guarded, one-shot disposable-project acceptance runner is documented in [HOST_ACCEPTANCE.md](HOST_ACCEPTANCE.md). No real Scripture edits were performed by this test session.
+- GitHub Windows build and reference-validation workflows pass. [Development prerelease v0.1.0-dev.3](https://github.com/selvabenz/tamil-language-qa-plugin/releases/tag/v0.1.0-dev.3) contains the plugin ZIP.
 
 ## Remaining release gates
 
