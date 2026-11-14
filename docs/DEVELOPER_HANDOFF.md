@@ -12,14 +12,16 @@ The user authorized a read-only comparison with OTCV, TAOVBSI and enhanced TaOVM
 
 The user subsequently supplied a local 66-book BSI OV USFM reference. The revised profile and evaluation protocol are documented in [local reference evaluation](BSI_REFERENCE_EVALUATION.md). The original host API block remains for the resources, but this export permits a read-only BSI comparison. Build 8 is the candidate for the reference-driven changes; build 7 host evidence is historical.
 
-## Current state
+Frozen-profile BSI evaluation completed across 66 books, 1,189 chapters and 31,102 verse units, with all inputs unchanged. There are 264 unadjudicated proposals and 1,596 review-only findings; 13,652/33,589 controlled missing-ஒற்று cases are reconstructed (coverage, not natural-error accuracy). See [aggregate results](bsi-reference-evaluation-build8.json). Remaining work: adjudicate proposals, confirm edition/register policy, expand unsupported morphology/compounds, obtain separate natural-error gold data, and obtain approved access for the other resources. Do not promise 100% reliability from a clean or low-finding scan.
+
+## Historical build 6 baseline
 
 - Repository: https://github.com/selvabenz/tamil-language-qa-plugin ; branch `main`. [Project board](https://github.com/users/selvabenz/projects/4).
 - Original delivery issues #1–#15 remain open until their broader acceptance criteria pass.
-- Installed and last published host-tested build: `0.1.0-dev.6+g73fb595c`, targeting Paratext **9.5.110.1**, SDK **2.0.100**, .NET Framework **4.8**.
-- Build 6 is installed, checksum-verified and published as a development prerelease. The consumed developer helper was removed. [Exact-host build 6 evidence](host-acceptance-build6.json) records the completed transaction/post-note/export tests and original disposable-chapter restoration.
+- At the earlier baseline, installed and published build: `0.1.0-dev.6+g73fb595c`, targeting Paratext **9.5.110.1**, SDK **2.0.100**, .NET Framework **4.8**.
+- Build 6 was installed, checksum-verified and published as a development prerelease. The consumed developer helper was removed. [Exact-host build 6 evidence](host-acceptance-build6.json) records the completed transaction/post-note/export tests and original disposable-chapter restoration.
 - Local validation: **403 core assertions**, SDK/native-control/toolbar/narrow-layout checks, finding schema and original reference validators, and isolated Git/package-integrity regression tests pass. Check the Actions run for the exact checkout before claiming CI acceptance.
-- Linguistic coverage remains 10 expected predictions out of 24 conditional development scenarios; the other 14 are unimplemented or abstained. All 99 supplied fixtures are consumed for their relevant checks. Independent linguistic accuracy is unmeasured; 100% accuracy is not achieved.
+- At that baseline, linguistic coverage was 10 expected predictions out of 24 conditional development scenarios; the other 14 are unimplemented or abstained. All 99 supplied fixtures are consumed for their relevant checks. Independent linguistic accuracy is unmeasured; 100% accuracy is not achieved.
 
 ## Review fixes
 

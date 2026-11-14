@@ -47,4 +47,6 @@ Issues stay open until their full acceptance criteria have evidence. A prereleas
 
 ## Scripture-context follow-up
 
+The user-provided BSI OV export has now been compared read-only over all 66 books, 1,189 chapters and 31,102 verse units. The frozen revised profile proposes 264 changes and abstains on 1,596 nominated findings; all source files remain unchanged. Controlled missing-ஒற்று recovery is 13,652/33,589, not independent accuracy. See [full aggregate evaluation and limitations](BSI_REFERENCE_EVALUATION.md). Build 8 contains these reference-driven context/coverage improvements.
+
 The [five linguistic review fixes](SCRIPTURE_CONTEXT_FIXES.md) are tracked in #26–#30. Build 7 candidate `0.1.0-dev.7+g78186d91` was installed; build 6 remains the last published host-tested baseline until new host evidence and publication are recorded. Both candidate CI workflows passed (Windows run 43563472388; reference run 43563472350). The user selected OTCV, TAOVBSI and TaOVM+ for read-only comparison. The host refused resource text access, so zero chapters were evaluated; see [evidence](resource-benchmark-build7.json) and [remaining gate #31](https://github.com/selvabenz/tamil-language-qa-plugin/issues/31). No resource text was committed or published, and no independent accuracy score exists.

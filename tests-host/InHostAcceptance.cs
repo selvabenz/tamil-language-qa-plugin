@@ -103,7 +103,9 @@ public sealed class InHostAcceptance : IParatextStartupAutomaticPlugin
                 new{Name="wrong-dative",Text="எனக்குப் கொடு.",Operation="replace"},
                 new{Name="relative-participle",Text="வந்தப் பையன்.",Operation="remove"},
                 new{Name="soft-participle",Text="வந்துச் சென்றான்.",Operation="remove"},
-                new{Name="homograph-abstention",Text="அவரை கொடுத்தான்.",Operation="review"}})
+                new{Name="homograph-abstention",Text="அவரை கொடுத்தான்.",Operation="review"},
+                new{Name="naming-clause-abstention",Text="அவனுக்கு புதியபெயர் என்று பேரிட்டான்.",Operation="review"},
+                new{Name="editorial-deity-abstention",Text="இந்த தேவன் இருக்கிறார்.",Operation="review"}})
             {
                 string raw="\\id GEN Synthetic regression\n\\c 1\n\\p\n\\v 1 "+regression.Text;
                 using(var held=store.Lock(1,1))
@@ -117,8 +119,8 @@ public sealed class InHostAcceptance : IParatextStartupAutomaticPlugin
                 if(regression.Operation=="review")
                 {
                     var uncertain=scan().Single();
-                    if(uncertain.Actionable||uncertain.State!=ReviewState.NeedsReview||!uncertain.Blockers.Contains("lexical_homograph_unresolved"))throw new InvalidOperationException("Host homograph did not abstain");
-                    results.Add("homograph-host-review-only-no-apply: PASS");continue;
+                    if(uncertain.Actionable||uncertain.State!=ReviewState.NeedsReview||uncertain.Blockers.Length==0)throw new InvalidOperationException("Host uncertain context did not abstain");
+                    results.Add(regression.Name+"-host-review-only-no-apply: PASS");continue;
                 }
                 string exactFixture=lastKnown;var target=scan().Single(f=>f.Actionable);
                 if(target.Operation!=regression.Operation)throw new InvalidOperationException("Unexpected correction operation");

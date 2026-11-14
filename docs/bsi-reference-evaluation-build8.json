@@ -1,0 +1,68 @@
+{
+  "profile": "scripture-modern-2",
+  "reference": "User-supplied local BSI OV USFM",
+  "readOnly": true,
+  "allInputFilesUnchanged": true,
+  "independentNaturalErrorAccuracyMeasured": false,
+  "splits": [
+    {
+      "build": "0.1.0-dev.8+gbf7a3f24",
+      "profile": "scripture-modern-2",
+      "stage": "development",
+      "readOnly": true,
+      "reference": "User-supplied local BSI OV USFM",
+      "books": 4,
+      "chapters": 249,
+      "verseUnits": 5944,
+      "examinedBoundaries": 51415,
+      "supportedBoundaries": 2840,
+      "unassessedBoundaries": 48336,
+      "proposedChangesToReviewedText": 22,
+      "reviewOnlyFindings": 239,
+      "proposedChangesByRule": {
+        "HARD-DEM": 4,
+        "HARD-PART-AG": 2,
+        "CASE-002-OVERT": 8,
+        "CASE-004-OVERT": 6,
+        "HARD-PART-I": 1,
+        "HARD-PART-Y": 1
+      },
+      "controlledMissingOttuCandidates": 5856,
+      "controlledMissingOttuRecovered": 2828,
+      "allInputFilesUnchanged": true,
+      "independentNaturalErrorAccuracyMeasured": false,
+      "elapsedMilliseconds": 1253
+    },
+    {
+      "build": "0.1.0-dev.8+gbf7a3f24",
+      "profile": "scripture-modern-2",
+      "stage": "holdout",
+      "readOnly": true,
+      "reference": "User-supplied local BSI OV USFM",
+      "books": 62,
+      "chapters": 940,
+      "verseUnits": 25158,
+      "examinedBoundaries": 268993,
+      "supportedBoundaries": 11080,
+      "unassessedBoundaries": 256556,
+      "proposedChangesToReviewedText": 242,
+      "reviewOnlyFindings": 1357,
+      "proposedChangesByRule": {
+        "CASE-004-OVERT": 32,
+        "HARD-PART-HARDU": 13,
+        "CASE-002-OVERT": 56,
+        "HARD-PART-AG": 24,
+        "HARD-PART-I": 4,
+        "HARD-DEM": 96,
+        "HARD-MANNER": 8,
+        "HARD-PART-Y": 9
+      },
+      "controlledMissingOttuCandidates": 27733,
+      "controlledMissingOttuRecovered": 10824,
+      "allInputFilesUnchanged": true,
+      "independentNaturalErrorAccuracyMeasured": false,
+      "elapsedMilliseconds": 6574
+    }
+  ],
+  "notes": "Reference disagreements require adjudication. Controlled isolated-pair mutation recovery is coverage, not natural-error accuracy. Text, snippets, paths and private manifests are excluded."
+}

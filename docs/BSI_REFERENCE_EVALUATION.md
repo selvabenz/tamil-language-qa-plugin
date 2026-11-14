@@ -26,6 +26,26 @@ The revised `scripture-modern-2` profile expands explicitly known accusative/dat
 
 The last development run before freezing supported 2,840 pairs and reconstructed 2,828 of 5,856 controlled boundaries, with 22 proposed changes and 239 review-only findings. Inputs remained unchanged. Some proposals concern mismatched written consonants; others concern edition/register choices. An expert-reviewed decision set is still required before labeling all disagreements or measuring precision.
 
-## Limits
+## Frozen-profile results
+
+The profile was frozen at commit `bf7a3f24` before inspecting the remaining 62 books. [Aggregate results](bsi-reference-evaluation-build8.json) contain no Scripture text:
+
+| Measurement | Development | Remaining reference split | Total |
+|---|---:|---:|---:|
+| Books | 4 | 62 | 66 |
+| Chapters | 249 | 940 | 1,189 |
+| Verse units | 5,944 | 25,158 | 31,102 |
+| Examined word pairs | 51,415 | 268,993 | 320,408 |
+| Supported word pairs | 2,840 | 11,080 | 13,920 |
+| Proposed changes to reference | 22 | 242 | 264 |
+| Review-only findings | 239 | 1,357 | 1,596 |
+| Controlled missing-ஒற்று candidates | 5,856 | 27,733 | 33,589 |
+| Reconstructed controlled cases | 2,828 | 10,824 | 13,652 |
+
+All 66 input files were verified unchanged. Controlled recovery is about **40.64% overall**, showing substantial remaining coverage gaps; it is not an accuracy percentage. The 264 proposals are unadjudicated. Do not count them all as reference errors or all as checker errors. The remaining split was not used to tune the frozen profile. Any future tuning against it must stop treating it as untouched evaluation data.
+
+## Production limits
 
 The user-supplied BSI export enables local reference comparison; it does not remove Paratext's API restriction on OTCV/TAOVBSI or make the enhanced resource readable. Those original restrictions remain documented in [resource-access evidence](resource-benchmark-build7.json). The export's exact edition/version and independent editorial judgments should be confirmed before production acceptance. Joined compounds, arbitrary morphology, unknown names, wider classical usage and natural-error recall remain outside the supported guarantee.
+
+A private offline HTML adjudication view can be generated with `scripts/create-reference-review.py` from the private finding JSON files. It shows the 264 proposals, verse context and local decision controls; it cannot apply Scripture edits. Do not commit or upload the generated view or its saved decisions.
