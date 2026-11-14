@@ -1,1 +1,26 @@
-{"build":"0.1.0-dev.8+g7faca08f","host":"9.5.110.1","utc":"2026-11-14T09:13:28.3317246Z","results":["production-window-current-chapter-scope: PASS","disposable-marker-and-edit-permission: PASS","host-read-and-protected-USFM-scan: PASS","real-host-lock-apply-and-readback: PASS","stale-finding-rejected-without-write: PASS","real-host-revert-exact: PASS","modify-apply-and-revert: PASS","post-note-host-apply-revert-and-export: PASS","wrapped-source-host-acceptance: NOT_EXERCISED (host canonicalizes source wrapping; core whitespace regressions are separate)","wrong-demonstrative-host-apply-revert-and-export: PASS","wrong-dative-host-apply-revert-and-export: PASS","relative-participle-host-apply-revert-and-export: PASS","soft-participle-host-apply-revert-and-export: PASS","homograph-abstention-host-review-only-no-apply: PASS","naming-clause-abstention-host-review-only-no-apply: PASS","editorial-deity-abstention-host-review-only-no-apply: PASS","original-disposable-chapter-restored-exactly: PASS"]}
+{
+  "build": "0.1.0-dev.8+g7faca08f",
+  "host": "9.5.110.1",
+  "utc": "2026-11-14T09:13:28.3317246Z",
+  "results": [
+    "production-window-current-chapter-scope: PASS",
+    "disposable-marker-and-edit-permission: PASS",
+    "host-read-and-protected-USFM-scan: PASS",
+    "real-host-lock-apply-and-readback: PASS",
+    "stale-finding-rejected-without-write: PASS",
+    "real-host-revert-exact: PASS",
+    "modify-apply-and-revert: PASS",
+    "post-note-host-apply-revert-and-export: PASS",
+    "wrapped-source-host-acceptance: NOT_EXERCISED (host canonicalizes source wrapping; core whitespace regressions are separate)",
+    "wrong-demonstrative-host-apply-revert-and-export: PASS",
+    "wrong-dative-host-apply-revert-and-export: PASS",
+    "relative-participle-host-apply-revert-and-export: PASS",
+    "soft-participle-host-apply-revert-and-export: PASS",
+    "homograph-abstention-host-review-only-no-apply: PASS",
+    "naming-clause-abstention-host-review-only-no-apply: PASS",
+    "editorial-deity-abstention-host-review-only-no-apply: PASS",
+    "original-disposable-chapter-restored-exactly: PASS"
+  ],
+  "helpersRemovedFromInstallation": true,
+  "normalNativeWindowObserved": "Tamil Sandhi QA 0.1.0-dev.8; disposable project; explicit limited-coverage explanation visible"
+}

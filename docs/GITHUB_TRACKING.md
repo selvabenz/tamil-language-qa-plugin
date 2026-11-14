@@ -35,7 +35,7 @@ Whole-app review issues [#19–#25](https://github.com/selvabenz/tamil-language-
 
 ## Scripture-context review
 
-The five findings in the [sandhi review](SANDHI_RULES_REVIEW.md) have separate issues, bug/linguistics/phase/priority labels and project cards targeting build 7:
+The five findings in the [sandhi review](SANDHI_RULES_REVIEW.md) have separate issues, bug/linguistics/phase/priority labels and project cards targeting build 8:
 
 - [#26](https://github.com/selvabenz/tamil-language-qa-plugin/issues/26): lexical ambiguity and honest evidence.
 - [#27](https://github.com/selvabenz/tamil-language-qa-plugin/issues/27): wrong/unnecessary consonant replacement and removal.
@@ -48,3 +48,5 @@ See [fix evidence and remaining limits](SCRIPTURE_CONTEXT_FIXES.md). These bound
 [Issue #31](https://github.com/selvabenz/tamil-language-qa-plugin/issues/31) records the confirmed host resource-access blocker for OTCV/TAOVBSI/TaOVM+, approved-access requirements and held-out accuracy evaluation. It remains In Progress with P0/QA/linguistics/research labels, phase P3, and a production-evaluation target. Zero resource chapters read must never be reported as zero errors.
 
 Build 8 resolves the bounded SR-01 through SR-05 tasks with 708 assertions and exact-host insertion/replacement/removal/abstention tests. The BSI export enabled read-only 66-book evaluation after the host resource API refusal. Issue #31 and broader gates #5/#15 remain open for adjudicating 264 proposals, independent natural-error data and the other approved resources.
+
+Issues #26 through #30 are CLOSED and their board cards are Done, targeting 0.1.0-dev.8. The published prerelease ZIP hash matches the checksum-verified installed build. Issue #31 remains In Progress: the user-provided BSI export comparison is complete, while proposal adjudication, independent natural-error validation and the other resource access remain outstanding.
